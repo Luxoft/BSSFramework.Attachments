@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Framework.Attachments.Environment</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Attachments.BLL\Framework.Attachments.BLL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD" Version="16.0.1" />
+  </ItemGroup>
+
+</Project>

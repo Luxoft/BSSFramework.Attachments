@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Framework.Attachments.BLL.Core</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Attachments.Domain\Framework.Attachments.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Luxoft.Framework.Authorization.BLL.Core" Version="16.0.1" />
+    <PackageReference Include="Luxoft.Framework.Configuration.BLL.Core" Version="16.0.1" />
+  </ItemGroup>
+
+</Project>

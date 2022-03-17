@@ -1,0 +1,42 @@
+name: Build+Unit
+
+on:
+  push:
+    branches: 
+      - 'main'
+  pull_request:
+    branches: [ main ]
+    types: [opened, synchronize, reopened]
+  Attachments_dispatch:
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - run: git config --global core.autocrlf true
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore dependencies
+      working-directory: ./src
+      run: |
+        dotnet restore
+
+    - name: Build
+      working-directory: ./src
+      run: |
+        dotnet build ./IAD.Framework.WF.sln --no-restore
+
+    - name: Check Generation
+      run: |
+        dotnet test src\_AttachmentsSampleSystem\_Tests\AttachmentsSampleSystem.CheckGenTests\AttachmentsSampleSystem.CheckGenTests.csproj --no-build --verbosity normal
+    
+    - name: Unit tests
+      run: |
+

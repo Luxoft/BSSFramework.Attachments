@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Attachments.Generated.DTO\Framework.Attachments.Generated.DTO.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Luxoft.Framework.DomainDriven.WebApiNetCore" Version="16.0.1" />
+    <PackageReference Include="Luxoft.Framework.WebApi.Utils" Version="16.0.1" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD" Version="16.0.1" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Luxoft.Framework.Attachments.TestGenerate</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
+
+    <PackageReference Include="Luxoft.Framework.DomainDriven.DBGenerator" Version="16.0.1" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.NHibernate.DALGenerator" Version="16.0.1" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModelGenerator" Version="16.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\__SolutionItems\CommonAssemblyInfo.cs" Link="Properties\CommonAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Attachments.Domain\Framework.Attachments.Domain.csproj" />
+  </ItemGroup>
+</Project>

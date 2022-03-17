@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Framework.Attachments.Domain</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Attachments.Abstract\Framework.Attachments.Abstract.csproj" />
+    <ProjectReference Include="..\Framework.Attachments.Core\Framework.Attachments.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Luxoft.Framework.DomainDriven.BLL" Version="16.0.1" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.BLL.Security" Version="16.0.1" />
+  </ItemGroup>
+
+</Project>
