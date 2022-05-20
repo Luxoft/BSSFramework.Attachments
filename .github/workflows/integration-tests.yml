@@ -38,7 +38,7 @@ jobs:
     - name: Build
       working-directory: ./src
       run: |
-        dotnet build ./IAD.Framework.WF.sln --no-restore
+        dotnet build ./IAD.Framework.Attachments.sln --no-restore
 
     - name: Integration Tests
       run: |           
