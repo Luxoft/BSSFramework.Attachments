@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <PackageId>Framework.Attachments.Generated.DTO</PackageId>
+    <PackageId>Luxoft.Framework.Attachments.Generated.DTO</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

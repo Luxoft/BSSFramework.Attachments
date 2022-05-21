@@ -1,4 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <PackageId>Luxoft.Framework.Attachments.WebApi</PackageId>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Framework.Attachments.Generated.DTO\Framework.Attachments.Generated.DTO.csproj" />
