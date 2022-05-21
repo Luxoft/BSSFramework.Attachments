@@ -17,6 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Luxoft.Framework.DomainDriven.NHibernate" Version="16.0.1" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.NHibernate" Version="16.3.2" />
   </ItemGroup>
 </Project>

@@ -74,7 +74,7 @@ public class AttachmentsServiceEnvironmentModule<TMainServiceEnvironment, TBLLCo
     {
         return currentScopedServiceProvider == null
                        ? new RootContextEvaluator<IAttachmentsBLLContext>(this, this.RootServiceProvider)
-                       : new ScopeContextEvaluator<IAttachmentsBLLContext>(this, currentScopedServiceProvider);
+                       : new ScopedContextEvaluator<IAttachmentsBLLContext>(this, currentScopedServiceProvider);
     }
 
     public IBLLContextContainer<IAttachmentsBLLContext> GetBLLContextContainer(

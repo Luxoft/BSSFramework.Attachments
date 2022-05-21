@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Luxoft.Framework.Authorization.BLL.Core" Version="16.0.1" />
-    <PackageReference Include="Luxoft.Framework.Configuration.BLL.Core" Version="16.0.1" />
+    <PackageReference Include="Luxoft.Framework.Authorization.BLL.Core" Version="16.3.2" />
+    <PackageReference Include="Luxoft.Framework.Configuration.BLL.Core" Version="16.3.2" />
   </ItemGroup>
 
 </Project>
