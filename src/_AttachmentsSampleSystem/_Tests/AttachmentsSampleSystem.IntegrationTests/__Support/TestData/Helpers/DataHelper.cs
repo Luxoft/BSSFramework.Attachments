@@ -309,19 +309,6 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers
                 });
 
         }
-
-        public TController GetController<TController>(string principalName = null)
-            where TController : ControllerBase, IApiControllerBase
-        {
-            var scope = this.Environment.ServiceProvider.CreateScope();
-
-            var controller = scope.ServiceProvider.GetRequiredService<TController>();
-
-            controller.ServiceProvider = scope.ServiceProvider;
-            controller.PrincipalName = principalName;
-
-            return controller;
-        }
     }
 
     public static class ServiceProviderControllerExtensions

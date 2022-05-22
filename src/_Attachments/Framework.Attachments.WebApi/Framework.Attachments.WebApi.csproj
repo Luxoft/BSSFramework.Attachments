@@ -9,9 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Luxoft.Framework.DomainDriven.WebApiNetCore" Version="16.0.1" />
-    <PackageReference Include="Luxoft.Framework.WebApi.Utils" Version="16.0.1" />
-    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD" Version="16.0.1" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.WebApiNetCore" Version="16.3.2" />
+    <PackageReference Include="Luxoft.Framework.WebApi.Utils" Version="16.3.2" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD" Version="16.3.2" />
   </ItemGroup>
 
 </Project>

@@ -11,6 +11,8 @@ using AttachmentsSampleSystem.Generated.DTO;
 using AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment;
 using AttachmentsSampleSystem.ServiceEnvironment;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using BusinessRole = AttachmentsSampleSystem.IntegrationTests.__Support.Utils.BusinessRole;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers
@@ -53,7 +55,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers
 
         public void LoginAs(string principalName = null)
         {
-            IntegrationTestsUserAuthenticationService.Instance.CustomUserName = principalName;
+            this.Environment.RootServiceProvider.GetRequiredService<IntegrationTestsUserAuthenticationService>().CustomUserName = principalName;
         }
 
         public new void FinishRunAsUser()
