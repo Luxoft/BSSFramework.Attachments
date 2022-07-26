@@ -106,7 +106,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers
             return this.EvaluateWrite(
                 context =>
                 {
-                    period = period ?? new Period(context.DateTimeService.CurrentFinancialYear.StartDate.AddYears(-1));
+                    period = period ?? new Period(this.GetDateTimeService().CurrentFinancialYear.StartDate.AddYears(-1));
                     businessUnit = context.Logics.BusinessUnit.GetById(this.GetGuid(id));
 
                     if (businessUnit == null)

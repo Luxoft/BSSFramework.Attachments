@@ -5,7 +5,6 @@ using System.Linq;
 
 using Framework.Attachments.Domain;
 using Framework.Authorization.BLL;
-using Framework.Configuration.BLL;
 using Framework.Core;
 using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
@@ -13,10 +12,8 @@ using Framework.SecuritySystem.Rules.Builders;
 using Framework.DomainDriven.BLL.Tracking;
 using Framework.Exceptions;
 using Framework.HierarchicalExpand;
-using Framework.Notification;
 using Framework.QueryLanguage;
 using Framework.SecuritySystem;
-using Framework.Validation;
 
 using JetBrains.Annotations;
 
@@ -24,8 +21,6 @@ namespace Framework.Attachments.BLL
 {
     public partial class AttachmentsBLLContext
     {
-        private static readonly ITypeResolver<string> CurrentTargetSystemTypeResolver = TypeSource.FromSample<PersistentDomainObjectBase>().ToDefaultTypeResolver();
-
         private readonly Lazy<Dictionary<TargetSystem, ITargetSystemService>> lazyTargetSystemServiceCache;
 
         private readonly IDictionaryCache<Type, DomainType> domainTypeCache;
@@ -33,22 +28,22 @@ namespace Framework.Attachments.BLL
         public AttachmentsBLLContext(
             IServiceProvider serviceProvider,
             [NotNull] IDALFactory<PersistentDomainObjectBase, Guid> dalFactory,
-            [NotNull] BLLOperationEventListenerContainer<DomainObjectBase> operationListeners,
+            [NotNull] IOperationEventSenderContainer<PersistentDomainObjectBase> operationSenders,
             [NotNull] BLLSourceEventListenerContainer<PersistentDomainObjectBase> sourceListeners,
             [NotNull] IObjectStateService objectStateService,
             [NotNull] IAccessDeniedExceptionService<PersistentDomainObjectBase> accessDeniedExceptionService,
             [NotNull] IStandartExpressionBuilder standartExpressionBuilder,
-            [NotNull] IValidator validator,
+            [NotNull] IAttachmentsValidator validator,
             [NotNull] IHierarchicalObjectExpanderFactory<Guid> hierarchicalObjectExpanderFactory,
             [NotNull] IFetchService<PersistentDomainObjectBase, FetchBuildRule> fetchService,
-            [NotNull] IDateTimeService dateTimeService,
             [NotNull] ISecurityExpressionBuilderFactory<PersistentDomainObjectBase, Guid> securityExpressionBuilderFactory,
             IAttachmentsSecurityService securityService,
             IAttachmentsBLLFactoryContainer logics,
             IAuthorizationBLLContext authorizationBLLContext,
             [NotNull] Framework.Configuration.BLL.IConfigurationBLLContext configurationBLLContext,
-            IEnumerable<ITargetSystemService> targetSystemServices)
-            : base(serviceProvider, dalFactory, operationListeners, sourceListeners, objectStateService, accessDeniedExceptionService, standartExpressionBuilder, validator, hierarchicalObjectExpanderFactory, fetchService, dateTimeService)
+            IEnumerable<ITargetSystemService> targetSystemServices,
+            IAttachmentsBLLContextSettings settings)
+            : base(serviceProvider, dalFactory, operationSenders, sourceListeners, objectStateService, accessDeniedExceptionService, standartExpressionBuilder, validator, hierarchicalObjectExpanderFactory, fetchService)
         {
             this.SecurityExpressionBuilderFactory = securityExpressionBuilderFactory ?? throw new ArgumentNullException(nameof(securityExpressionBuilderFactory));
 
@@ -63,6 +58,8 @@ namespace Framework.Attachments.BLL
             this.domainTypeCache = new DictionaryCache<Type, DomainType>(type =>
 
                 this.GetTargetSystemService(type, false).Maybe(targetService => this.GetDomainType(targetService, type))).WithLock();
+
+            this.TypeResolver = settings.TypeResolver;
         }
 
         public IAttachmentsSecurityService SecurityService { get; }
@@ -75,7 +72,7 @@ namespace Framework.Attachments.BLL
 
         public ISecurityExpressionBuilderFactory<PersistentDomainObjectBase, Guid> SecurityExpressionBuilderFactory { get; }
 
-        public ITypeResolver<string> TypeResolver => CurrentTargetSystemTypeResolver;
+        public ITypeResolver<string> TypeResolver { get; }
 
         public ITargetSystemService GetPersistentTargetSystemService(TargetSystem targetSystem)
         {

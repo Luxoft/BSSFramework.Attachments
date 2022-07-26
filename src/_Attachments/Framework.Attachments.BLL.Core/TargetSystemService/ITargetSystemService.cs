@@ -13,6 +13,7 @@ namespace Framework.Attachments.BLL
         }
 
         bool HasAttachments { get; }
+
         bool IsAssignable(Type domainType);
 
         void TryRemoveAttachments(Array domainObjects);

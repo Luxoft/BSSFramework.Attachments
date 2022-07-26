@@ -16,6 +16,9 @@ using NHibernate.Tool.hbm2ddl;
 
 using AttachmentsSampleSystem.WebApiCore;
 
+using Framework.Core;
+using Framework.DomainDriven.NHibernate.Audit;
+
 namespace AttachmentsSampleSystem.DbGenerate
 {
     [TestClass]
@@ -45,9 +48,11 @@ namespace AttachmentsSampleSystem.DbGenerate
             services.AddSingleton<IDateTimeService>(DateTimeService.Default);
             services.AddSingleton(UserAuthenticationService.CreateFor("neg"));
             services.AddSingleton<ICapTransactionManager, FakeCapTransactionManager>();
+            services.AddSingleton(_ => LazyInterfaceImplementHelper.CreateNotImplemented<IAuditRevisionUserAuthenticationService>());
+
             var provider = services.BuildServiceProvider(false);
 
-            var dbSessionFactory = (NHibSessionFactory) provider.GetService<IDBSessionFactory>();
+            var dbSessionFactory = provider.GetService<NHibSessionEnvironment>();
             var cfg = dbSessionFactory?.Configuration;
 
             var migrate = new SchemaUpdate(cfg);

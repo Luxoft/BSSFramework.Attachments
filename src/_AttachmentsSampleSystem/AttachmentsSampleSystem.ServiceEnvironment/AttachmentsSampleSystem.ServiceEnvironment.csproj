@@ -21,8 +21,8 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="10.0.1" />
 
-    <PackageReference Include="Luxoft.Framework.App.ServiceEnvironment" Version="16.3.2" />
-    <PackageReference Include="Luxoft.Framework.NotificationCore" Version="16.3.2" />
+    <PackageReference Include="Luxoft.Framework.App.ServiceEnvironment" Version="17.0.0" />
+    <PackageReference Include="Luxoft.Framework.NotificationCore" Version="17.0.0" />
   </ItemGroup>
 
 </Project>

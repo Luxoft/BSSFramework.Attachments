@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment;
 
-public abstract class WebApiBase : IControllerEvaluatorContainer
+public abstract class WebApiBase : IRootServiceProviderContainer
 {
     private readonly IServiceProvider serviceProvider;
 
@@ -24,5 +24,5 @@ public abstract class WebApiBase : IControllerEvaluatorContainer
         return principalName == null ? controllerEvaluator : controllerEvaluator.WithImpersonate(principalName);
     }
 
-    IServiceProvider IControllerEvaluatorContainer.RootServiceProvider => this.serviceProvider;
+    IServiceProvider IRootServiceProviderContainer.RootServiceProvider => this.serviceProvider;
 }

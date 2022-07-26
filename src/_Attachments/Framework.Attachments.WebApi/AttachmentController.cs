@@ -9,10 +9,19 @@ using Framework.Attachments.Generated.DTO;
 using Framework.Core;
 using Framework.SecuritySystem;
 
+using JetBrains.Annotations;
+
 namespace Framework.Attachments.WebApi
 {
     public partial class AttachmentController
     {
+        private readonly IContextEvaluator<IAttachmentsBLLContext> contextEvaluator;
+
+        public AttachmentController([NotNull] IContextEvaluator<IAttachmentsBLLContext> contextEvaluator)
+        {
+            this.contextEvaluator = contextEvaluator ?? throw new ArgumentNullException(nameof(contextEvaluator));
+        }
+
         [Microsoft.AspNetCore.Mvc.HttpPost(nameof(GetSimpleAttachmentsByContainerReference))]
         public IEnumerable<AttachmentSimpleDTO> GetSimpleAttachmentsByContainerReference(AttachmentContainerReferenceStrictDTO attachmentContainerReference)
         {
@@ -135,7 +144,7 @@ namespace Framework.Attachments.WebApi
         [Microsoft.AspNetCore.Mvc.HttpPost(nameof(SaveAttachment))]
         public AttachmentIdentityDTO SaveAttachment(string domainTypeName, Guid domainObjectId, AttachmentStrictDTO attachment)
         {
-            var reference = this.EvaluateC(DBSessionMode.Read, context => new AttachmentContainerReferenceStrictDTO
+            var reference = this.contextEvaluator.Evaluate(DBSessionMode.Read, context => new AttachmentContainerReferenceStrictDTO
             {
                 ObjectId = domainObjectId,
                 DomainType = context.Logics.DomainType.GetByName(domainTypeName, true).ToIdentityDTO()
