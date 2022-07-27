@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Luxoft.Framework.DomainDriven.BLL" Version="16.3.2" />
-    <PackageReference Include="Luxoft.Framework.DomainDriven.BLL.Security" Version="16.3.2" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.BLL" Version="17.0.0" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.BLL.Security" Version="17.0.0" />
   </ItemGroup>
 
 </Project>

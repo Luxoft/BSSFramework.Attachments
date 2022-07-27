@@ -14,12 +14,6 @@ namespace AttachmentsSampleSystem.WebApiCore.Controllers
 {
     public class AuthSLJsonController : Framework.Authorization.WebApi.AuthSLJsonController
     {
-        public AuthSLJsonController(IServiceEnvironment<IAuthorizationBLLContext> environment, IExceptionProcessor exceptionProcessor)
-            : base(environment, exceptionProcessor)
-        {
-        }
-
-
         [HttpPost(nameof(SavePermission))]
         public PermissionIdentityDTO SavePermission(SavePermissionAutoRequest savePermissionAutoRequest)
         {

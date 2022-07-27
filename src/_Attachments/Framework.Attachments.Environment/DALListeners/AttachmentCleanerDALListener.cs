@@ -9,14 +9,14 @@ using JetBrains.Annotations;
 
 namespace Framework.Attachments.Environment
 {
-    public class AttachmentCleanerDALListener : IDALListener
+    public class AttachmentCleanerDALListener : IBeforeTransactionCompletedDALListener
     {
-        private readonly ITargetSystemService _targetSystemService;
+        private readonly ITargetSystemService targetSystemService;
 
 
         public AttachmentCleanerDALListener([NotNull] ITargetSystemService targetSystemService)
         {
-            this._targetSystemService = targetSystemService ?? throw new ArgumentNullException(nameof(targetSystemService));
+            this.targetSystemService = targetSystemService ?? throw new ArgumentNullException(nameof(targetSystemService));
         }
 
 
@@ -26,11 +26,11 @@ namespace Framework.Attachments.Environment
 
             if (eventArgs.Changes.RemovedItems.Any())
             {
-                foreach (var pair in eventArgs.Changes.GroupByType().Where(pair => this._targetSystemService.IsAssignable(pair.Key)))
+                foreach (var pair in eventArgs.Changes.GroupByType().Where(pair => this.targetSystemService.IsAssignable(pair.Key)))
                 {
                     var removeObjects = pair.Value.RemovedItems.ToArray(pair.Key);
 
-                    this._targetSystemService.TryRemoveAttachments(removeObjects);
+                    this.targetSystemService.TryRemoveAttachments(removeObjects);
                 }
             }
         }

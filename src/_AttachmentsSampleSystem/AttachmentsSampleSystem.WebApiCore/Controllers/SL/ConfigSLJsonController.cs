@@ -14,11 +14,6 @@ namespace AttachmentsSampleSystem.WebApiCore.Controllers
 {
     public class ConfigSLJsonController : Framework.Configuration.WebApi.ConfigSLJsonController
     {
-        public ConfigSLJsonController(IServiceEnvironment<IConfigurationBLLContext> environment, IExceptionProcessor exceptionProcessor)
-            : base(environment, exceptionProcessor)
-        {
-        }
-
         [HttpPost(nameof(SaveSendedNotification))]
         public void SaveSendedNotification(NotificationEventDTO notification)
         {

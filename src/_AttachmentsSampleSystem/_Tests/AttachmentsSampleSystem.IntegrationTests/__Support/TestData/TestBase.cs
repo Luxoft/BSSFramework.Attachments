@@ -9,12 +9,13 @@ using Framework.Core;
 using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.ServiceModel.Subscriptions;
+using Framework.DomainDriven.WebApiNetCore;
 using Framework.Notification.DTO;
 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using AttachmentsSampleSystem.BLL;
 using AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment;
 using AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment.IntegrationTests;
 using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
@@ -25,25 +26,23 @@ using DataHelper = AttachmentsSampleSystem.IntegrationTests.__Support.TestData.H
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 {
     [TestClass]
-    public class TestBase : IControllerEvaluatorContainer
+    public class TestBase : IRootServiceProviderContainer
     {
-        private static readonly Lazy<TestServiceEnvironment> EnvironmentLazy = new Lazy<TestServiceEnvironment>(() => TestServiceEnvironment.IntegrationEnvironment, true);
-
         private DataHelper dataHelper;
 
         protected TestBase()
         {
             this.SetCurrentDateTime(DateTime.Now);
-            this.DataHelper = new DataHelper();
-            this.AuthHelper = new AuthHelper();
+            this.DataHelper = new DataHelper(this.RootServiceProvider);
+            this.AuthHelper = new AuthHelper(this.RootServiceProvider);
 
             // Workaround for System.Drawing.Common problem https://chowdera.com/2021/12/202112240234238356.html
             System.AppContext.SetSwitch("System.Drawing.EnableUnixSupport", true);
         }
 
-        protected TestServiceEnvironment Environment => EnvironmentLazy.Value;
+        public IServiceProvider RootServiceProvider { get; } = AttachmentsSampleSystemTestRootServiceProvider.Default;
 
-        public MainWebApi MainWebApi => new(this.Environment.ServiceProvider);
+        public MainWebApi MainWebApi => new(this.RootServiceProvider);
 
         protected DataHelper DataHelper
         {
@@ -61,9 +60,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 
         protected AuthHelper AuthHelper { get; }
 
-        protected IDateTimeService DateTimeService => this.Environment.ServiceProvider.GetRequiredService<IDateTimeService>();
-
-        IServiceProvider IControllerEvaluatorContainer.RootServiceProvider => this.Environment.RootServiceProvider;
+        protected IDateTimeService DateTimeService => this.RootServiceProvider.GetRequiredService<IDateTimeService>();
 
         protected string DatabaseName { get; } = "AttachmentsSampleSystem";
 
@@ -81,9 +78,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
                     break;
             }
 
-            this.DataHelper.Environment = this.Environment;
-            this.AuthHelper.Environment = this.Environment;
-            this.AuthHelper.LoginAs();
+            //this.AuthHelper.LoginAs();
 
             this.ClearNotifications();
             this.ClearIntegrationEvents();
@@ -190,36 +185,25 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
             this.EvaluateWrite(context => context.Configuration.Logics.DomainObjectModification.Pipe(bll => bll.Remove(bll.GetFullList())));
         }
 
-        protected TResult EvaluateWrite<TResult>(Func<IAttachmentsSampleSystemBLLContext, TResult> func)
+        public ControllerEvaluator<TController> GetControllerEvaluator<TController>(string principalName = null)
+                where TController : ControllerBase
         {
-            return this.Environment.GetContextEvaluator().Evaluate(DBSessionMode.Write, this.GetCurrentUserName(), func);
+            return this.RootServiceProvider.GetDefaultControllerEvaluator<TController>(principalName);
         }
 
-        protected TResult EvaluateRead<TResult>(Func<IAttachmentsSampleSystemBLLContext, TResult> action)
+        protected ControllerEvaluator<AuthSLJsonController> GetAuthControllerEvaluator(string principalName = null)
         {
-            return this.Environment.GetContextEvaluator().Evaluate(DBSessionMode.Read, this.GetCurrentUserName(), ctx => action(ctx));
+            return this.GetControllerEvaluator<AuthSLJsonController>(principalName);
         }
 
-        protected void EvaluateWrite(Action<IAttachmentsSampleSystemBLLContext> action)
+        protected ControllerEvaluator<ConfigSLJsonController> GetConfigurationControllerEvaluator(string principalName = null)
         {
-            this.Environment.GetContextEvaluator().Evaluate(
-                                                            DBSessionMode.Write,
-                                                            this.GetCurrentUserName(),
-                                                            context =>
-                                                            {
-                                                                action.Invoke(context);
-                                                                return Ignore.Value;
-                                                            });
+            return this.GetControllerEvaluator<ConfigSLJsonController>(principalName);
         }
 
-        protected ControllerEvaluator<AuthSLJsonController> GetAuthControllerEvaluator()
+        protected ControllerEvaluator<AttachmentController> GetAttachmentControllerEvaluator(string principalName = null)
         {
-            return this.MainWebApi.GetControllerEvaluator<AuthSLJsonController>();
-        }
-
-        protected ControllerEvaluator<AttachmentController> GetAttachmentControllerEvaluator()
-        {
-            return this.MainWebApi.GetControllerEvaluator<AttachmentController>();
+            return this.GetControllerEvaluator<AttachmentController>(principalName);
         }
     }
 }

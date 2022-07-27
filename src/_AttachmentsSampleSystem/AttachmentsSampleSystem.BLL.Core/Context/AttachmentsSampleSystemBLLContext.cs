@@ -22,30 +22,25 @@ namespace AttachmentsSampleSystem.BLL
 {
     public partial class AttachmentsSampleSystemBLLContext
     {
-        private readonly Func<string, IAttachmentsSampleSystemBLLContext> _impersonateFunc;
-
         public AttachmentsSampleSystemBLLContext(
             IServiceProvider serviceProvider,
             [NotNull] IDALFactory<PersistentDomainObjectBase, Guid> dalFactory,
-            [NotNull] BLLOperationEventListenerContainer<DomainObjectBase> operationListeners,
+            [NotNull] IOperationEventSenderContainer<PersistentDomainObjectBase> operationSenders,
             [NotNull] BLLSourceEventListenerContainer<PersistentDomainObjectBase> sourceListeners,
             [NotNull] IObjectStateService objectStateService,
             [NotNull] IAccessDeniedExceptionService<PersistentDomainObjectBase> accessDeniedExceptionService,
             [NotNull] IStandartExpressionBuilder standartExpressionBuilder,
-            [NotNull] IValidator validator,
+            [NotNull] IAttachmentsSampleSystemValidator validator,
             [NotNull] IHierarchicalObjectExpanderFactory<Guid> hierarchicalObjectExpanderFactory,
             [NotNull] IFetchService<PersistentDomainObjectBase, FetchBuildRule> fetchService,
-            [NotNull] IDateTimeService dateTimeService,
             [NotNull] IAttachmentsSampleSystemSecurityService securityService,
             [NotNull] ISecurityExpressionBuilderFactory<PersistentDomainObjectBase, Guid> securityExpressionBuilderFactory,
             [NotNull] IAttachmentsSampleSystemBLLFactoryContainer logics,
             [NotNull] IAuthorizationBLLContext authorization,
             [NotNull] Framework.Configuration.BLL.IConfigurationBLLContext configuration,
-            [NotNull] IAttachmentsBLLContext Attachments,
-            [NotNull] ICryptService<CryptSystem> cryptService,
-            [NotNull] Func<string, IAttachmentsSampleSystemBLLContext> impersonateFunc,
-            [NotNull] ITypeResolver<string> currentTargetSystemTypeResolver)
-            : base(serviceProvider, dalFactory, operationListeners, sourceListeners, objectStateService, accessDeniedExceptionService, standartExpressionBuilder, validator, hierarchicalObjectExpanderFactory, fetchService, dateTimeService)
+            [NotNull] IAttachmentsBLLContext attachments,
+            [NotNull] IAttachmentsSampleSystemBLLContextSettings settings)
+            : base(serviceProvider, dalFactory, operationSenders, sourceListeners, objectStateService, accessDeniedExceptionService, standartExpressionBuilder, validator, hierarchicalObjectExpanderFactory, fetchService)
         {
             this.SecurityExpressionBuilderFactory = securityExpressionBuilderFactory ?? throw new ArgumentNullException(nameof(securityExpressionBuilderFactory));
 
@@ -54,12 +49,9 @@ namespace AttachmentsSampleSystem.BLL
 
             this.Authorization = authorization ?? throw new ArgumentNullException(nameof(authorization));
             this.Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            this.Attachments = Attachments ?? throw new ArgumentNullException(nameof(Attachments));
+            this.Attachments = attachments ?? throw new ArgumentNullException(nameof(attachments));
 
-            this.CryptService = cryptService ?? throw new ArgumentNullException(nameof(cryptService));
-
-            this._impersonateFunc = impersonateFunc ?? throw new ArgumentNullException(nameof(impersonateFunc));
-            this.TypeResolver = currentTargetSystemTypeResolver ?? throw new ArgumentNullException(nameof(currentTargetSystemTypeResolver));
+            this.TypeResolver = settings.TypeResolver;
         }
 
         public IAttachmentsSampleSystemSecurityService SecurityService { get; }
@@ -74,13 +66,8 @@ namespace AttachmentsSampleSystem.BLL
 
         public IAttachmentsBLLContext Attachments { get; }
 
-        public ICryptService<CryptSystem> CryptService { get; }
-
         public ITypeResolver<string> TypeResolver { get; }
 
-        public IAttachmentsSampleSystemBLLContext Impersonate(string principalName)
-        {
-            return this._impersonateFunc(principalName);
-        }
+        ITypeResolver<string> ISecurityTypeResolverContainer.SecurityTypeResolver => this.TypeResolver;
     }
 }

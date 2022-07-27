@@ -79,7 +79,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers
                 {
                     if (!saveEmployeeWithNullHireDate)
                     {
-                        hireDate = hireDate ?? context.DateTimeService.CurrentMonth.StartDate;
+                        hireDate = hireDate ?? this.GetDateTimeService().CurrentMonth.StartDate;
                     }
 
                     employee = new Employee

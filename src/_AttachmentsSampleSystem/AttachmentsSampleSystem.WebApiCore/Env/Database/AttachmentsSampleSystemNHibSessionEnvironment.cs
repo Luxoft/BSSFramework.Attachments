@@ -1,25 +1,25 @@
 ﻿#nullable enable
+
 using System.Collections.Generic;
 using System.Data;
 
 using Framework.Cap.Abstractions;
-using Framework.Core.Services;
-using Framework.DomainDriven;
 using Framework.DomainDriven.NHibernate;
+using Framework.DomainDriven.NHibernate.Audit;
 
 namespace AttachmentsSampleSystem.WebApiCore.Env.Database;
 
-public class AttachmentsSampleSystemNHibSessionFactory : NHibSessionFactory
+public class AttachmentsSampleSystemNHibSessionEnvironment : NHibSessionEnvironment
 {
     private readonly ICapTransactionManager manager;
 
-    public AttachmentsSampleSystemNHibSessionFactory(
+    public AttachmentsSampleSystemNHibSessionEnvironment(
             NHibConnectionSettings connectionSettings,
-            IUserAuthenticationService userAuthenticationService,
             IEnumerable<IMappingSettings> mappingSettings,
-            IDateTimeService dateTimeService,
-            ICapTransactionManager manager)
-            : base(connectionSettings, mappingSettings, userAuthenticationService, dateTimeService) =>
+            IAuditRevisionUserAuthenticationService auditRevisionUserAuthenticationService,
+            ICapTransactionManager manager,
+            INHibSessionEnvironmentSettings settings)
+            : base(connectionSettings, mappingSettings, auditRevisionUserAuthenticationService, settings) =>
             this.manager = manager;
 
     public override void ProcessTransaction(IDbTransaction dbTransaction)

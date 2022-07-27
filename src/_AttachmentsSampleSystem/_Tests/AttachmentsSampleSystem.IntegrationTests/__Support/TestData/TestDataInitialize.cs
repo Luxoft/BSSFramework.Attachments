@@ -1,5 +1,8 @@
 ﻿using AttachmentsSampleSystem.Domain.Inline;
 using AttachmentsSampleSystem.IntegrationTests.__Support.Utils;
+using AttachmentsSampleSystem.ServiceEnvironment;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 {
@@ -7,8 +10,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
     {
         public void TestData()
         {
-            this.DataHelper.Environment = this.Environment;
-            this.AuthHelper.Environment = this.Environment;
+            this.RootServiceProvider.GetRequiredService<AttachmentsSampleSystemInitializer>().Initialize();
 
             this.AuthHelper.AddCurrentUserToAdmin();
 
