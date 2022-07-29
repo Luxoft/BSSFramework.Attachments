@@ -6,40 +6,39 @@ using Framework.Core;
 using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.ServiceModel.IAD;
 using Framework.Attachments.BLL;
-using Framework.Attachments.Environment;
 
-namespace AttachmentsSampleSystem.WebApiCore;
+namespace Framework.Attachments.Environment;
 
-public class AttachmentsSampleSystemDBSessionEventListener : DBSessionEventListener, IDBSessionEventListener
+public class AttachmentsDBSessionEventListener : IDBSessionEventListener
 {
     private readonly IInitializeManager initializeManager;
 
     private readonly IAttachmentsBLLContext attachmentsBllContext;
 
-    public AttachmentsSampleSystemDBSessionEventListener(
+    public AttachmentsDBSessionEventListener(
             IInitializeManager initializeManager,
-            IEnumerable<IFlushedDALListener> flushedDalListener,
-            IEnumerable<IBeforeTransactionCompletedDALListener> beforeTransactionCompletedDalListener,
-            IEnumerable<IAfterTransactionCompletedDALListener> afterTransactionCompletedDalListener,
-            IConfigurationBLLContext configurationBLLContext,
-            IAttachmentsBLLContext attachmentsBllContext,
-            IStandardSubscriptionService subscriptionService)
-            : base(initializeManager, flushedDalListener, beforeTransactionCompletedDalListener, afterTransactionCompletedDalListener, configurationBLLContext, subscriptionService)
+            IAttachmentsBLLContext attachmentsBllContext)
     {
         this.initializeManager = initializeManager;
         this.attachmentsBllContext = attachmentsBllContext;
     }
 
-    public new void OnBeforeTransactionCompleted(DALChangesEventArgs eventArgs)
+    public void OnFlushed(DALChangesEventArgs eventArgs)
+    {
+    }
+
+    public void OnBeforeTransactionCompleted(DALChangesEventArgs eventArgs)
     {
         if (this.initializeManager.IsInitialize)
         {
             return;
         }
 
-        base.OnBeforeTransactionCompleted(eventArgs);
-
         this.GetAttachmentCleanerDALListeners().Foreach(listener => listener.Process(eventArgs));
+    }
+
+    public void OnAfterTransactionCompleted(DALChangesEventArgs eventArgs)
+    {
     }
 
     private IEnumerable<IBeforeTransactionCompletedDALListener> GetAttachmentCleanerDALListeners()
