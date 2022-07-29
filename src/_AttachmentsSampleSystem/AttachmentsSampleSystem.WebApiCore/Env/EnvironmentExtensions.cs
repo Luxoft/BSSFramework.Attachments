@@ -21,10 +21,17 @@ using nuSpec.NHibernate;
 
 using AttachmentsSampleSystem.BLL;
 using AttachmentsSampleSystem.Generated.DAL.NHibernate;
+using AttachmentsSampleSystem.Generated.DTO;
 using AttachmentsSampleSystem.WebApiCore.Env;
 using AttachmentsSampleSystem.WebApiCore.Env.Database;
 
 using Framework.Attachments.BLL;
+using Framework.Attachments.Environment;
+using Framework.Attachments.Generated.DTO;
+using Framework.Authorization.Generated.DTO;
+using Framework.Configuration.BLL;
+using Framework.Configuration.Generated.DTO;
+using Framework.DomainDriven.ServiceModel.Service;
 
 namespace AttachmentsSampleSystem.WebApiCore
 {
@@ -62,7 +69,8 @@ namespace AttachmentsSampleSystem.WebApiCore
         public static IServiceCollection AddDatabaseSettings(this IServiceCollection services, string connectionString) =>
                 services.AddScoped<INHibSessionSetup, NHibSessionSettings>()
 
-                        .AddScoped<IDBSessionEventListener, AttachmentsSampleSystemDBSessionEventListener>()
+                        .AddScoped<IDBSessionEventListener, DBSessionEventListener>()
+                        .AddScoped<IDBSessionEventListener, AttachmentsDBSessionEventListener>()
                         .AddScopedFromLazy<IDBSession, NHibSession>()
 
                         .AddSingleton<INHibSessionEnvironmentSettings, NHibSessionEnvironmentSettings>()
@@ -83,6 +91,13 @@ namespace AttachmentsSampleSystem.WebApiCore
             services.AddSingleton<IContextEvaluator<IAuthorizationBLLContext>, ContextEvaluator<IAuthorizationBLLContext>>();
             services.AddSingleton<IContextEvaluator<IAttachmentsSampleSystemBLLContext>, ContextEvaluator<IAttachmentsSampleSystemBLLContext>>();
             services.AddSingleton<IContextEvaluator<IAttachmentsBLLContext>, ContextEvaluator<IAttachmentsBLLContext>>();
+
+
+            services.AddScoped<IApiControllerBaseEvaluator<EvaluatedData<IAuthorizationBLLContext, IAuthorizationDTOMappingService>>, ApiControllerBaseSingleCallEvaluator<EvaluatedData<IAuthorizationBLLContext, IAuthorizationDTOMappingService>>>();
+            services.AddScoped<IApiControllerBaseEvaluator<EvaluatedData<IConfigurationBLLContext, IConfigurationDTOMappingService>>, ApiControllerBaseSingleCallEvaluator<EvaluatedData<IConfigurationBLLContext, IConfigurationDTOMappingService>>>();
+            services.AddScoped<IApiControllerBaseEvaluator<EvaluatedData<IAttachmentsBLLContext, IAttachmentsDTOMappingService>>, ApiControllerBaseSingleCallEvaluator<EvaluatedData<IAttachmentsBLLContext, IAttachmentsDTOMappingService>>>();
+            services.AddScoped<IApiControllerBaseEvaluator<EvaluatedData<IAttachmentsSampleSystemBLLContext, IAttachmentsSampleSystemDTOMappingService>>, ApiControllerBaseSingleCallEvaluator<EvaluatedData<IAttachmentsSampleSystemBLLContext, IAttachmentsSampleSystemDTOMappingService>>>();
+
 
             return services;
         }

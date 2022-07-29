@@ -10,7 +10,6 @@ namespace Framework.Attachments.TestGenerate
     {
         public string GenerateDB(
             string serverName,
-            IUserAuthenticationService userAuthenticationService,
             DatabaseScriptGeneratorMode generatorMode = DatabaseScriptGeneratorMode.AutoGenerateUpdateChangeTypeScript,
             DBGenerateScriptMode mode = DBGenerateScriptMode.AppliedOnTargetDatabase,
             IEnumerable<string> migrationScriptFolderPaths = null,
@@ -20,7 +19,6 @@ namespace Framework.Attachments.TestGenerate
             var generator = new AttachmentsDBGenerator(this.Environment.MappingSettings);
             var result = generator.Generate(
                 serverName,
-                userAuthenticationService,
                 mode: mode,
                 generatorMode: generatorMode,
                 migrationScriptFolderPaths: migrationScriptFolderPaths,
@@ -34,7 +32,6 @@ namespace Framework.Attachments.TestGenerate
         public string GenerateDB(
                 string serverName,
                 DatabaseName databaseName,
-                IUserAuthenticationService userAuthenticationService,
                 DatabaseScriptGeneratorMode generatorMode = DatabaseScriptGeneratorMode.AutoGenerateUpdateChangeTypeScript,
                 DBGenerateScriptMode mode = DBGenerateScriptMode.AppliedOnTargetDatabase,
                 IEnumerable<string> migrationScriptFolderPaths = null,
@@ -45,7 +42,6 @@ namespace Framework.Attachments.TestGenerate
             var generator = new AttachmentsDBGenerator(this.Environment.GetMappingSettingsWithoutAudit(databaseName));
             var result = generator.Generate(
                 serverName,
-                userAuthenticationService,
                 mode: mode,
                 generatorMode: generatorMode,
                 migrationScriptFolderPaths: migrationScriptFolderPaths,

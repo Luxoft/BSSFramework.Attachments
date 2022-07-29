@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Luxoft.Framework.Security" Version="17.0.0" />
+    <PackageReference Include="Luxoft.Framework.Security" Version="17.0.1" />
   </ItemGroup>
 
 </Project>

@@ -17,8 +17,6 @@ namespace AttachmentsSampleSystem.DbGenerate
     [TestClass]
     public class DbGeneratorTest
     {
-        private readonly IUserAuthenticationService userAuthenticationService = UserAuthenticationService.CreateFor("DbGenerator");
-
         private readonly ServerGenerationEnvironment environment = new();
 
         [TestMethod]
@@ -57,7 +55,6 @@ namespace AttachmentsSampleSystem.DbGenerate
                                                    serverName,
                                                    new DatabaseName(mainDatabaseName, "auth"),
                                                    new DatabaseName(mainDatabaseName, "auth").ToDefaultAudit(),
-                                                   this.userAuthenticationService,
                                                    mode,
                                                    true,
                                                    credential);
@@ -66,14 +63,12 @@ namespace AttachmentsSampleSystem.DbGenerate
                                                    serverName,
                                                    new DatabaseName(mainDatabaseName, "configuration"),
                                                    new DatabaseName(mainDatabaseName, "configuration").ToDefaultAudit(),
-                                                   this.userAuthenticationService,
                                                    mode,
                                                    true,
                                                    credential);
 
                 this.GenerateAttachmentsDatabase(serverName,
                                               new DatabaseName(mainDatabaseName, "configuration"),
-                                              this.userAuthenticationService,
                                               mode,
                                               false,
                                               credential);
@@ -83,7 +78,6 @@ namespace AttachmentsSampleSystem.DbGenerate
                                                      serverName,
                                                      new DatabaseName(mainDatabaseName, "app"),
                                                      new DatabaseName(mainDatabaseName, "app").ToDefaultAudit(),
-                                                     this.userAuthenticationService,
                                                      mode: mode,
                                                      generatorMode: generatorMode,
                                                      migrationScriptFolderPaths: migrationScriptFolderPaths,
@@ -98,7 +92,6 @@ namespace AttachmentsSampleSystem.DbGenerate
                 string serverName,
                 DatabaseName databaseName,
                 AuditDatabaseName auditDatabaseName,
-                IUserAuthenticationService userAuthenticationService,
                 DatabaseScriptGeneratorMode generatorMode = DatabaseScriptGeneratorMode.AutoGenerateUpdateChangeTypeScript,
                 DBGenerateScriptMode mode = DBGenerateScriptMode.AppliedOnTargetDatabase,
                 IEnumerable<string> migrationScriptFolderPaths = null,
@@ -111,7 +104,6 @@ namespace AttachmentsSampleSystem.DbGenerate
 
             var result = generator.Generate(
                                             serverName,
-                                            userAuthenticationService,
                                             mode: mode,
                                             generatorMode: generatorMode,
                                             migrationScriptFolderPaths: migrationScriptFolderPaths,
@@ -128,7 +120,6 @@ namespace AttachmentsSampleSystem.DbGenerate
                 string serverName,
                 DatabaseName mainDatabaseName,
                 AuditDatabaseName auditDatabaseName,
-                IUserAuthenticationService userAuthenticationService,
                 DBGenerateScriptMode mode = DBGenerateScriptMode.AppliedOnCopySchemeDatabase,
                 bool preserveSchemaDatabase = false,
                 UserCredential credential = null)
@@ -142,7 +133,6 @@ namespace AttachmentsSampleSystem.DbGenerate
                                 serverName,
                                 mainDatabaseName,
                                 auditDatabaseName,
-                                userAuthenticationService,
                                 migrationScriptFolderPaths: migrationScriptFolderPaths,
                                 mode: mode,
                                 preserveSchemaDatabase: preserveSchemaDatabase,
@@ -158,7 +148,6 @@ namespace AttachmentsSampleSystem.DbGenerate
                 string serverName,
                 DatabaseName mainDatabaseName,
                 AuditDatabaseName auditDatabaseName,
-                IUserAuthenticationService userAuthenticationService,
                 DBGenerateScriptMode mode = DBGenerateScriptMode.AppliedOnCopySchemeDatabase,
                 bool preserveSchemaDatabase = false,
                 UserCredential credential = null)
@@ -168,7 +157,6 @@ namespace AttachmentsSampleSystem.DbGenerate
              serverName,
              mainDatabaseName,
              auditDatabaseName,
-             userAuthenticationService,
              migrationScriptFolderPaths: migrationScriptFolderPaths,
              mode: mode,
              preserveSchemaDatabase: preserveSchemaDatabase,
@@ -181,7 +169,6 @@ namespace AttachmentsSampleSystem.DbGenerate
         private void GenerateAttachmentsDatabase(
                 string serverName,
                 DatabaseName mainDatabaseName,
-                IUserAuthenticationService userAuthenticationService,
                 DBGenerateScriptMode mode = DBGenerateScriptMode.AppliedOnCopySchemeDatabase,
                 bool preserveSchemaDatabase = false,
                 UserCredential credential = null)
@@ -191,7 +178,6 @@ namespace AttachmentsSampleSystem.DbGenerate
             var result = new Framework.Attachments.TestGenerate.ServerGenerators().GenerateDB(
              serverName,
              mainDatabaseName,
-             userAuthenticationService,
              migrationScriptFolderPaths: migrationScriptFolderPaths,
              mode: mode,
              generatorMode: DatabaseScriptGeneratorMode.AutoGenerateUpdateChangeTypeScript
