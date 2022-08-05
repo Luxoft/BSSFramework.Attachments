@@ -5,16 +5,13 @@ using System.Linq;
 
 using Framework.CodeDom;
 using Framework.Core;
-using Framework.CustomReports.Generation.BLL;
 using Framework.DomainDriven;
 using Framework.DomainDriven.BLLCoreGenerator;
 using Framework.DomainDriven.BLLGenerator;
 using Framework.DomainDriven.DTOGenerator;
-using Framework.DomainDriven.DTOGenerator.Audit;
 using Framework.DomainDriven.DTOGenerator.Server;
 using Framework.DomainDriven.Generation;
 using Framework.DomainDriven.NHibernate.DALGenerator;
-using Framework.DomainDriven.ProjectionGenerator;
 using Framework.DomainDriven.Serialization;
 using Framework.DomainDriven.ServiceModelGenerator;
 using Framework.DomainDriven.WebApiGenerator.NetCore;

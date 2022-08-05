@@ -29,6 +29,8 @@ using AttachmentsSampleSystem.Domain;
 using AttachmentsSampleSystem.ServiceEnvironment;
 using AttachmentsSampleSystem.WebApiCore.NewtonsoftJson;
 
+using Framework.DomainDriven.WebApiNetCore;
+
 namespace AttachmentsSampleSystem.WebApiCore
 {
     public class Startup
@@ -93,6 +95,8 @@ namespace AttachmentsSampleSystem.WebApiCore
             app
                 .UseDefaultExceptionsHandling()
                 .UseCorrelationId("AttachmentsSampleSystem_{0}")
+                .UseTryProcessDbSession()
+                .UseWebApiExceptionExpander()
 
                 .UseHttpsRedirection()
                 .UseRouting()

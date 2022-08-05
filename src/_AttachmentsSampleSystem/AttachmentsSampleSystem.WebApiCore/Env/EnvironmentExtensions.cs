@@ -87,8 +87,10 @@ namespace AttachmentsSampleSystem.WebApiCore
 
         public static IServiceCollection AddControllerEnvironment(this IServiceCollection services)
         {
-            services.AddSingleton<IExceptionProcessor, ApiControllerExceptionService<IAttachmentsSampleSystemBLLContext>>();
+            services.AddSingleton<IWebApiExceptionExpander, WebApiExceptionExpander>();
             services.AddSingleton<IContextEvaluator<IAuthorizationBLLContext>, ContextEvaluator<IAuthorizationBLLContext>>();
+            services.AddSingleton<IContextEvaluator<IConfigurationBLLContext>, ContextEvaluator<IConfigurationBLLContext>>();
+            services.AddSingletonFrom<IContextEvaluator<Framework.DomainDriven.BLL.Configuration.IConfigurationBLLContext>, IContextEvaluator<IConfigurationBLLContext>>();
             services.AddSingleton<IContextEvaluator<IAttachmentsSampleSystemBLLContext>, ContextEvaluator<IAttachmentsSampleSystemBLLContext>>();
             services.AddSingleton<IContextEvaluator<IAttachmentsBLLContext>, ContextEvaluator<IAttachmentsBLLContext>>();
 
