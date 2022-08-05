@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Luxoft.Framework.App.Domain" Version="17.0.1" />
+    <PackageReference Include="Luxoft.Framework.App.Domain" Version="17.1.0" />
   </ItemGroup>
 
 </Project>

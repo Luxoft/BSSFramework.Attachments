@@ -9,11 +9,6 @@
     public partial class AttachmentController : Framework.DomainDriven.WebApiNetCore.ApiControllerBase<Framework.Attachments.BLL.IAttachmentsBLLContext, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Attachments.BLL.IAttachmentsBLLContext, Framework.Attachments.Generated.DTO.IAttachmentsDTOMappingService>>
     {
         
-        protected override Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Attachments.BLL.IAttachmentsBLLContext, Framework.Attachments.Generated.DTO.IAttachmentsDTOMappingService> GetEvaluatedData(Framework.DomainDriven.BLL.IDBSession session, Framework.Attachments.BLL.IAttachmentsBLLContext context)
-        {
-            return new Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Attachments.BLL.IAttachmentsBLLContext, Framework.Attachments.Generated.DTO.IAttachmentsDTOMappingService>(session, context, new AttachmentsServerPrimitiveDTOMappingService(context));
-        }
-        
         protected virtual void RemoveAttachmentInternal(Framework.Attachments.Generated.DTO.AttachmentIdentityDTO attachmentIdent, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Attachments.BLL.IAttachmentsBLLContext, Framework.Attachments.Generated.DTO.IAttachmentsDTOMappingService> evaluateData, Framework.Attachments.BLL.IAttachmentBLL bll)
         {
             Framework.Attachments.Domain.Attachment domainObject = bll.GetById(attachmentIdent.Id, true);

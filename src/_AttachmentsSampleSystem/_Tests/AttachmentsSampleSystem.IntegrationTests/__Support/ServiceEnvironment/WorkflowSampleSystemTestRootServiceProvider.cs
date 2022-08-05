@@ -45,17 +45,12 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment
 
         private static IServiceProvider BuildServiceProvider()
         {
-            var configuration = new ConfigurationBuilder()
-                                .SetBasePath(Directory.GetCurrentDirectory())
-                                .AddJsonFile("appsettings.json", false, true)
-                                .AddEnvironmentVariables(nameof(AttachmentsSampleSystem) + "_")
-                                .Build();
-
-
             return new ServiceCollection()
                                   .RegisterLegacyBLLContext()
                                   .RegisterControllers()
                                   .AddControllerEnvironment()
+
+                                  .AddSingleton<IWebApiExceptionExpander, WebApiDebugExceptionExpander>()
 
                                   .AddMediatR(Assembly.GetAssembly(typeof(EmployeeBLL)))
 
@@ -69,12 +64,10 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment
 
                                   .AddSingleton<IDateTimeService, IntegrationTestDateTimeService>()
                                   .AddDatabaseSettings(InitializeAndCleanup.DatabaseUtil.ConnectionSettings.ConnectionString)
-                                  .AddScoped<IExceptionProcessor, ApiControllerExceptionService<IAttachmentsSampleSystemBLLContext>>()
                                   .AddSingleton<ISpecificationEvaluator, NhSpecificationEvaluator>()
                                   .AddSingleton<ICapTransactionManager, TestCapTransactionManager>()
                                   .AddSingleton<IIntegrationEventBus, TestIntegrationEventBus>()
 
-                                  .AddSingleton<TestDebugModeManager>()
                                   .AddSingleton<AttachmentsSampleSystemInitializer>()
 
                                   .BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });
