@@ -8018,7 +8018,7 @@ namespace Framework.Attachments.Generated.DTO
             where TMappingObject : Framework.DomainDriven.IMappingObject<Framework.Attachments.Generated.DTO.IAttachmentsDTOMappingService, TDomainObject, System.Guid>
             where TDomainObject : Framework.Attachments.Domain.PersistentDomainObjectBase
         {
-            TDomainObject domainObject = this.GetById<TDomainObject>(mappingObject.Id, Framework.DomainDriven.BLL.IdCheckMode.CheckAll);
+            TDomainObject domainObject = this.GetById<TDomainObject>(mappingObject.Id, Framework.DomainDriven.IdCheckMode.CheckAll);
             this.MapToDomainObject(mappingObject, domainObject);
             return domainObject;
         }

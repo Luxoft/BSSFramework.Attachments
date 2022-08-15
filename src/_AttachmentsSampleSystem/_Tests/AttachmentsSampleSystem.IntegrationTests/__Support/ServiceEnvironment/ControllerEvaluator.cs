@@ -1,7 +1,6 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
-
-using AttachmentsSampleSystem.IntegrationTests.__Support.TestData;
 
 using Framework.Core;
 using Framework.DomainDriven.WebApiNetCore;
@@ -12,7 +11,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment;
+using AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment;
+using AttachmentsSampleSystem.IntegrationTests.__Support.TestData;
+
+namespace Attachments.IntegrationTests;
 
 public class ControllerEvaluator<TController>
         where TController : ControllerBase
@@ -32,65 +34,59 @@ public class ControllerEvaluator<TController>
         this.customPrincipalName = customPrincipalName;
     }
 
-    public async Task<T> EvaluateAsync<T>(Func<TController, Task<T>> func)
+    public void Evaluate(Expression<Action<TController>> actionExpr)
     {
-        await using var scope = this.rootServiceProvider.CreateAsyncScope();
-
-        return await new WebApiInvoker<T>(new DefaultHttpContext { RequestServices = scope.ServiceProvider }, context => InvokeController(context, func))
-                .WithMidlleware(next => new ImpersonateMiddleware<T>(next), (middleware, httpContext) => middleware.Invoke(httpContext, this.customPrincipalName))
-                .WithMidlleware(next => new TryProcessDbSessionMiddleware(next), (middleware, httpContext) => middleware.Invoke(httpContext))
-                .WithMidlleware(next => new WebApiExceptionExpanderMiddleware(next), (middleware, httpContext) => middleware.Invoke(httpContext, httpContext.RequestServices.GetRequiredService<IWebApiExceptionExpander>()))
-                .Invoke();
-    }
-
-    private static Task<T> InvokeController<T>(HttpContext context, Func<TController, Task<T>> func)
-    {
-        var controller = context.RequestServices.GetRequiredService<TController>();
-
-        (controller as IApiControllerBase).Maybe(c => c.ServiceProvider = context.RequestServices);
-
-        return func(controller);
-    }
-
-    private async Task<T> InternalEvaluateAsync<T>(IServiceProvider scopeServiceProvider, Func<TController, Task<T>> func)
-    {
-        var controller = scopeServiceProvider.GetRequiredService<TController>();
-
-        (controller as IApiControllerBase).Maybe(c => c.ServiceProvider = scopeServiceProvider);
-
-        if (this.customPrincipalName == null)
+        this.InternalEvaluateAsync<object>(actionExpr, async c =>
         {
-            return await func(controller);
-        }
-        else
-        {
-            return await scopeServiceProvider.GetRequiredService<IntegrationTestDefaultUserAuthenticationService>().WithImpersonateAsync(this.customPrincipalName, async () => await func(controller));
-        }
+            actionExpr.Eval(c);
+            return default;
+        }).GetAwaiter().GetResult();
     }
 
-
-
-    public T Evaluate<T>(Func<TController, T> func)
+    public T Evaluate<T>(Expression<Func<TController, T>> funcExpr)
     {
-        return this.EvaluateAsync(c => Task.FromResult(func(c))).GetAwaiter().GetResult();
+        return this.InternalEvaluateAsync(funcExpr, c => Task.FromResult(funcExpr.Eval(c))).GetAwaiter().GetResult();
     }
 
-    public async Task EvaluateAsync(Func<TController, Task> action)
+    public async Task EvaluateAsync(Expression<Func<TController, Task>> actionExpr)
     {
-        await this.EvaluateAsync<object>(async c =>
+        await this.InternalEvaluateAsync<object>(actionExpr, async c =>
         {
-            await action(c);
+            await actionExpr.Eval(c);
             return default;
         });
     }
 
-    public void Evaluate(Action<TController> action)
+    public async Task<T> EvaluateAsync<T>(Expression<Func<TController, Task<T>>> funcExpr)
     {
-        this.Evaluate(c =>
-        {
-            action(c);
-            return default(object);
-        });
+        return await this.InternalEvaluateAsync(funcExpr, funcExpr.Compile(LambdaCompileCache.Default));
+    }
+
+    private async Task<T> InternalEvaluateAsync<T>(LambdaExpression invokeExpr, Func<TController, Task<T>> func)
+    {
+        await using var scope = this.rootServiceProvider.CreateAsyncScope();
+
+        var c = new DefaultHttpContext { RequestServices = scope.ServiceProvider };
+
+        await new WebApiInvoker(c, context => InvokeController(context, func))
+              .WithMiddleware(next => new ImpersonateMiddleware(next), (middleware, httpContext) => middleware.Invoke(httpContext, this.customPrincipalName))
+              .WithMiddleware(next => new TryProcessDbSessionMiddleware(next), (middleware, httpContext) => middleware.Invoke(httpContext, httpContext.RequestServices.GetRequiredService<IWebApiDBSessionModeResolver>()))
+              .WithMiddleware(next => new InitCurrentMethodMiddleware(next), (middleware, httpContext) => middleware.Invoke(httpContext, invokeExpr))
+              .WithMiddleware(next => new WebApiExceptionExpanderMiddleware(next), (middleware, httpContext) => middleware.Invoke(httpContext, httpContext.RequestServices.GetRequiredService<IWebApiExceptionExpander>()))
+              .Invoke();
+
+        return (T)c.Items["Result"];
+    }
+
+    private static async Task InvokeController<T>(HttpContext context, Func<TController, Task<T>> func)
+    {
+        var controller = context.RequestServices.GetRequiredService<TController>();
+
+        controller.ControllerContext.HttpContext = context;
+
+        var res = await func(controller);
+
+        context.Items["Result"] = res;
     }
 
     public ControllerEvaluator<TController> WithImpersonate([CanBeNull] string newCustomPrincipalName)
@@ -103,7 +99,7 @@ public class ControllerEvaluator<TController>
         return this.WithImpersonate(DefaultConstants.INTEGRATION_USER);
     }
 
-    private class ImpersonateMiddleware<T>
+    private class ImpersonateMiddleware
     {
         private readonly RequestDelegate next;
 
@@ -112,20 +108,44 @@ public class ControllerEvaluator<TController>
             this.next = next;
         }
 
-        public Task Invoke(HttpContext context, string customPrincipalName)
+        public async Task Invoke(HttpContext context, string customPrincipalName)
         {
             if (customPrincipalName == null)
             {
-                return this.next(context);
+                await this.next(context);
             }
             else
             {
-                return context.RequestServices.GetRequiredService<IntegrationTestDefaultUserAuthenticationService>().WithImpersonateAsync(customPrincipalName, () => (Task<T>)this.next(context));
+                await context.RequestServices.GetRequiredService<IntegrationTestDefaultUserAuthenticationService>().WithImpersonateAsync(customPrincipalName, async () =>
+                {
+                    await this.next(context);
+                    return default(object);
+                });
             }
         }
     }
+    private class InitCurrentMethodMiddleware
+    {
+        private readonly RequestDelegate next;
 
-    private class WebApiInvoker<T>
+        public InitCurrentMethodMiddleware(RequestDelegate next)
+        {
+            this.next = next;
+        }
+
+        public async Task Invoke(HttpContext context, LambdaExpression invokeExpr)
+        {
+            var currentMethod = invokeExpr.UpdateBodyBase(ExpandConstVisitor.Value)
+                                          .TryGetStartMethodInfo()
+                                          .FromMaybe("Current controller method can't be extracted");
+
+            context.RequestServices.GetRequiredService<IntegrationTestsWebApiCurrentMethodResolver>().SetCurrentMethod(currentMethod);
+
+            await this.next(context);
+        }
+    }
+
+    private class WebApiInvoker
     {
         private readonly HttpContext context;
 
@@ -137,14 +157,14 @@ public class ControllerEvaluator<TController>
             this.next = next;
         }
 
-        public WebApiInvoker<T> WithMidlleware<TMiddleware>(Func<RequestDelegate, TMiddleware> createFunc, Func<TMiddleware, HttpContext, Task> invokeDelegate)
+        public WebApiInvoker WithMiddleware<TMiddleware>(Func<RequestDelegate, TMiddleware> createFunc, Func<TMiddleware, HttpContext, Task> invokeDelegate)
         {
-            return new WebApiInvoker<T>(this.context, c => invokeDelegate(createFunc(this.next), c));
+            return new WebApiInvoker(this.context, c => invokeDelegate(createFunc(this.next), c));
         }
 
-        public Task<T> Invoke()
+        public async Task Invoke()
         {
-            return (Task<T>)this.next(this.context);
+            await this.next(this.context);
         }
     }
 }

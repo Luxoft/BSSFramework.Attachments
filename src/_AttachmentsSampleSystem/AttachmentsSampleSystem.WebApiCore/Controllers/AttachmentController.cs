@@ -1,5 +1,5 @@
 ﻿using Framework.Attachments.BLL;
-using Framework.DomainDriven.BLL;
+using Framework.DomainDriven;
 
 using JetBrains.Annotations;
 

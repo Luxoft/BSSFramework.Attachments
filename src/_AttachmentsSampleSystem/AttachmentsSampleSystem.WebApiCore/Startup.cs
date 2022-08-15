@@ -92,15 +92,15 @@ namespace AttachmentsSampleSystem.WebApiCore
                 app.UseHsts();
             }
 
-            app
-                .UseDefaultExceptionsHandling()
-                .UseCorrelationId("AttachmentsSampleSystem_{0}")
-                .UseTryProcessDbSession()
-                .UseWebApiExceptionExpander()
+            app.UseHttpsRedirection()
+               .UseRouting()
 
-                .UseHttpsRedirection()
-                .UseRouting()
-                .UseEndpoints(z => z.MapControllers());
+               .UseDefaultExceptionsHandling()
+               .UseCorrelationId("AttachmentsSampleSystem_{0}")
+               .UseTryProcessDbSession()
+               .UseWebApiExceptionExpander()
+
+               .UseEndpoints(z => z.MapControllers());
 
             if (env.IsProduction())
             {

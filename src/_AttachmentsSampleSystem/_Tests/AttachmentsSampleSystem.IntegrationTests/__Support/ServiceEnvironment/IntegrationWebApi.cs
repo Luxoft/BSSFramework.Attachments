@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Attachments.IntegrationTests;
+
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment;
 
 public class IntegrationWebApi : WebApiBase

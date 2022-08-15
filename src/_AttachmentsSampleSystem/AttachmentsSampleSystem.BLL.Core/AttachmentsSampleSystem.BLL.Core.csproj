@@ -20,8 +20,8 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Luxoft.Framework.App.BLLCore" Version="17.1.0" />
-    <PackageReference Include="Luxoft.Framework.Cap" Version="17.1.0" />
+    <PackageReference Include="Luxoft.Framework.App.BLLCore" Version="17.3.0" />
+    <PackageReference Include="Luxoft.Framework.Cap" Version="17.3.0" />
 
     <PackageReference Include="MediatR" Version="10.0.1" />
   </ItemGroup>

@@ -18,7 +18,7 @@
         {
             AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperationCode = checkBusinessUnitAccessAutoRequest.securityOperationCode;
             AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdent = checkBusinessUnitAccessAutoRequest.businessUnitIdent;
-            this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.CheckBusinessUnitAccessInternal(businessUnitIdent, securityOperationCode, evaluateData));
+            this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.CheckBusinessUnitAccessInternal(businessUnitIdent, securityOperationCode, evaluateData));
         }
         
         protected virtual void CheckBusinessUnitAccessInternal(AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdent, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -36,7 +36,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetFullBusinessUnit")]
         public virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO GetFullBusinessUnit([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdentity)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitInternal(businessUnitIdentity, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitInternal(businessUnitIdentity, evaluateData));
         }
         
         /// <summary>
@@ -46,7 +46,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetFullBusinessUnitByName")]
         public virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO GetFullBusinessUnitByName([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] string businessUnitName)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitByNameInternal(businessUnitName, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitByNameInternal(businessUnitName, evaluateData));
         }
         
         protected virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO GetFullBusinessUnitByNameInternal(string businessUnitName, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -70,7 +70,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetFullBusinessUnits")]
         public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO> GetFullBusinessUnits()
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitsInternal(evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitsInternal(evaluateData));
         }
         
         /// <summary>
@@ -80,7 +80,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetFullBusinessUnitsByIdents")]
         public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO> GetFullBusinessUnitsByIdents([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO[] businessUnitIdents)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitsByIdentsInternal(businessUnitIdents, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitsByIdentsInternal(businessUnitIdents, evaluateData));
         }
         
         protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO> GetFullBusinessUnitsByIdentsInternal(AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO[] businessUnitIdents, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -96,7 +96,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetFullBusinessUnitsByOperation")]
         public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO> GetFullBusinessUnitsByOperation([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitsByOperationInternal(securityOperationCode, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitsByOperationInternal(securityOperationCode, evaluateData));
         }
         
         protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO> GetFullBusinessUnitsByOperationInternal(AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -118,7 +118,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetRichBusinessUnit")]
         public virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitRichDTO GetRichBusinessUnit([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdentity)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetRichBusinessUnitInternal(businessUnitIdentity, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetRichBusinessUnitInternal(businessUnitIdentity, evaluateData));
         }
         
         /// <summary>
@@ -128,7 +128,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetRichBusinessUnitByName")]
         public virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitRichDTO GetRichBusinessUnitByName([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] string businessUnitName)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetRichBusinessUnitByNameInternal(businessUnitName, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetRichBusinessUnitByNameInternal(businessUnitName, evaluateData));
         }
         
         protected virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitRichDTO GetRichBusinessUnitByNameInternal(string businessUnitName, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -152,7 +152,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetSimpleBusinessUnit")]
         public virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO GetSimpleBusinessUnit([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdentity)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitInternal(businessUnitIdentity, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitInternal(businessUnitIdentity, evaluateData));
         }
         
         /// <summary>
@@ -162,7 +162,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetSimpleBusinessUnitByName")]
         public virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO GetSimpleBusinessUnitByName([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] string businessUnitName)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitByNameInternal(businessUnitName, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitByNameInternal(businessUnitName, evaluateData));
         }
         
         protected virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO GetSimpleBusinessUnitByNameInternal(string businessUnitName, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -186,7 +186,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetSimpleBusinessUnits")]
         public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO> GetSimpleBusinessUnits()
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitsInternal(evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitsInternal(evaluateData));
         }
         
         /// <summary>
@@ -196,7 +196,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetSimpleBusinessUnitsByIdents")]
         public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO> GetSimpleBusinessUnitsByIdents([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO[] businessUnitIdents)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitsByIdentsInternal(businessUnitIdents, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitsByIdentsInternal(businessUnitIdents, evaluateData));
         }
         
         protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO> GetSimpleBusinessUnitsByIdentsInternal(AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO[] businessUnitIdents, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -212,7 +212,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetSimpleBusinessUnitsByOperation")]
         public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO> GetSimpleBusinessUnitsByOperation([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitsByOperationInternal(securityOperationCode, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitsByOperationInternal(securityOperationCode, evaluateData));
         }
         
         protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO> GetSimpleBusinessUnitsByOperationInternal(AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -234,7 +234,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetVisualBusinessUnit")]
         public virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO GetVisualBusinessUnit([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdentity)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitInternal(businessUnitIdentity, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitInternal(businessUnitIdentity, evaluateData));
         }
         
         /// <summary>
@@ -244,7 +244,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetVisualBusinessUnitByName")]
         public virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO GetVisualBusinessUnitByName([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] string businessUnitName)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitByNameInternal(businessUnitName, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitByNameInternal(businessUnitName, evaluateData));
         }
         
         protected virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO GetVisualBusinessUnitByNameInternal(string businessUnitName, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -268,7 +268,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetVisualBusinessUnits")]
         public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO> GetVisualBusinessUnits()
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitsInternal(evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitsInternal(evaluateData));
         }
         
         /// <summary>
@@ -278,7 +278,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetVisualBusinessUnitsByIdents")]
         public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO> GetVisualBusinessUnitsByIdents([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO[] businessUnitIdents)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitsByIdentsInternal(businessUnitIdents, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitsByIdentsInternal(businessUnitIdents, evaluateData));
         }
         
         protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO> GetVisualBusinessUnitsByIdentsInternal(AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO[] businessUnitIdents, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -294,7 +294,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("GetVisualBusinessUnitsByOperation")]
         public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO> GetVisualBusinessUnitsByOperation([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitsByOperationInternal(securityOperationCode, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitsByOperationInternal(securityOperationCode, evaluateData));
         }
         
         protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO> GetVisualBusinessUnitsByOperationInternal(AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -318,7 +318,7 @@
         {
             AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperationCode = hasBusinessUnitAccessAutoRequest.securityOperationCode;
             AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdent = hasBusinessUnitAccessAutoRequest.businessUnitIdent;
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Read, evaluateData => this.HasBusinessUnitAccessInternal(businessUnitIdent, securityOperationCode, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.HasBusinessUnitAccessInternal(businessUnitIdent, securityOperationCode, evaluateData));
         }
         
         protected virtual bool HasBusinessUnitAccessInternal(AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdent, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -336,7 +336,7 @@
         [Microsoft.AspNetCore.Mvc.RouteAttribute("SaveBusinessUnit")]
         public virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO SaveBusinessUnit([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.BusinessUnitStrictDTO businessUnitStrict)
         {
-            return this.Evaluate(Framework.DomainDriven.BLL.DBSessionMode.Write, evaluateData => this.SaveBusinessUnitInternal(businessUnitStrict, evaluateData));
+            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Write, evaluateData => this.SaveBusinessUnitInternal(businessUnitStrict, evaluateData));
         }
         
         protected virtual AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO SaveBusinessUnitInternal(AttachmentsSampleSystem.Generated.DTO.BusinessUnitStrictDTO businessUnitStrict, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
