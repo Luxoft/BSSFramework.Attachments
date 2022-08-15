@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Attachments.IntegrationTests;
+
 using AttachmentsSampleSystem.WebApiCore.Controllers.Main;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment;

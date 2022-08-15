@@ -2,9 +2,10 @@
 using System.Threading.Tasks;
 
 using Framework.Core.Services;
-using Framework.DomainDriven.ServiceModel.IAD;
 
 using AttachmentsSampleSystem.WebApiCore.Env;
+
+using Framework.DomainDriven;
 
 namespace AttachmentsSampleSystem.WebApiCore;
 

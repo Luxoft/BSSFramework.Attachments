@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using AttachmentsSampleSystem.BLL;
 
 using Framework.Authorization.BLL;
+using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.ServiceModel.IAD;
 

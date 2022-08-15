@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Attachments.IntegrationTests;
+
 using Framework.Configuration.Domain;
 using Framework.Configuration.Domain.Reports;
 using Framework.Configuration.Generated.DTO;

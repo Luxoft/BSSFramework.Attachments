@@ -7,6 +7,7 @@ using Framework.DomainDriven.BLL;
 using Framework.Attachments.Domain;
 using Framework.Attachments.Generated.DTO;
 using Framework.Core;
+using Framework.DomainDriven;
 using Framework.SecuritySystem;
 
 using JetBrains.Annotations;

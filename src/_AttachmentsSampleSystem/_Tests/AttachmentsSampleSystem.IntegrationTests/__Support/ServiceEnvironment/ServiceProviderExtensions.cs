@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Attachments.IntegrationTests;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 

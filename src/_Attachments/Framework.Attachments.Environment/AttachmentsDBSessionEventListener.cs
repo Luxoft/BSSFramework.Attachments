@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Framework.Configuration.BLL;
 using Framework.Core;
-using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.ServiceModel.IAD;
 using Framework.Attachments.BLL;
+using Framework.DomainDriven;
 
 namespace Framework.Attachments.Environment;
 

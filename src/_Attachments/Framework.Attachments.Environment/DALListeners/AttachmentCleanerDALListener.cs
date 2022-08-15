@@ -3,7 +3,7 @@ using System.Linq;
 
 using Framework.Attachments.BLL;
 using Framework.Core;
-using Framework.DomainDriven.BLL;
+using Framework.DomainDriven;
 
 using JetBrains.Annotations;
 

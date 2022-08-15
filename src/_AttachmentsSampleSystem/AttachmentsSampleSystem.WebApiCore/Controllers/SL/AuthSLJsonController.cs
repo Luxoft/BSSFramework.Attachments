@@ -3,6 +3,7 @@
 using Framework.Authorization.BLL;
 using Framework.Authorization.Domain;
 using Framework.Authorization.Generated.DTO;
+using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.ServiceModel.Service;
 using Framework.Exceptions;
@@ -18,23 +19,23 @@ namespace AttachmentsSampleSystem.WebApiCore.Controllers
         public PermissionIdentityDTO SavePermission(SavePermissionAutoRequest savePermissionAutoRequest)
         {
             return this.Evaluate(DBSessionMode.Write, evaluateData =>
-                                                      {
-                                                          var principalIdent = savePermissionAutoRequest.principalIdent;
-                                                          var permissionDTO = savePermissionAutoRequest.permissionDTO;
+            {
+                var principalIdent = savePermissionAutoRequest.principalIdent;
+                var permissionDTO = savePermissionAutoRequest.permissionDTO;
 
-                                                          var principalBLL = evaluateData.Context.Logics.PrincipalFactory.Create(BLLSecurityMode.Edit);
-                                                          var permissionBLL = evaluateData.Context.Logics.PermissionFactory.Create(BLLSecurityMode.Edit);
+                var principalBLL = evaluateData.Context.Logics.PrincipalFactory.Create(BLLSecurityMode.Edit);
+                var permissionBLL = evaluateData.Context.Logics.PermissionFactory.Create(BLLSecurityMode.Edit);
 
-                                                          var principal = principalBLL.GetById(principalIdent.Id, true);
+                var principal = principalBLL.GetById(principalIdent.Id, true);
 
-                                                          var permission = permissionBLL.GetById(permissionDTO.Id, IdCheckMode.SkipEmpty) ?? new Permission(principal);
+                var permission = permissionBLL.GetById(permissionDTO.Id, IdCheckMode.SkipEmpty) ?? new Permission(principal);
 
-                                                          permissionDTO.MapToDomainObject(evaluateData.MappingService, permission);
+                permissionDTO.MapToDomainObject(evaluateData.MappingService, permission);
 
-                                                          permissionBLL.Save(permission);
+                permissionBLL.Save(permission);
 
-                                                          return permission.ToIdentityDTO();
-                                                      });
+                return permission.ToIdentityDTO();
+            });
         }
 
 

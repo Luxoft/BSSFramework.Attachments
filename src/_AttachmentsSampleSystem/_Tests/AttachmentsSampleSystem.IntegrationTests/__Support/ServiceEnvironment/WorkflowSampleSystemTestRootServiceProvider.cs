@@ -5,22 +5,15 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Framework.Authorization.BLL;
 using Framework.Cap.Abstractions;
-using Framework.Core.Services;
 using Framework.DomainDriven;
 using Framework.DomainDriven.NHibernate.Audit;
 using Framework.DomainDriven.ServiceModel.IAD;
 using Framework.DomainDriven.WebApiNetCore;
-using Framework.Exceptions;
 
 using MediatR;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-using nuSpec.Abstraction;
-using nuSpec.NHibernate;
 
 using AttachmentsSampleSystem.BLL;
 using AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment.IntegrationTests;
@@ -28,6 +21,8 @@ using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
 using AttachmentsSampleSystem.ServiceEnvironment;
 using AttachmentsSampleSystem.WebApiCore;
 using AttachmentsSampleSystem.WebApiCore.Env;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment
 {
@@ -45,28 +40,44 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment
 
         private static IServiceProvider BuildServiceProvider()
         {
-            return new ServiceCollection()
-                                  .RegisterLegacyBLLContext()
-                                  .RegisterControllers()
-                                  .AddControllerEnvironment()
+            var configuration = new ConfigurationBuilder()
+                                .SetBasePath(Directory.GetCurrentDirectory())
+                                .AddJsonFile("appsettings.json", false, true)
+                                .AddEnvironmentVariables(nameof(AttachmentsSampleSystem) + "_")
+                                .AddInMemoryCollection(new Dictionary<string, string>
+                                 {
+                                         {
+                                                 "ConnectionStrings:DefaultConnection",
+                                                 InitializeAndCleanup.DatabaseUtil.ConnectionSettings.ConnectionString
+                                         },
+                                 })
+                                .Build();
 
-                                  .AddSingleton<IWebApiExceptionExpander, WebApiDebugExceptionExpander>()
+            return new ServiceCollection()
+
+                                  .AddEnvironment(configuration)
+
+                                  .RegisterLegacyBLLContext()
+                                  .AddControllerEnvironment()
 
                                   .AddMediatR(Assembly.GetAssembly(typeof(EmployeeBLL)))
 
+                                  .RegisterControllers()
+
+                                  .AddScoped<IntegrationTestsWebApiCurrentMethodResolver>()
+                                  .ReplaceScopedFrom<IWebApiCurrentMethodResolver, IntegrationTestsWebApiCurrentMethodResolver>()
+
+                                  .ReplaceSingleton<IWebApiExceptionExpander, WebApiDebugExceptionExpander>()
+
                                   .AddSingleton<IntegrationTestDefaultUserAuthenticationService>()
-                                  .AddSingletonFrom<IDefaultUserAuthenticationService, IntegrationTestDefaultUserAuthenticationService>()
-                                  .AddSingletonFrom<IAuditRevisionUserAuthenticationService, IntegrationTestDefaultUserAuthenticationService>()
+                                  .ReplaceSingletonFrom<IDefaultUserAuthenticationService, IntegrationTestDefaultUserAuthenticationService>()
+                                  .ReplaceSingletonFrom<IAuditRevisionUserAuthenticationService, IntegrationTestDefaultUserAuthenticationService>()
 
-                                  .AddScoped<AttachmentsSampleSystemUserAuthenticationService>()
-                                  .AddScopedFrom<IUserAuthenticationService, AttachmentsSampleSystemUserAuthenticationService>()
-                                  .AddScopedFrom<IImpersonateService, AttachmentsSampleSystemUserAuthenticationService>()
+                                  .ReplaceSingleton<IDateTimeService, IntegrationTestDateTimeService>()
 
-                                  .AddSingleton<IDateTimeService, IntegrationTestDateTimeService>()
-                                  .AddDatabaseSettings(InitializeAndCleanup.DatabaseUtil.ConnectionSettings.ConnectionString)
-                                  .AddSingleton<ISpecificationEvaluator, NhSpecificationEvaluator>()
                                   .AddSingleton<ICapTransactionManager, TestCapTransactionManager>()
                                   .AddSingleton<IIntegrationEventBus, TestIntegrationEventBus>()
+
 
                                   .AddSingleton<AttachmentsSampleSystemInitializer>()
 

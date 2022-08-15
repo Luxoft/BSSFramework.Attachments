@@ -553,7 +553,7 @@ namespace AttachmentsSampleSystem.Generated.DTO
             where TMappingObject : Framework.DomainDriven.IMappingObject<AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService, TDomainObject, System.Guid>
             where TDomainObject : AttachmentsSampleSystem.Domain.PersistentDomainObjectBase
         {
-            TDomainObject domainObject = this.GetById<TDomainObject>(mappingObject.Id, Framework.DomainDriven.BLL.IdCheckMode.CheckAll);
+            TDomainObject domainObject = this.GetById<TDomainObject>(mappingObject.Id, Framework.DomainDriven.IdCheckMode.CheckAll);
             this.MapToDomainObject(mappingObject, domainObject);
             return domainObject;
         }

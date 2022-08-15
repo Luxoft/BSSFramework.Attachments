@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Attachments.IntegrationTests;
+
 using Automation;
 using Automation.Enums;
 using Automation.Utils;
@@ -9,7 +11,6 @@ using Framework.Core;
 using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.ServiceModel.Subscriptions;
-using Framework.DomainDriven.WebApiNetCore;
 using Framework.Notification.DTO;
 
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,6 @@ using AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment;
 using AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment.IntegrationTests;
 using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
 using AttachmentsSampleSystem.WebApiCore.Controllers;
-
-using DataHelper = AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers.DataHelper;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 {
