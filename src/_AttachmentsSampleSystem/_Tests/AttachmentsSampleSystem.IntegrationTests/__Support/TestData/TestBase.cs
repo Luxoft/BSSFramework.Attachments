@@ -23,7 +23,6 @@ using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
 using AttachmentsSampleSystem.WebApiCore.Controllers;
 
 using Automation.Utils.DatabaseUtils;
-using Automation.Utils.DatabaseUtils.Interfaces;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 {
@@ -46,8 +45,6 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 
         public MainWebApi MainWebApi => new(this.RootServiceProvider);
 
-        public IDatabaseContext DatabaseContext => this.RootServiceProvider.GetRequiredService<IDatabaseContext>();
-
         protected DataHelper DataHelper
         {
             get
@@ -66,10 +63,6 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 
         protected IDateTimeService DateTimeService => this.RootServiceProvider.GetRequiredService<IDateTimeService>();
 
-        protected string DatabaseName { get; } = "AttachmentsSampleSystem";
-
-        protected string DefaultDatabaseServer { get; } = InitializeAndCleanup.DatabaseUtil.DatabaseContext.MainDatabase.DataSource;
-
         [TestInitialize]
         public void TestBaseInitialize()
         {
@@ -77,8 +70,8 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
             {
                 case TestRunMode.DefaultRunModeOnEmptyDatabase:
                 case TestRunMode.RestoreDatabaseUsingAttach:
-                    AssemblyInitializeAndCleanup.RunAction("Drop Database", this.DatabaseContext.Drop);
-                    AssemblyInitializeAndCleanup.RunAction("Restore Databases", this.DatabaseContext.AttachDatabase);
+                    AssemblyInitializeAndCleanup.RunAction("Drop Database", InitializeAndCleanup.DatabaseUtil.DatabaseContext.Drop);
+                    AssemblyInitializeAndCleanup.RunAction("Restore Databases", InitializeAndCleanup.DatabaseUtil.DatabaseContext.AttachDatabase);
                     break;
             }
 
