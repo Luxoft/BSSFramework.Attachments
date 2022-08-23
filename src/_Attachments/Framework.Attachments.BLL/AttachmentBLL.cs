@@ -64,7 +64,7 @@ namespace Framework.Attachments.BLL
 
             var domainType = this.Context.GetDomainType(type, true);
 
-            return this.GetObjectsBy(attachment => attachment.Container.DomainType == domainType && attachment.Container.ObjectId == domainObjectId);
+            return this.GetListBy(attachment => attachment.Container.DomainType == domainType && attachment.Container.ObjectId == domainObjectId);
         }
 
         public IList<Attachment> GetObjectsBy<TDomainObject>(TDomainObject domainObject)

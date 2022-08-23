@@ -22,6 +22,9 @@ using AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment.Inte
 using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
 using AttachmentsSampleSystem.WebApiCore.Controllers;
 
+using Automation.Utils.DatabaseUtils;
+using Automation.Utils.DatabaseUtils.Interfaces;
+
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 {
     [TestClass]
@@ -43,6 +46,8 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 
         public MainWebApi MainWebApi => new(this.RootServiceProvider);
 
+        public IDatabaseContext DatabaseContext => this.RootServiceProvider.GetRequiredService<IDatabaseContext>();
+
         protected DataHelper DataHelper
         {
             get
@@ -63,7 +68,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 
         protected string DatabaseName { get; } = "AttachmentsSampleSystem";
 
-        protected string DefaultDatabaseServer { get; } = InitializeAndCleanup.DatabaseUtil.ConnectionSettings.DataSource;
+        protected string DefaultDatabaseServer { get; } = InitializeAndCleanup.DatabaseUtil.DatabaseContext.MainDatabase.DataSource;
 
         [TestInitialize]
         public void TestBaseInitialize()
@@ -72,8 +77,8 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
             {
                 case TestRunMode.DefaultRunModeOnEmptyDatabase:
                 case TestRunMode.RestoreDatabaseUsingAttach:
-                    AssemblyInitializeAndCleanup.RunAction("Drop Database", CoreDatabaseUtil.Drop);
-                    AssemblyInitializeAndCleanup.RunAction("Restore Databases", CoreDatabaseUtil.AttachDatabase);
+                    AssemblyInitializeAndCleanup.RunAction("Drop Database", this.DatabaseContext.Drop);
+                    AssemblyInitializeAndCleanup.RunAction("Restore Databases", this.DatabaseContext.AttachDatabase);
                     break;
             }
 
@@ -141,7 +146,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 
             return this.EvaluateRead(
                 context => context.Configuration.Logics.DomainObjectEvent
-                                  .GetObjectsBy(v => v.SerializeType == serializeType && v.QueueTag == queueTag)
+                                  .GetListBy(v => v.SerializeType == serializeType && v.QueueTag == queueTag)
                                   .ToList(obj => DataContractSerializerHelper.Deserialize<T>(obj.SerializeData)));
         }
 

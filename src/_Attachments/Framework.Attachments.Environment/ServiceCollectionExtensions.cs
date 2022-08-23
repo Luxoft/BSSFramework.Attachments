@@ -23,9 +23,7 @@ namespace Framework.Attachments.ServiceEnvironment
                    .AddScoped(sp => sp.GetRequiredService<IDBSession>().GetDALFactory<Framework.Attachments.Domain.PersistentDomainObjectBase, Guid>())
 
                    .AddScoped<IOperationEventSenderContainer<Framework.Attachments.Domain.PersistentDomainObjectBase>, OperationEventSenderContainer<Framework.Attachments.Domain.PersistentDomainObjectBase>>()
-
-                   .AddScoped<BLLSourceEventListenerContainer<Framework.Attachments.Domain.PersistentDomainObjectBase>>()
-
+                   
                    .AddSingleton<AttachmentsValidatorCompileCache>()
 
                    .AddScoped<IAttachmentsValidator>(sp =>

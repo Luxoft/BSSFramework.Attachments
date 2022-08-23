@@ -12,11 +12,11 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
     <PackageReference Include="Serilog.Sinks.Graylog" Version="2.3.0" />
 
-    <PackageReference Include="Luxoft.Framework.Cap" Version="17.3.0" />
-    <PackageReference Include="Luxoft.Framework.NotificationCore" Version="17.3.0" />
-    <PackageReference Include="Luxoft.Framework.Authorization.WebApi" Version="17.3.0" />
-    <PackageReference Include="Luxoft.Framework.Configuration.WebApi" Version="17.3.0" />
-    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD.DTO" Version="17.3.0" />
+    <PackageReference Include="Luxoft.Framework.Cap" Version="17.3.1" />
+    <PackageReference Include="Luxoft.Framework.NotificationCore" Version="17.3.1" />
+    <PackageReference Include="Luxoft.Framework.Authorization.WebApi" Version="17.3.1" />
+    <PackageReference Include="Luxoft.Framework.Configuration.WebApi" Version="17.3.1" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD.DTO" Version="17.3.1" />
   </ItemGroup>
 
   <ItemGroup>
