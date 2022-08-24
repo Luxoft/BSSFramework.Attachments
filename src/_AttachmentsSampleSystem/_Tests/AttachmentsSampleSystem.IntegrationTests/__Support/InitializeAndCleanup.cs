@@ -18,9 +18,8 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support
         public static void EnvironmentInitialize(TestContext testContext)
         {
             AppSettings.Initialize(nameof(AttachmentsSampleSystem) + "_");
-
-            DatabaseUtil = new AttachmentsSampleSystemDatabaseUtil(
-                new DatabaseContext(AppSettings.Default["ConnectionStrings:DefaultConnection"]));
+            var databaseContext = new DatabaseContext(AppSettings.Default["ConnectionStrings"]);
+            DatabaseUtil = new AttachmentsSampleSystemDatabaseUtil(databaseContext);
 
             AssemblyInitializeAndCleanup.EnvironmentInitialize(DatabaseUtil);
         }
