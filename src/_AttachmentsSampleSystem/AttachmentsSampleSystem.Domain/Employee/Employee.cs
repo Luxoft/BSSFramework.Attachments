@@ -137,8 +137,7 @@ namespace AttachmentsSampleSystem.Domain
             get { return this.landlinephone.TrimNull(); }
             set { this.landlinephone = value.TrimNull(); }
         }
-
-        [AttachmentsSampleSystemCrypt]
+        
         [CustomSerialization(CustomSerializationMode.Ignore, DTORole.Event | DTORole.Integration)]
         public virtual string PersonalCellPhone
         {

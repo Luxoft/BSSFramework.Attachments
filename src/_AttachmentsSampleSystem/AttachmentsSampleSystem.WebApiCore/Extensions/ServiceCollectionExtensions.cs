@@ -18,7 +18,6 @@ using Framework.Events;
 
 using Framework.HierarchicalExpand;
 using Framework.QueryableSource;
-using Framework.Security.Cryptography;
 using Framework.SecuritySystem;
 using Framework.SecuritySystem.Rules.Builders;
 using Framework.Attachments.BLL;
@@ -113,9 +112,7 @@ public static class ServiceCollectionExtensions
         return services
 
                 .AddScoped(sp => sp.GetRequiredService<IDBSession>().GetDALFactory<PersistentDomainObjectBase, Guid>())
-
-                .AddScoped<BLLSourceEventListenerContainer<PersistentDomainObjectBase>>()
-
+                
                 .AddSingleton<AttachmentsSampleSystemValidatorCompileCache>()
 
                 .AddScoped<IAttachmentsSampleSystemValidator>(sp =>
@@ -124,7 +121,6 @@ public static class ServiceCollectionExtensions
                 .AddSingleton(new AttachmentsSampleSystemMainFetchService().WithCompress().WithCache().WithLock().Add(FetchService<PersistentDomainObjectBase>.OData))
                 .AddScoped<IAttachmentsSampleSystemSecurityService, AttachmentsSampleSystemSecurityService>()
                 .AddScoped<IAttachmentsSampleSystemBLLFactoryContainer, AttachmentsSampleSystemBLLFactoryContainer>()
-                .AddSingleton<ICryptService<CryptSystem>, CryptService<CryptSystem>>()
                 .AddScoped<IAttachmentsSampleSystemBLLContextSettings>(_ => new AttachmentsSampleSystemBLLContextSettings { TypeResolver  = new[] { new AttachmentsSampleSystemBLLContextSettings().TypeResolver, TypeSource.FromSample<BusinessUnitSimpleDTO>().ToDefaultTypeResolver() }.ToComposite() })
                 .AddScopedFromLazyInterfaceImplement<IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystemBLLContext>()
 

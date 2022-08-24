@@ -29,7 +29,6 @@ namespace Framework.Attachments.BLL
             IServiceProvider serviceProvider,
             [NotNull] IDALFactory<PersistentDomainObjectBase, Guid> dalFactory,
             [NotNull] IOperationEventSenderContainer<PersistentDomainObjectBase> operationSenders,
-            [NotNull] BLLSourceEventListenerContainer<PersistentDomainObjectBase> sourceListeners,
             [NotNull] IObjectStateService objectStateService,
             [NotNull] IAccessDeniedExceptionService<PersistentDomainObjectBase> accessDeniedExceptionService,
             [NotNull] IStandartExpressionBuilder standartExpressionBuilder,
@@ -43,7 +42,7 @@ namespace Framework.Attachments.BLL
             [NotNull] Framework.Configuration.BLL.IConfigurationBLLContext configurationBLLContext,
             IEnumerable<ITargetSystemService> targetSystemServices,
             IAttachmentsBLLContextSettings settings)
-            : base(serviceProvider, dalFactory, operationSenders, sourceListeners, objectStateService, accessDeniedExceptionService, standartExpressionBuilder, validator, hierarchicalObjectExpanderFactory, fetchService)
+            : base(serviceProvider, dalFactory, operationSenders, objectStateService, accessDeniedExceptionService, standartExpressionBuilder, validator, hierarchicalObjectExpanderFactory, fetchService)
         {
             this.SecurityExpressionBuilderFactory = securityExpressionBuilderFactory ?? throw new ArgumentNullException(nameof(securityExpressionBuilderFactory));
 

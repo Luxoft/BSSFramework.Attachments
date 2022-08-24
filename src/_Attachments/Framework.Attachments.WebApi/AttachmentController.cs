@@ -34,7 +34,7 @@ namespace Framework.Attachments.WebApi
 
                 var bll = evaluateData.Context.Logics.AttachmentFactory.Create(reference.DomainType, BLLSecurityMode.View);
 
-                return bll.GetObjectsBy(attachment => attachment.Container.ObjectId == attachmentContainerReference.ObjectId).ToSimpleDTOList(evaluateData.MappingService);
+                return bll.GetListBy(attachment => attachment.Container.ObjectId == attachmentContainerReference.ObjectId).ToSimpleDTOList(evaluateData.MappingService);
             });
         }
 

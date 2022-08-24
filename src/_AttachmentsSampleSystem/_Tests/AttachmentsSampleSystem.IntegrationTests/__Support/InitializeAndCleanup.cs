@@ -5,6 +5,8 @@ using Automation.Utils;
 
 using AttachmentsSampleSystem.IntegrationTests.Support.Utils;
 
+using Automation.Utils.DatabaseUtils;
+
 namespace AttachmentsSampleSystem.IntegrationTests.__Support
 {
     [TestClass]
@@ -16,8 +18,8 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support
         public static void EnvironmentInitialize(TestContext testContext)
         {
             AppSettings.Initialize(nameof(AttachmentsSampleSystem) + "_");
-
-            DatabaseUtil = new AttachmentsSampleSystemDatabaseUtil();
+            var databaseContext = new DatabaseContext(AppSettings.Default["ConnectionStrings:DefaultConnection"]);
+            DatabaseUtil = new AttachmentsSampleSystemDatabaseUtil(databaseContext);
 
             AssemblyInitializeAndCleanup.EnvironmentInitialize(DatabaseUtil);
         }

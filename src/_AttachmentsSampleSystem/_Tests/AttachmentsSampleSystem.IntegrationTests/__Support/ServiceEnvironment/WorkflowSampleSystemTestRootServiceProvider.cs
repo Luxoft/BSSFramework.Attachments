@@ -48,7 +48,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.ServiceEnvironment
                                  {
                                          {
                                                  "ConnectionStrings:DefaultConnection",
-                                                 InitializeAndCleanup.DatabaseUtil.ConnectionSettings.ConnectionString
+                                                 InitializeAndCleanup.DatabaseUtil.DatabaseContext.MainDatabase.ConnectionString
                                          },
                                  })
                                 .Build();
