@@ -1,21 +1,35 @@
-﻿using AttachmentsSampleSystem.Domain.Inline;
-using AttachmentsSampleSystem.IntegrationTests.__Support.Utils;
+﻿using System;
+
+using AttachmentsSampleSystem.BLL;
+using AttachmentsSampleSystem.Domain.Inline;
+using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
 using AttachmentsSampleSystem.ServiceEnvironment;
+
+using Automation.ServiceEnvironment;
 
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 {
-    public class TestDataInitialize : TestBase
+    public class TestDataInitialize : RootServiceProviderContainer<IAttachmentsSampleSystemBLLContext>
     {
+        public TestDataInitialize(IServiceProvider serviceProvider)
+                : base(serviceProvider)
+        {
+        }
+
+        private AuthHelper AuthHelper => this.RootServiceProvider.GetRequiredService<AuthHelper>();
+
+        private DataHelper DataHelper => this.RootServiceProvider.GetRequiredService<DataHelper>();
+
         public void TestData()
         {
             this.RootServiceProvider.GetRequiredService<AttachmentsSampleSystemInitializer>().Initialize();
 
             this.AuthHelper.AddCurrentUserToAdmin();
 
-            this.AuthHelper.SetUserRole(DefaultConstants.NOTIFICATION_ADMIN, new AttachmentsSampleSystemPermission(BusinessRole.SystemIntegration));
-            this.AuthHelper.SetUserRole(DefaultConstants.INTEGRATION_USER, new AttachmentsSampleSystemPermission(BusinessRole.SystemIntegration));
+            this.AuthHelper.SetUserRole(DefaultConstants.NOTIFICATION_ADMIN, IntegrationBusinessRole.SystemIntegration);
+            this.AuthHelper.SetUserRole(DefaultConstants.INTEGRATION_USER, IntegrationBusinessRole.SystemIntegration);
 
             this.DataHelper.SaveLocation(id: DefaultConstants.LOCATION_PARENT_ID, name: DefaultConstants.LOCATION_PARENT_NAME);
 

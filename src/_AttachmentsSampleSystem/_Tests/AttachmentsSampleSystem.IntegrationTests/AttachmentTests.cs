@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using AttachmentsSampleSystem.Domain;
 using AttachmentsSampleSystem.IntegrationTests.__Support.TestData;
+using AttachmentsSampleSystem.WebApiCore.Controllers;
 
 using Framework.Attachments.Generated.DTO;
 
@@ -26,7 +27,7 @@ namespace AttachmentsSampleSystem.IntegrationTests
                 Content = new byte[] { 1, 2, 3 }
             };
 
-            var attachmentController = this.GetAttachmentControllerEvaluator();
+            var attachmentController = this.GetControllerEvaluator<AttachmentController>();
 
             // Act
             var attachmentIdentity = attachmentController.Evaluate(c => c.SaveAttachment(nameof(Employee), employeeIdent.Id, sourceAttachment));

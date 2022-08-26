@@ -3,12 +3,11 @@
 using Framework.Core;
 using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
-using Framework.DomainDriven.ServiceModel.IAD;
-using Framework.ExpressionParsers;
 using Framework.QueryableSource;
 using Framework.SecuritySystem;
 using Framework.SecuritySystem.Rules.Builders;
 using Framework.Attachments.BLL;
+using Framework.DependencyInjection;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,10 +19,10 @@ namespace Framework.Attachments.ServiceEnvironment
         {
             return services
 
-                   .AddScoped(sp => sp.GetRequiredService<IDBSession>().GetDALFactory<Framework.Attachments.Domain.PersistentDomainObjectBase, Guid>())
+                   .AddScopedFrom((IDBSession session) => session.GetDALFactory<Framework.Attachments.Domain.PersistentDomainObjectBase, Guid>())
 
                    .AddScoped<IOperationEventSenderContainer<Framework.Attachments.Domain.PersistentDomainObjectBase>, OperationEventSenderContainer<Framework.Attachments.Domain.PersistentDomainObjectBase>>()
-                   
+
                    .AddSingleton<AttachmentsValidatorCompileCache>()
 
                    .AddScoped<IAttachmentsValidator>(sp =>

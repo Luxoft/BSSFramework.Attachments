@@ -1,33 +1,24 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Automation;
-using Automation.Utils;
-
-using AttachmentsSampleSystem.IntegrationTests.Support.Utils;
-
-using Automation.Utils.DatabaseUtils;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support
 {
     [TestClass]
     public class InitializeAndCleanup
     {
-        public static AttachmentsSampleSystemDatabaseUtil DatabaseUtil { get; set; }
+        private static readonly TestEnvironment TestEnvironment = AttachmentsSampleSystemTestEnvironment.Current;
 
         [AssemblyInitialize]
         public static void EnvironmentInitialize(TestContext testContext)
         {
-            AppSettings.Initialize(nameof(AttachmentsSampleSystem) + "_");
-            var databaseContext = new DatabaseContext(AppSettings.Default["ConnectionStrings:DefaultConnection"]);
-            DatabaseUtil = new AttachmentsSampleSystemDatabaseUtil(databaseContext);
-
-            AssemblyInitializeAndCleanup.EnvironmentInitialize(DatabaseUtil);
+            TestEnvironment.AssemblyInitializeAndCleanup.EnvironmentInitialize();
         }
 
         [AssemblyCleanup]
         public static void EnvironmentCleanup()
         {
-            AssemblyInitializeAndCleanup.EnvironmentCleanup(DatabaseUtil);
+            TestEnvironment.AssemblyInitializeAndCleanup.EnvironmentCleanup();
         }
     }
 }

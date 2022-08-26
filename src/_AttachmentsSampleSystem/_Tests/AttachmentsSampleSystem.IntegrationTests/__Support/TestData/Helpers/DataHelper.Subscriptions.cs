@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using Automation.ServiceEnvironment;
+
 using Framework.Authorization.Domain;
 using Framework.Configuration.BLL;
 using Framework.Configuration.Domain;
 using Framework.Core;
-using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.DAL.Revisions;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers
