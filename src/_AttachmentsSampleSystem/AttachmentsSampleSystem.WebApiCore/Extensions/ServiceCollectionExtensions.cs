@@ -32,6 +32,8 @@ using AttachmentsSampleSystem.Domain;
 using AttachmentsSampleSystem.Generated.DTO;
 using AttachmentsSampleSystem.ServiceEnvironment;
 
+using Framework.DependencyInjection;
+
 using TargetSystemServiceFactory = Framework.Attachments.BLL.TargetSystemServiceFactory;
 
 namespace AttachmentsSampleSystem.WebApiCore;
@@ -44,7 +46,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<CustomAttachmentSecurityService>();
 
-        services.AddScoped(sp => sp.GetRequiredService<TargetSystemServiceFactory>().Create(tss => tss.IsMain, sp => sp.GetRequiredService<CustomAttachmentSecurityService>()));
+        services.AddScopedFrom((TargetSystemServiceFactory factory) => factory.Create(tss => tss.IsMain, sp => sp.GetRequiredService<CustomAttachmentSecurityService>()));
 
         services.AddSingleton<IInitializeManager, InitializeManager>();
 
@@ -112,7 +114,7 @@ public static class ServiceCollectionExtensions
         return services
 
                 .AddScoped(sp => sp.GetRequiredService<IDBSession>().GetDALFactory<PersistentDomainObjectBase, Guid>())
-                
+
                 .AddSingleton<AttachmentsSampleSystemValidatorCompileCache>()
 
                 .AddScoped<IAttachmentsSampleSystemValidator>(sp =>

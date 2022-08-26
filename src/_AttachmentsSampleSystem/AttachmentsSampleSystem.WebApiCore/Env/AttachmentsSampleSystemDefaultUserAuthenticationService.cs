@@ -3,11 +3,10 @@ using Framework.DomainDriven.NHibernate.Audit;
 
 using Microsoft.AspNetCore.Http;
 
-namespace AttachmentsSampleSystem.WebApiCore.Env
+namespace AttachmentsSampleSystem.WebApiCore
 {
     public class AttachmentsSampleSystemDefaultUserAuthenticationService : DomainDefaultUserAuthenticationService, IAuditRevisionUserAuthenticationService
     {
-
         private readonly IHttpContextAccessor httpContextAccessor;
 
         public AttachmentsSampleSystemDefaultUserAuthenticationService(IHttpContextAccessor httpContextAccessor) => this.httpContextAccessor = httpContextAccessor;

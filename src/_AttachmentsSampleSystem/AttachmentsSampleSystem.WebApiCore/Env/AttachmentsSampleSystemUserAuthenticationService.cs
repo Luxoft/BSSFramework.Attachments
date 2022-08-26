@@ -2,13 +2,9 @@
 using System.Threading.Tasks;
 
 using Framework.Core.Services;
-
-using AttachmentsSampleSystem.WebApiCore.Env;
-
 using Framework.DomainDriven;
 
 namespace AttachmentsSampleSystem.WebApiCore;
-
 public class AttachmentsSampleSystemUserAuthenticationService : IUserAuthenticationService, IImpersonateService
 {
     private readonly IDefaultUserAuthenticationService defaultAuthenticationService;

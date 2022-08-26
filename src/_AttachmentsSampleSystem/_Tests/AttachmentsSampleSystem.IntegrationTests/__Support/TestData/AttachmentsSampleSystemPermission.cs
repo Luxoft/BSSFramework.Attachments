@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Automation.ServiceEnvironment;
 using Automation.Utils;
-
 using AttachmentsSampleSystem.Generated.DTO;
-using AttachmentsSampleSystem.IntegrationTests.__Support.Utils;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 {
@@ -14,13 +12,13 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
         {
         }
 
-        public AttachmentsSampleSystemPermission(BusinessRole role)
+        public AttachmentsSampleSystemPermission(IntegrationBusinessRole role)
         {
             this.Role = role;
         }
 
         public AttachmentsSampleSystemPermission(
-            BusinessRole role,
+            IntegrationBusinessRole role,
             BusinessUnitIdentityDTO? businessUnit,
             LocationIdentityDTO? location)
         {
@@ -29,7 +27,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
             this.Location = location;
         }
 
-        public BusinessRole Role { get; set; }
+        public IntegrationBusinessRole Role { get; set; }
 
         public BusinessUnitIdentityDTO? BusinessUnit { get; set; }
 
@@ -50,7 +48,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 
         public string GetRoleName()
         {
-            return this.Role.GetName();
+            return this.Role.GetRoleName();
         }
     }
 }
