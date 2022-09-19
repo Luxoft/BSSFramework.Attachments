@@ -83,6 +83,7 @@ public static class AttachmentsSampleSystemFrameworkExtensions
 
         return services;
     }
+
     private static IServiceCollection RegisterListeners(this IServiceCollection services)
     {
         services.AddSingleton<IInitializeManager, InitializeManager>();
