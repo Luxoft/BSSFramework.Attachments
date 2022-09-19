@@ -27,5 +27,5 @@ public class AttachmentsSampleSystemTestEnvironment : TestEnvironment
         return new AttachmentsSampleSystemTestDatabaseGenerator(databaseContext, this.ConfigUtil ,serviceProvider);
     }
 
-    public static readonly AttachmentsSampleSystemTestEnvironment Current = new AttachmentsSampleSystemTestEnvironment();
+    public static readonly AttachmentsSampleSystemTestEnvironment Current = new();
 }
