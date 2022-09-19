@@ -6,17 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.9" />
     <PackageReference Include="nuSpec.NHibernate" Version="1.3.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.Graylog" Version="2.3.0" />
 
-    <PackageReference Include="Luxoft.Framework.Cap" Version="17.4.2" />
-    <PackageReference Include="Luxoft.Framework.NotificationCore" Version="17.4.2" />
-    <PackageReference Include="Luxoft.Framework.Authorization.WebApi" Version="17.4.2" />
-    <PackageReference Include="Luxoft.Framework.Configuration.WebApi" Version="17.4.2" />
-    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD.DTO" Version="17.4.2" />
+    <PackageReference Include="Luxoft.Framework.Cap" Version="17.5.1" />
+    <PackageReference Include="Luxoft.Framework.NotificationCore" Version="17.5.1" />
+    <PackageReference Include="Luxoft.Framework.Authorization.WebApi" Version="17.5.1" />
+    <PackageReference Include="Luxoft.Framework.Configuration.WebApi" Version="17.5.1" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD.DTO" Version="17.5.1" />
   </ItemGroup>
 
   <ItemGroup>

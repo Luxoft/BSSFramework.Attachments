@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Reflection;
 
 using Framework.Cap.Abstractions;
 
-using MediatR;
-
 using Microsoft.Extensions.DependencyInjection;
 
-using AttachmentsSampleSystem.BLL;
 using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
 using AttachmentsSampleSystem.ServiceEnvironment;
-using AttachmentsSampleSystem.WebApiCore;
 
 using Microsoft.Extensions.Configuration;
 
@@ -22,6 +17,7 @@ using Automation.ServiceEnvironment;
 using Automation.ServiceEnvironment.Services;
 using Automation.Utils;
 using Automation.Utils.DatabaseUtils.Interfaces;
+using Framework.DependencyInjection;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support
 {
@@ -36,25 +32,25 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support
                                                                { "ConnectionStrings:DefaultConnection", databaseContext.Main.ConnectionString }
                                                        }).Build();
 
-            return TestServiceProvider.Build(
-                z =>
-                    z.AddEnvironment(configuration)
-                        .RegisterLegacyBLLContext()
-                        .AddControllerEnvironment()
-                        .AddMediatR(Assembly.GetAssembly(typeof(EmployeeBLL)))
+            return new ServiceCollection()
 
-                        .AddSingleton<AttachmentsSampleSystemInitializer>()
+                   .RegisterGeneralDependencyInjection(configuration)
 
-                        .AddSingleton<ICapTransactionManager, IntegrationTestCapTransactionManager>()
-                        .AddSingleton<IIntegrationEventBus, IntegrationTestIntegrationEventBus>()
+                   .ApplyIntegrationTestServices()
 
-                        .RegisterControllers(new[] { typeof(EmployeeController).Assembly })
+                   .ReplaceSingleton<IIntegrationEventBus, IntegrationTestIntegrationEventBus>()
+                   .ReplaceScoped<ICapTransactionManager, IntegrationTestCapTransactionManager>()
 
-                        .AddSingleton(databaseContext)
-                        .AddSingleton<DataHelper>()
-                        .AddSingleton<AuthHelper>()
-                        .AddSingleton(configUtil)
-                    );
+                   .AddSingleton<AttachmentsSampleSystemInitializer>()
+
+                   .RegisterControllers(new[] { typeof(EmployeeController).Assembly })
+
+                   .AddSingleton(databaseContext)
+                   .AddSingleton<DataHelper>()
+                   .AddSingleton<AuthHelper>()
+                   .AddSingleton(configUtil)
+                   .ValidateDuplicateDeclaration()
+                   .BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });
         }
     }
 }

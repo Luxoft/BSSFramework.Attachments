@@ -18,6 +18,7 @@ using AttachmentsSampleSystem.WebApiCore;
 
 using Framework.Core;
 using Framework.DomainDriven.NHibernate.Audit;
+using AttachmentsSampleSystem.ServiceEnvironment;
 
 namespace AttachmentsSampleSystem.DbGenerate
 {

@@ -7,9 +7,12 @@ using Framework.QueryableSource;
 using Framework.SecuritySystem;
 using Framework.SecuritySystem.Rules.Builders;
 using Framework.Attachments.BLL;
+using Framework.Attachments.Generated.DTO;
 using Framework.DependencyInjection;
 
 using Microsoft.Extensions.DependencyInjection;
+using Framework.DomainDriven.ServiceModel.Service;
+using Framework.DomainDriven.WebApiNetCore;
 
 namespace Framework.Attachments.ServiceEnvironment
 {
@@ -19,21 +22,13 @@ namespace Framework.Attachments.ServiceEnvironment
         {
             return services
 
-                   .AddScopedFrom((IDBSession session) => session.GetDALFactory<Framework.Attachments.Domain.PersistentDomainObjectBase, Guid>())
-
-                   .AddScoped<IOperationEventSenderContainer<Framework.Attachments.Domain.PersistentDomainObjectBase>, OperationEventSenderContainer<Framework.Attachments.Domain.PersistentDomainObjectBase>>()
-
                    .AddSingleton<AttachmentsValidatorCompileCache>()
 
-                   .AddScoped<IAttachmentsValidator>(sp =>
-                                                          new AttachmentsValidator(sp.GetRequiredService<IAttachmentsBLLContext>(), sp.GetRequiredService<AttachmentsValidatorCompileCache>()))
-
+                   .AddScoped<IAttachmentsValidator, AttachmentsValidator>()
 
                    .AddSingleton(new AttachmentsMainFetchService().WithCompress().WithCache().WithLock().Add(FetchService<Framework.Attachments.Domain.PersistentDomainObjectBase>.OData))
                    .AddScoped<IAttachmentsSecurityService, AttachmentsSecurityService>()
                    .AddScoped<IAttachmentsBLLFactoryContainer, AttachmentsBLLFactoryContainer>()
-
-                   .AddScopedFrom<ICurrentRevisionService, IDBSession>()
 
                    .AddScoped<IAttachmentsBLLContextSettings, AttachmentsBLLContextSettings>()
                    .AddScopedFromLazyInterfaceImplement<IAttachmentsBLLContext, AttachmentsBLLContext>()
@@ -47,6 +42,21 @@ namespace Framework.Attachments.ServiceEnvironment
 
                    .Self(AttachmentsSecurityServiceBase.Register)
                    .Self(AttachmentsBLLFactoryContainer.RegisterBLLFactory);
+        }
+
+        public static IServiceCollection RegisterAttachmentsWebApiGenericServices(this IServiceCollection services)
+        {
+            services.RegisterAttachmentsContextEvaluator();
+
+            return services;
+        }
+
+        private static IServiceCollection RegisterAttachmentsContextEvaluator(this IServiceCollection services)
+        {
+            services.AddSingleton<IContextEvaluator<IAttachmentsBLLContext>, ContextEvaluator<IAttachmentsBLLContext>>();
+            services.AddScoped<IApiControllerBaseEvaluator<EvaluatedData<IAttachmentsBLLContext, IAttachmentsDTOMappingService>>, ApiControllerBaseSingleCallEvaluator<EvaluatedData<IAttachmentsBLLContext, IAttachmentsDTOMappingService>>>();
+
+            return services;
         }
     }
 }

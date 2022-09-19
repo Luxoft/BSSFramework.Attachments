@@ -6,10 +6,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Framework.Attachments.BLL\Framework.Attachments.BLL.csproj" />
+    <ProjectReference Include="..\Framework.Attachments.Generated.DTO\Framework.Attachments.Generated.DTO.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD" Version="17.4.2" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD" Version="17.5.1" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.WebApiNetCore" Version="17.5.1" />
   </ItemGroup>
 
 </Project>

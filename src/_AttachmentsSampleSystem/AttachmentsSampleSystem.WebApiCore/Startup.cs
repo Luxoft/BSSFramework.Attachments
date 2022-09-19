@@ -54,7 +54,7 @@ namespace AttachmentsSampleSystem.WebApiCore
             }
 
             services
-                .RegisterDependencyInjections(this.Configuration)
+                .RegisterGeneralDependencyInjection(this.Configuration)
                 .AddApiVersion()
                 .AddSwaggerBss(
                     new OpenApiInfo { Title = "AttachmentsSampleSystem", Version = "v1" },
@@ -76,8 +76,6 @@ namespace AttachmentsSampleSystem.WebApiCore
                 services.AddMetrics();
 
             }
-
-            services.RegisterLegacyBLLContext();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider versionProvider)

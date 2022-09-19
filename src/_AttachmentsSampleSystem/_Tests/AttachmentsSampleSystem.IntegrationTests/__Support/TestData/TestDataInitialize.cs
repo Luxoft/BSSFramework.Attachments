@@ -28,8 +28,8 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 
             this.AuthHelper.AddCurrentUserToAdmin();
 
-            this.AuthHelper.SetUserRole(DefaultConstants.NOTIFICATION_ADMIN, IntegrationBusinessRole.SystemIntegration);
-            this.AuthHelper.SetUserRole(DefaultConstants.INTEGRATION_USER, IntegrationBusinessRole.SystemIntegration);
+            this.AuthHelper.SetUserRole(DefaultConstants.NOTIFICATION_ADMIN, TestBusinessRole.SystemIntegration);
+            this.AuthHelper.SetUserRole(DefaultConstants.INTEGRATION_USER, TestBusinessRole.SystemIntegration);
 
             this.DataHelper.SaveLocation(id: DefaultConstants.LOCATION_PARENT_ID, name: DefaultConstants.LOCATION_PARENT_NAME);
 
