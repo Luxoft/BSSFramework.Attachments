@@ -1,0 +1,49 @@
+﻿<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="CommandLineParser" Version="2.9.1" />
+    <PackageVersion Include="FluentAssertions" Version="6.11.0" />
+    <PackageVersion Include="FluentMigrator" Version="3.3.2" />
+    <PackageVersion Include="FluentMigrator.Runner" Version="3.3.2" />
+    <PackageVersion Include="FluentNHibernate" Version="3.2.0" />
+    <PackageVersion Include="Luxoft.Framework.App.BLL" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.App.BLLCore" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.App.Core" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.App.Dal" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.App.Domain" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.App.Dto" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.App.Sdk" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.App.ServiceEnvironment" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.Authorization.BLL.Core" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.Authorization.WebApi" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.AutomationCore.ServiceEnvironment" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.Cap" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.Configuration.BLL.Core" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.Configuration.WebApi" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.DomainDriven.BLL" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.DomainDriven.BLL.Security" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.DomainDriven.DBGenerator" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.DomainDriven.NHibernate" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.DomainDriven.NHibernate.DALGenerator" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD.DTO" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.DomainDriven.ServiceModelGenerator" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.DomainDriven.WebApiGenerator.NetCore" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.DomainDriven.WebApiNetCore" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.NotificationCore" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.Security" Version="18.6.0" />
+    <PackageVersion Include="Luxoft.Framework.WebApi.Utils" Version="18.6.0" />
+    <PackageVersion Include="MediatR" Version="12.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageVersion Include="Microsoft.SqlServer.SqlManagementObjects" Version="170.13.0" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="3.0.2" />
+    <PackageVersion Include="MSTest.TestFramework" Version="3.0.2" />
+    <PackageVersion Include="nuSpec.NHibernate" Version="1.3.0" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="4.1.0" />
+    <PackageVersion Include="Serilog.Sinks.Graylog" Version="2.3.0" />
+  </ItemGroup>
+</Project>

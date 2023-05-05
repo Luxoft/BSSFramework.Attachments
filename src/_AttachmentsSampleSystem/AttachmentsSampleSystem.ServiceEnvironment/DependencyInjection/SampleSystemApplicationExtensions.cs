@@ -1,26 +1,24 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.CodeAnalysis;
 
-using Framework.Authorization.BLL;
+using AttachmentsSampleSystem.BLL;
+
 using Framework.Cap;
-using Framework.DependencyInjection;
-
-using MediatR;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-using AttachmentsSampleSystem.BLL;
 
 namespace AttachmentsSampleSystem.ServiceEnvironment;
 
 public static class AttachmentsSampleSystemApplicationExtensions
 {
+    [SuppressMessage("SonarQube", "S4792", Justification = "reviewed")]
     public static IServiceCollection RegisterGeneralApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        return services.AddMediatR(Assembly.GetAssembly(typeof(EmployeeBLL)))
-                       .RegisterApplicationServices()
-                       .AddLogging()
-                       .AddCapBss(configuration.GetConnectionString("DefaultConnection"));
+        return services
+               .AddMediatR(opt => opt.RegisterServicesFromAssemblyContaining<EmployeeBLL>())
+               .RegisterApplicationServices()
+               .AddLogging()
+               .AddCapBss(configuration.GetConnectionString("DefaultConnection"));
     }
 
     private static IServiceCollection RegisterApplicationServices(this IServiceCollection services)

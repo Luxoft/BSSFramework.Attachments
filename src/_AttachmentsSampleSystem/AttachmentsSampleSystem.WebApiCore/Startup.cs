@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-using DotNetCore.CAP;
+using AttachmentsSampleSystem.BLL;
+using AttachmentsSampleSystem.ServiceEnvironment;
+using AttachmentsSampleSystem.WebApiCore.NewtonsoftJson;
 
-using Framework.Core;
-using Framework.DependencyInjection;
-using Framework.DomainDriven.ServiceModel;
-using Framework.DomainDriven.ServiceModel.IAD;
-using Framework.SecuritySystem;
+using Framework.DomainDriven.WebApiNetCore;
 using Framework.WebApi.Utils;
-
-using MediatR;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,13 +19,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 using Newtonsoft.Json;
-
-using AttachmentsSampleSystem.BLL;
-using AttachmentsSampleSystem.Domain;
-using AttachmentsSampleSystem.ServiceEnvironment;
-using AttachmentsSampleSystem.WebApiCore.NewtonsoftJson;
-
-using Framework.DomainDriven.WebApiNetCore;
 
 namespace AttachmentsSampleSystem.WebApiCore
 {
@@ -60,7 +49,7 @@ namespace AttachmentsSampleSystem.WebApiCore
                     new OpenApiInfo { Title = "AttachmentsSampleSystem", Version = "v1" },
                     new List<string> { Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml") });
 
-            services.AddMediatR(Assembly.GetAssembly(typeof(EmployeeBLL)));
+            services.AddMediatR(opt => opt.RegisterServicesFromAssemblyContaining<EmployeeBLL>());
 
             services
                 .AddMvcBss()
@@ -76,6 +65,8 @@ namespace AttachmentsSampleSystem.WebApiCore
                 services.AddMetrics();
 
             }
+
+            services.AddCap(opt => opt.UseDashboard());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider versionProvider)
@@ -104,9 +95,6 @@ namespace AttachmentsSampleSystem.WebApiCore
             {
                 app.UseMetricsAllMiddleware();
             }
-
-            app.UseCapDashboard();
-
         }
     }
 }

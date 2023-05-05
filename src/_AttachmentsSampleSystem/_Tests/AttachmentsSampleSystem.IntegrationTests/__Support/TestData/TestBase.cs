@@ -1,11 +1,11 @@
-﻿using Automation.ServiceEnvironment;
+﻿using AttachmentsSampleSystem.BLL;
+using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
+using AttachmentsSampleSystem.WebApiCore.Controllers;
+
+using Automation.ServiceEnvironment;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using AttachmentsSampleSystem.BLL;
-using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
-using AttachmentsSampleSystem.WebApiCore.Controllers;
 
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 {
@@ -13,7 +13,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
     public class TestBase : IntegrationTestBase<IAttachmentsSampleSystemBLLContext>
     {
         protected TestBase()
-                : base(AttachmentsSampleSystemTestEnvironment.Current.ServiceProviderPool)
+                : base(InitializeAndCleanup.TestEnvironment.ServiceProviderPool)
         {
             // Workaround for System.Drawing.Common problem https://chowdera.com/2021/12/202112240234238356.html
             System.AppContext.SetSwitch("System.Drawing.EnableUnixSupport", true);

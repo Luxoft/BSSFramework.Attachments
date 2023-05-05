@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 
 using Framework.Attachments.Abstract;
+using Framework.Attachments.Core.Extensions;
 using Framework.Attachments.Domain;
 using Framework.Core;
 using Framework.DomainDriven.BLL;
