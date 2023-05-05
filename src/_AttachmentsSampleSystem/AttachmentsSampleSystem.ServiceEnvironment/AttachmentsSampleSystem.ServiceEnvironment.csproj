@@ -20,10 +20,9 @@
 
 
   <ItemGroup>
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" />
-
     <PackageReference Include="Luxoft.Framework.App.ServiceEnvironment" />
     <PackageReference Include="Luxoft.Framework.NotificationCore" />
+    <PackageReference Include="MediatR" />
     <PackageReference Include="nuSpec.NHibernate" />
   </ItemGroup>
 

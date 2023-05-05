@@ -1,19 +1,22 @@
 ﻿using System;
 
-using Framework.Authorization;
+using AttachmentsSampleSystem.BLL;
+using AttachmentsSampleSystem.Domain;
+using AttachmentsSampleSystem.Generated.DTO;
+
+using Framework.Attachments.BLL;
+using Framework.Attachments.Generated.DTO;
+using Framework.Attachments.ServiceEnvironment;
 using Framework.Authorization.BLL;
 using Framework.Authorization.Events;
 using Framework.Authorization.Generated.DTO;
 using Framework.Configuration.BLL;
 using Framework.Configuration.BLL.Notification;
-using Framework.Configuration.BLL.SubscriptionSystemService3.Subscriptions;
 using Framework.Configuration.Generated.DTO;
 using Framework.Core;
 using Framework.DependencyInjection;
 using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
-using Framework.DomainDriven.Serialization;
-using Framework.DomainDriven.SerializeMetadata;
 using Framework.DomainDriven.ServiceModel.IAD;
 using Framework.DomainDriven.ServiceModel.Service;
 using Framework.DomainDriven.WebApiNetCore;
@@ -22,15 +25,8 @@ using Framework.Persistent;
 using Framework.QueryableSource;
 using Framework.SecuritySystem;
 using Framework.SecuritySystem.Rules.Builders;
-using Framework.Attachments.BLL;
-using Framework.Attachments.Generated.DTO;
-using Framework.Attachments.ServiceEnvironment;
 
 using Microsoft.Extensions.DependencyInjection;
-
-using AttachmentsSampleSystem.BLL;
-using AttachmentsSampleSystem.Domain;
-using AttachmentsSampleSystem.Generated.DTO;
 
 namespace AttachmentsSampleSystem.ServiceEnvironment;
 
@@ -136,6 +132,9 @@ public static class AttachmentsSampleSystemFrameworkExtensions
 
         // For expand tree
         services.RegisterHierarchicalObjectExpander<PersistentDomainObjectBase>();
+        
+        // For repository
+        services.AddScoped(_ => new LegacyPersistentDomainObjectBaseList(typeof(PersistentDomainObjectBase)));
 
         return services;
     }
