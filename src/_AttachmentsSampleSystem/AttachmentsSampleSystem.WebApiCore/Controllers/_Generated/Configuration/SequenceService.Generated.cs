@@ -10,26 +10,6 @@
     {
         
         /// <summary>
-        /// Check Sequence access
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("CheckSequenceAccess")]
-        public virtual void CheckSequenceAccess(CheckSequenceAccessAutoRequest checkSequenceAccessAutoRequest)
-        {
-            Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode = checkSequenceAccessAutoRequest.securityOperationCode;
-            Framework.Configuration.Generated.DTO.SequenceIdentityDTO sequenceIdent = checkSequenceAccessAutoRequest.sequenceIdent;
-            this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.CheckSequenceAccessInternal(sequenceIdent, securityOperationCode, evaluateData));
-        }
-        
-        protected virtual void CheckSequenceAccessInternal(Framework.Configuration.Generated.DTO.SequenceIdentityDTO sequenceIdent, Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Configuration.BLL.IConfigurationBLLContext, Framework.Configuration.Generated.DTO.IConfigurationDTOMappingService> evaluateData)
-        {
-            Framework.Configuration.BLL.ISequenceBLL bll = evaluateData.Context.Logics.Sequence;
-            Framework.Security.TransferEnumHelper.Check(securityOperationCode);
-            Framework.Configuration.Domain.Sequence domainObject = bll.GetById(sequenceIdent.Id, true);
-            Framework.SecuritySystem.SecurityProviderExtensions.CheckAccess(evaluateData.Context.SecurityService.GetSecurityProvider<Framework.Configuration.Domain.Sequence>(securityOperationCode), domainObject);
-        }
-        
-        /// <summary>
         /// Create Sequence by model (SequenceCreateModel)
         /// </summary>
         [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
@@ -332,26 +312,6 @@
         }
         
         /// <summary>
-        /// Check access for Sequence
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("HasSequenceAccess")]
-        public virtual bool HasSequenceAccess(HasSequenceAccessAutoRequest hasSequenceAccessAutoRequest)
-        {
-            Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode = hasSequenceAccessAutoRequest.securityOperationCode;
-            Framework.Configuration.Generated.DTO.SequenceIdentityDTO sequenceIdent = hasSequenceAccessAutoRequest.sequenceIdent;
-            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.HasSequenceAccessInternal(sequenceIdent, securityOperationCode, evaluateData));
-        }
-        
-        protected virtual bool HasSequenceAccessInternal(Framework.Configuration.Generated.DTO.SequenceIdentityDTO sequenceIdent, Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Configuration.BLL.IConfigurationBLLContext, Framework.Configuration.Generated.DTO.IConfigurationDTOMappingService> evaluateData)
-        {
-            Framework.Configuration.BLL.ISequenceBLL bll = evaluateData.Context.Logics.Sequence;
-            Framework.Security.TransferEnumHelper.Check(securityOperationCode);
-            Framework.Configuration.Domain.Sequence domainObject = bll.GetById(sequenceIdent.Id, true);
-            return evaluateData.Context.SecurityService.GetSecurityProvider<Framework.Configuration.Domain.Sequence>(securityOperationCode).HasAccess(domainObject);
-        }
-        
-        /// <summary>
         /// Remove Sequence
         /// </summary>
         [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
@@ -396,33 +356,5 @@
             bll.Save(domainObject);
             return Framework.Configuration.Generated.DTO.LambdaHelper.ToIdentityDTO(domainObject);
         }
-    }
-    
-    [System.Runtime.Serialization.DataContractAttribute()]
-    [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
-    public partial class CheckSequenceAccessAutoRequest
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=0)]
-        public Framework.Configuration.Generated.DTO.SequenceIdentityDTO sequenceIdent;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=1)]
-        public Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode;
-    }
-    
-    [System.Runtime.Serialization.DataContractAttribute()]
-    [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
-    public partial class HasSequenceAccessAutoRequest
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=0)]
-        public Framework.Configuration.Generated.DTO.SequenceIdentityDTO sequenceIdent;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=1)]
-        public Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode;
     }
 }

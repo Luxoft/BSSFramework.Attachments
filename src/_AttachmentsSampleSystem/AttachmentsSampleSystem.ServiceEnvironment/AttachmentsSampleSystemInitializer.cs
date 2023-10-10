@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 using AttachmentsSampleSystem.BLL;
 
-using Framework.Authorization.BLL;
+using Framework.Authorization.SecuritySystem.OperationInitializer;
 using Framework.DomainDriven;
 using Framework.DomainDriven.ServiceModel.IAD;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AttachmentsSampleSystem.ServiceEnvironment;
 
@@ -46,7 +47,11 @@ public class AttachmentsSampleSystemInitializer
                                        DBSessionMode.Write,
                                        context =>
                                        {
-                                           context.Authorization.InitSecurityOperations();
+                                           context.ServiceProvider
+                                                  .GetRequiredService<IAuthorizationOperationInitializer>()
+                                                  .InitSecurityOperations(UnexpectedAuthOperationMode.Remove)
+                                                  .GetAwaiter()
+                                                  .GetResult();
 
                                            context.Configuration.Logics.TargetSystem.RegisterBase();
                                            context.Configuration.Logics.TargetSystem.Register<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase>(true, true);

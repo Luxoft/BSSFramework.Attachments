@@ -4,16 +4,15 @@ using Framework.Authorization.BLL;
 using Framework.Core;
 using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
-using Framework.SecuritySystem.Rules.Builders;
-using Framework.DomainDriven.BLL.Tracking;
 using Framework.HierarchicalExpand;
 using Framework.QueryLanguage;
 using Framework.SecuritySystem;
 using Framework.Attachments.BLL;
 
-using JetBrains.Annotations;
-
 using AttachmentsSampleSystem.Domain;
+
+using Framework.DomainDriven.BLL.Security;
+using Framework.DomainDriven.Tracking;
 
 namespace AttachmentsSampleSystem.BLL
 {
@@ -21,24 +20,21 @@ namespace AttachmentsSampleSystem.BLL
     {
         public AttachmentsSampleSystemBLLContext(
             IServiceProvider serviceProvider,
-            [NotNull] IOperationEventSenderContainer<PersistentDomainObjectBase> operationSenders,
-            [NotNull] IObjectStateService objectStateService,
-            [NotNull] IAccessDeniedExceptionService<PersistentDomainObjectBase> accessDeniedExceptionService,
-            [NotNull] IStandartExpressionBuilder standartExpressionBuilder,
-            [NotNull] IAttachmentsSampleSystemValidator validator,
-            [NotNull] IHierarchicalObjectExpanderFactory<Guid> hierarchicalObjectExpanderFactory,
-            [NotNull] IFetchService<PersistentDomainObjectBase, FetchBuildRule> fetchService,
-            [NotNull] IAttachmentsSampleSystemSecurityService securityService,
-            [NotNull] ISecurityExpressionBuilderFactory<PersistentDomainObjectBase, Guid> securityExpressionBuilderFactory,
-            [NotNull] IAttachmentsSampleSystemBLLFactoryContainer logics,
-            [NotNull] IAuthorizationBLLContext authorization,
-            [NotNull] Framework.Configuration.BLL.IConfigurationBLLContext configuration,
-            [NotNull] IAttachmentsBLLContext attachments,
-            [NotNull] IAttachmentsSampleSystemBLLContextSettings settings)
-            : base(serviceProvider, operationSenders, objectStateService, accessDeniedExceptionService, standartExpressionBuilder, validator, hierarchicalObjectExpanderFactory, fetchService)
+            IOperationEventSenderContainer<PersistentDomainObjectBase> operationSenders,
+            ITrackingService<PersistentDomainObjectBase> trackingService,
+            IAccessDeniedExceptionService accessDeniedExceptionService,
+            IStandartExpressionBuilder standartExpressionBuilder,
+            IAttachmentsSampleSystemValidator validator,
+            IHierarchicalObjectExpanderFactory<Guid> hierarchicalObjectExpanderFactory,
+            IFetchService<PersistentDomainObjectBase, FetchBuildRule> fetchService,
+            IRootSecurityService<PersistentDomainObjectBase> securityService,
+            IAttachmentsSampleSystemBLLFactoryContainer logics,
+            IAuthorizationBLLContext authorization,
+            Framework.Configuration.BLL.IConfigurationBLLContext configuration,
+            IAttachmentsBLLContext attachments,
+            IAttachmentsSampleSystemBLLContextSettings settings)
+            : base(serviceProvider, operationSenders, trackingService, accessDeniedExceptionService, standartExpressionBuilder, validator, hierarchicalObjectExpanderFactory, fetchService)
         {
-            this.SecurityExpressionBuilderFactory = securityExpressionBuilderFactory ?? throw new ArgumentNullException(nameof(securityExpressionBuilderFactory));
-
             this.SecurityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
             this.Logics = logics ?? throw new ArgumentNullException(nameof(logics));
 
@@ -49,9 +45,7 @@ namespace AttachmentsSampleSystem.BLL
             this.TypeResolver = settings.TypeResolver;
         }
 
-        public IAttachmentsSampleSystemSecurityService SecurityService { get; }
-
-        public ISecurityExpressionBuilderFactory<PersistentDomainObjectBase, Guid> SecurityExpressionBuilderFactory { get; }
+        public IRootSecurityService<PersistentDomainObjectBase> SecurityService { get; }
 
         public override IAttachmentsSampleSystemBLLFactoryContainer Logics { get; }
 
@@ -62,7 +56,5 @@ namespace AttachmentsSampleSystem.BLL
         public IAttachmentsBLLContext Attachments { get; }
 
         public ITypeResolver<string> TypeResolver { get; }
-
-        ITypeResolver<string> ISecurityTypeResolverContainer.SecurityTypeResolver => this.TypeResolver;
     }
 }

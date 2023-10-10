@@ -1,6 +1,4 @@
-﻿using Framework.DomainDriven.DTOGenerator.Audit;
-
-namespace AttachmentsSampleSystem.CodeGenerate
+﻿namespace AttachmentsSampleSystem.CodeGenerate
 {
     public partial class ServerGenerationEnvironment : GenerationEnvironmentBase
     {

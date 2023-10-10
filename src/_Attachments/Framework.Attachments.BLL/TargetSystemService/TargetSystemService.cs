@@ -13,29 +13,23 @@ using Framework.Exceptions;
 using Framework.Persistent;
 using Framework.SecuritySystem;
 
-using JetBrains.Annotations;
-
 namespace Framework.Attachments.BLL
 {
     public class TargetSystemService<TBLLContext, TPersistentDomainObjectBase> : BLLContextContainer<IAttachmentsBLLContext>, ITargetSystemService<TPersistentDomainObjectBase>
 
-        where TBLLContext : class, ITypeResolverContainer<string>, IDefaultBLLContext<TPersistentDomainObjectBase, Guid>
+        where TBLLContext : class, ITypeResolverContainer<string>, ISecurityBLLContext<TPersistentDomainObjectBase, Guid>, ISecurityServiceContainer<IRootSecurityService<TPersistentDomainObjectBase>>
         where TPersistentDomainObjectBase : class, IIdentityObject<Guid>
     {
-        private readonly IRootSecurityService<TBLLContext, TPersistentDomainObjectBase> attachmentSecurityService;
-
         private readonly Lazy<bool> lazyHasAttachments;
 
         /// <summary>
         /// Создаёт экземпляр класса <see cref="TargetSystemService{TBLLContext, TPersistentDomainObjectBase}" />.
         /// </summary>
         /// <param name="context">Контекст конфигурации.</param>
-        public TargetSystemService(IAttachmentsBLLContext context, [NotNull] TBLLContext targetSystemContext, [NotNull] TargetSystem targetSystem, [NotNull] IRootSecurityService<TBLLContext, TPersistentDomainObjectBase> attachmentSecurityService)
+        public TargetSystemService(IAttachmentsBLLContext context, TBLLContext targetSystemContext, TargetSystem targetSystem)
             : base(context)
         {
             if (targetSystem == null) throw new ArgumentNullException(nameof(targetSystem));
-
-            this.attachmentSecurityService = attachmentSecurityService ?? throw new ArgumentNullException(nameof(attachmentSecurityService));
 
             this.TargetSystemContext = targetSystemContext ?? throw new ArgumentNullException(nameof(targetSystemContext));
 
@@ -48,10 +42,8 @@ namespace Framework.Attachments.BLL
         public TargetSystem TargetSystem { get; }
 
         public TBLLContext TargetSystemContext { get; }
-        public ITypeResolver<DomainType> TypeResolver { get; private set; }
 
-
-        public Type PersistentDomainObjectBaseType => typeof(TPersistentDomainObjectBase);
+        public ITypeResolver<DomainType> TypeResolver { get; }
 
         public bool HasAttachments => this.lazyHasAttachments.Value;
 
@@ -60,7 +52,7 @@ namespace Framework.Attachments.BLL
             return typeof(TPersistentDomainObjectBase).IsAssignableFrom(domainType);
         }
 
-        public void TryRemoveAttachments<TDomainObject>([NotNull] IEnumerable<TDomainObject> domainObjects)
+        public void TryRemoveAttachments<TDomainObject>(IEnumerable<TDomainObject> domainObjects)
             where TDomainObject : class, TPersistentDomainObjectBase
         {
             if (domainObjects == null) throw new ArgumentNullException(nameof(domainObjects));
@@ -93,7 +85,7 @@ namespace Framework.Attachments.BLL
             }
         }
 
-        public void TryDenormalizeHasAttachmentFlag([NotNull] AttachmentContainer container, bool value)
+        public void TryDenormalizeHasAttachmentFlag(AttachmentContainer container, bool value)
         {
             if (container == null) throw new ArgumentNullException(nameof(container));
 
@@ -134,7 +126,7 @@ namespace Framework.Attachments.BLL
             if (containerPath == null) throw new ArgumentNullException(nameof(containerPath));
             if (mainDomainType == null) throw new ArgumentNullException(nameof(mainDomainType));
 
-            return new AttachmentSecurityService<TBLLContext, TPersistentDomainObjectBase>(this.Context, this.TargetSystemContext, this.attachmentSecurityService)
+            return new AttachmentSecurityService<TBLLContext, TPersistentDomainObjectBase>(this.Context, this.TargetSystemContext)
                     .GetAttachmentSecurityProvider(containerPath, mainDomainType, securityMode);
         }
 

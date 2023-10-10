@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Framework.Attachments.Domain;
 using Framework.Persistent;
 
-using JetBrains.Annotations;
+
 
 namespace Framework.Attachments.BLL
 {
@@ -12,9 +12,9 @@ namespace Framework.Attachments.BLL
     {
         IList<AttachmentContainer> GetNotSynchronizated();
 
-        AttachmentContainer GetObjectBy([NotNull] Type type, Guid domainObjectId);
+        AttachmentContainer GetObjectBy(Type type, Guid domainObjectId);
 
-        AttachmentContainer GetObjectBy<TDomainObject>([NotNull] TDomainObject domainObject)
+        AttachmentContainer GetObjectBy<TDomainObject>(TDomainObject domainObject)
             where TDomainObject : class, IIdentityObject<Guid>;
     }
 }

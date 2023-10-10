@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup>
     <PackageId>Luxoft.Framework.Attachments.WebApi</PackageId>
   </PropertyGroup>
@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Luxoft.Framework.DomainDriven.WebApiNetCore" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.WebApiNetCore.LegacyContext" />
     <PackageReference Include="Luxoft.Framework.WebApi.Utils" />
     <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD" />
   </ItemGroup>

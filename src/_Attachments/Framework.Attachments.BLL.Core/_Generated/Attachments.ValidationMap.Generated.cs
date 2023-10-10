@@ -16,10 +16,10 @@ namespace Framework.Attachments.BLL
         
         private Framework.Validation.IValidationMap _defaultValidatorMap;
         
-        protected AttachmentsValidationMapBase(Framework.Core.IDynamicSource extendedValidationData) : 
-                base(extendedValidationData)
+        protected AttachmentsValidationMapBase(System.IServiceProvider serviceProvider) : 
+                base(serviceProvider)
         {
-            this._defaultValidatorMap = new Framework.Validation.ValidationMap(extendedValidationData);
+            this._defaultValidatorMap = new Framework.Validation.ValidationMap(serviceProvider);
         }
         
         protected virtual System.Collections.Generic.IEnumerable<Framework.Validation.IPropertyValidator<Framework.Attachments.Domain.Attachment, byte[]>> GetAttachment_ContentValidators()
@@ -323,8 +323,8 @@ namespace Framework.Attachments.BLL
     public partial class AttachmentsValidationMap : Framework.Attachments.BLL.AttachmentsValidationMapBase
     {
         
-        public AttachmentsValidationMap(Framework.Core.IDynamicSource extendedValidationData) : 
-                base(extendedValidationData)
+        public AttachmentsValidationMap(System.IServiceProvider serviceProvider) : 
+                base(serviceProvider)
         {
         }
     }

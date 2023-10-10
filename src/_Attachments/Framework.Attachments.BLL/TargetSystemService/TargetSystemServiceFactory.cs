@@ -25,25 +25,22 @@ public class TargetSystemServiceFactory
         this.lazyTargetSystems = LazyHelper.Create(() => context.Logics.TargetSystem.GetFullList());
     }
 
-    public ITargetSystemService Create<TBLLContext, TPersistentDomainObjectBase>(string name, Func<IServiceProvider, IRootSecurityService<TBLLContext, TPersistentDomainObjectBase>> getCustomAttachmentSecurityService = null)
-            where TBLLContext : class, ITypeResolverContainer<string>, IDefaultBLLContext<TPersistentDomainObjectBase, Guid>, ISecurityServiceContainer<IRootSecurityService<TBLLContext, TPersistentDomainObjectBase>>
+    public ITargetSystemService Create<TBLLContext, TPersistentDomainObjectBase>(string name)
+            where TBLLContext : class, ITypeResolverContainer<string>, ISecurityServiceContainer<IRootSecurityService<TPersistentDomainObjectBase>>, ISecurityBLLContext<TPersistentDomainObjectBase, Guid>
             where TPersistentDomainObjectBase : class, IIdentityObject<Guid>
     {
-        return this.Create<TBLLContext, TPersistentDomainObjectBase>(tss => tss.Name == name, getCustomAttachmentSecurityService);
+        return this.Create<TBLLContext, TPersistentDomainObjectBase>(tss => tss.Name == name);
     }
 
-    public ITargetSystemService Create<TBLLContext, TPersistentDomainObjectBase>(Func<TargetSystem, bool> filter, Func<IServiceProvider, IRootSecurityService<TBLLContext, TPersistentDomainObjectBase>> getCustomAttachmentSecurityService = null)
-            where TBLLContext : class, ITypeResolverContainer<string>, IDefaultBLLContext<TPersistentDomainObjectBase, Guid>, ISecurityServiceContainer<IRootSecurityService<TBLLContext, TPersistentDomainObjectBase>>
+    public ITargetSystemService Create<TBLLContext, TPersistentDomainObjectBase>(Func<TargetSystem, bool> filter)
+            where TBLLContext : class, ITypeResolverContainer<string>, ISecurityServiceContainer<IRootSecurityService<TPersistentDomainObjectBase>>, ISecurityBLLContext<TPersistentDomainObjectBase, Guid>
             where TPersistentDomainObjectBase : class, IIdentityObject<Guid>
     {
         return LazyInterfaceImplementHelper<ITargetSystemService>.CreateProxy(() =>
         {
             var targetSystem = this.lazyTargetSystems.Value.Single(filter);
 
-            return ActivatorUtilities.CreateInstance<TargetSystemService<TBLLContext, TPersistentDomainObjectBase>>(
-                this.serviceProvider,
-                targetSystem,
-                getCustomAttachmentSecurityService == null ? this.serviceProvider.GetRequiredService<TBLLContext>().SecurityService : getCustomAttachmentSecurityService(this.serviceProvider));
+            return ActivatorUtilities.CreateInstance<TargetSystemService<TBLLContext, TPersistentDomainObjectBase>>(this.serviceProvider, targetSystem);
         });
     }
 }

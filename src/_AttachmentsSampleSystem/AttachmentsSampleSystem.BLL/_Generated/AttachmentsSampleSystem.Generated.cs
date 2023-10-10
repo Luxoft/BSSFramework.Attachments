@@ -23,7 +23,7 @@ namespace AttachmentsSampleSystem.BLL
         }
     }
     
-    public partial class BusinessUnitBLLFactory : Framework.DomainDriven.BLL.Security.SecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.BLL.IBusinessUnitBLL, AttachmentsSampleSystem.BLL.BusinessUnitBLL, AttachmentsSampleSystem.Domain.BusinessUnit, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode>, AttachmentsSampleSystem.BLL.IBusinessUnitBLLFactory
+    public partial class BusinessUnitBLLFactory : Framework.DomainDriven.BLL.Security.SecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.BLL.IBusinessUnitBLL, AttachmentsSampleSystem.BLL.BusinessUnitBLL, AttachmentsSampleSystem.Domain.BusinessUnit>, AttachmentsSampleSystem.BLL.IBusinessUnitBLLFactory
     {
         
         public BusinessUnitBLLFactory(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context) : 
@@ -44,7 +44,7 @@ namespace AttachmentsSampleSystem.BLL
         }
     }
     
-    public partial class EmployeeBLLFactory : Framework.DomainDriven.BLL.Security.SecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.BLL.IEmployeeBLL, AttachmentsSampleSystem.BLL.EmployeeBLL, AttachmentsSampleSystem.Domain.Employee, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode>, AttachmentsSampleSystem.BLL.IEmployeeBLLFactory
+    public partial class EmployeeBLLFactory : Framework.DomainDriven.BLL.Security.SecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.BLL.IEmployeeBLL, AttachmentsSampleSystem.BLL.EmployeeBLL, AttachmentsSampleSystem.Domain.Employee>, AttachmentsSampleSystem.BLL.IEmployeeBLLFactory
     {
         
         public EmployeeBLLFactory(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context) : 
@@ -65,7 +65,7 @@ namespace AttachmentsSampleSystem.BLL
         }
     }
     
-    public partial class HRDepartmentBLLFactory : Framework.DomainDriven.BLL.Security.SecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.BLL.IHRDepartmentBLL, AttachmentsSampleSystem.BLL.HRDepartmentBLL, AttachmentsSampleSystem.Domain.HRDepartment, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode>, AttachmentsSampleSystem.BLL.IHRDepartmentBLLFactory
+    public partial class HRDepartmentBLLFactory : Framework.DomainDriven.BLL.Security.SecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.BLL.IHRDepartmentBLL, AttachmentsSampleSystem.BLL.HRDepartmentBLL, AttachmentsSampleSystem.Domain.HRDepartment>, AttachmentsSampleSystem.BLL.IHRDepartmentBLLFactory
     {
         
         public HRDepartmentBLLFactory(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context) : 
@@ -86,7 +86,7 @@ namespace AttachmentsSampleSystem.BLL
         }
     }
     
-    public partial class LocationBLLFactory : Framework.DomainDriven.BLL.Security.SecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.BLL.ILocationBLL, AttachmentsSampleSystem.BLL.LocationBLL, AttachmentsSampleSystem.Domain.Location, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode>, AttachmentsSampleSystem.BLL.ILocationBLLFactory
+    public partial class LocationBLLFactory : Framework.DomainDriven.BLL.Security.SecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.BLL.ILocationBLL, AttachmentsSampleSystem.BLL.LocationBLL, AttachmentsSampleSystem.Domain.Location>, AttachmentsSampleSystem.BLL.ILocationBLLFactory
     {
         
         public LocationBLLFactory(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context) : 
@@ -107,7 +107,7 @@ namespace AttachmentsSampleSystem.BLL
         }
     }
     
-    public partial class NamedLockBLLFactory : Framework.DomainDriven.BLL.Security.BLLFactoryBase<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.BLL.INamedLockBLL, AttachmentsSampleSystem.BLL.NamedLockBLL, AttachmentsSampleSystem.Domain.NamedLock>, AttachmentsSampleSystem.BLL.INamedLockBLLFactory
+    public partial class NamedLockBLLFactory : Framework.DomainDriven.BLL.Security.SecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.BLL.INamedLockBLL, AttachmentsSampleSystem.BLL.NamedLockBLL, AttachmentsSampleSystem.Domain.NamedLock>, AttachmentsSampleSystem.BLL.INamedLockBLLFactory
     {
         
         public NamedLockBLLFactory(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context) : 
@@ -158,7 +158,7 @@ namespace AttachmentsSampleSystem.BLL
             }
         }
         
-        public Framework.DomainDriven.BLL.Security.IDefaultSecurityBLLFactory<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode, System.Guid> Default
+        public Framework.DomainDriven.BLL.Security.IDefaultSecurityBLLFactory<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, System.Guid> Default
         {
             get
             {
@@ -210,7 +210,7 @@ namespace AttachmentsSampleSystem.BLL
             }
         }
         
-        public Framework.DomainDriven.BLL.Security.IDefaultSecurityBLLFactory<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode, System.Guid> Implemented
+        public Framework.DomainDriven.BLL.Security.IDefaultSecurityBLLFactory<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, System.Guid> Implemented
         {
             get
             {
@@ -265,14 +265,19 @@ namespace AttachmentsSampleSystem.BLL
         public static void RegisterBLLFactory(Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection)
         {
             Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddScoped<AttachmentsSampleSystem.BLL.IBusinessUnitBLLFactory, AttachmentsSampleSystem.BLL.BusinessUnitBLLFactory>(serviceCollection);
+            Framework.DependencyInjection.ServiceCollectionExtensions.AddScopedFrom<Framework.DomainDriven.BLL.Security.ISecurityBLLFactory<Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.Domain.BusinessUnit, System.Guid>, AttachmentsSampleSystem.Domain.BusinessUnit>, AttachmentsSampleSystem.BLL.IBusinessUnitBLLFactory>(serviceCollection);
             Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddScoped<AttachmentsSampleSystem.BLL.IEmployeeBLLFactory, AttachmentsSampleSystem.BLL.EmployeeBLLFactory>(serviceCollection);
+            Framework.DependencyInjection.ServiceCollectionExtensions.AddScopedFrom<Framework.DomainDriven.BLL.Security.ISecurityBLLFactory<Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.Domain.Employee, System.Guid>, AttachmentsSampleSystem.Domain.Employee>, AttachmentsSampleSystem.BLL.IEmployeeBLLFactory>(serviceCollection);
             Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddScoped<AttachmentsSampleSystem.BLL.IHRDepartmentBLLFactory, AttachmentsSampleSystem.BLL.HRDepartmentBLLFactory>(serviceCollection);
+            Framework.DependencyInjection.ServiceCollectionExtensions.AddScopedFrom<Framework.DomainDriven.BLL.Security.ISecurityBLLFactory<Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.Domain.HRDepartment, System.Guid>, AttachmentsSampleSystem.Domain.HRDepartment>, AttachmentsSampleSystem.BLL.IHRDepartmentBLLFactory>(serviceCollection);
             Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddScoped<AttachmentsSampleSystem.BLL.ILocationBLLFactory, AttachmentsSampleSystem.BLL.LocationBLLFactory>(serviceCollection);
+            Framework.DependencyInjection.ServiceCollectionExtensions.AddScopedFrom<Framework.DomainDriven.BLL.Security.ISecurityBLLFactory<Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.Domain.Location, System.Guid>, AttachmentsSampleSystem.Domain.Location>, AttachmentsSampleSystem.BLL.ILocationBLLFactory>(serviceCollection);
             Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddScoped<AttachmentsSampleSystem.BLL.INamedLockBLLFactory, AttachmentsSampleSystem.BLL.NamedLockBLLFactory>(serviceCollection);
+            Framework.DependencyInjection.ServiceCollectionExtensions.AddScopedFrom<Framework.DomainDriven.BLL.Security.ISecurityBLLFactory<Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.Domain.NamedLock, System.Guid>, AttachmentsSampleSystem.Domain.NamedLock>, AttachmentsSampleSystem.BLL.INamedLockBLLFactory>(serviceCollection);
         }
     }
     
-    public partial class AttachmentsSampleSystemDefaultBLLFactory : Framework.DomainDriven.BLL.Security.DefaultSecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.Domain.DomainObjectBase, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode, System.Guid>, Framework.DomainDriven.BLL.Security.IDefaultSecurityBLLFactory<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode, System.Guid>
+    public partial class AttachmentsSampleSystemDefaultBLLFactory : Framework.DomainDriven.BLL.Security.DefaultSecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, System.Guid>, Framework.DomainDriven.BLL.Security.IDefaultSecurityBLLFactory<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, System.Guid>
     {
         
         public AttachmentsSampleSystemDefaultBLLFactory(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context) : 
@@ -280,13 +285,13 @@ namespace AttachmentsSampleSystem.BLL
         {
         }
         
-        public override Framework.DomainDriven.BLL.IDefaultDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid> Create<TDomainObject>()
+        public override Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid> Create<TDomainObject>(Framework.SecuritySystem.ISecurityProvider<TDomainObject> securityProvider)
         {
-            return new AttachmentsSampleSystem.BLL.DomainBLLBase<TDomainObject>(this.Context);
+            return new AttachmentsSampleSystem.BLL.SecurityDomainBLLBase<TDomainObject>(this.Context, securityProvider);
         }
     }
     
-    public partial class AttachmentsSampleSystemImplementedBLLFactory : Framework.DomainDriven.BLL.Security.DefaultSecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.Domain.DomainObjectBase, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode, System.Guid>, Framework.DomainDriven.BLL.Security.IDefaultSecurityBLLFactory<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode, System.Guid>
+    public partial class AttachmentsSampleSystemImplementedBLLFactory : Framework.DomainDriven.BLL.Security.ImplementedSecurityBLLFactory<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, System.Guid>, Framework.DomainDriven.BLL.Security.IDefaultSecurityBLLFactory<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, System.Guid>
     {
         
         public AttachmentsSampleSystemImplementedBLLFactory(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context) : 
@@ -294,116 +299,9 @@ namespace AttachmentsSampleSystem.BLL
         {
         }
         
-        public override Framework.DomainDriven.BLL.IDefaultDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid> Create<TDomainObject>()
+        protected override Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid> CreateDefault<TDomainObject>(Framework.SecuritySystem.ISecurityProvider<TDomainObject> securityProvider)
         {
-            if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.BusinessUnit)))
-            {
-                return ((Framework.DomainDriven.BLL.IDefaultDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.BusinessUnit));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.Employee)))
-            {
-                return ((Framework.DomainDriven.BLL.IDefaultDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.Employee));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.HRDepartment)))
-            {
-                return ((Framework.DomainDriven.BLL.IDefaultDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.HRDepartment));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.Location)))
-            {
-                return ((Framework.DomainDriven.BLL.IDefaultDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.Location));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.NamedLock)))
-            {
-                return ((Framework.DomainDriven.BLL.IDefaultDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.NamedLock));
-            }
-            else
-            {
-                return new AttachmentsSampleSystem.BLL.DomainBLLBase<TDomainObject>(this.Context);
-            }
-        }
-        
-        public override Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid> Create<TDomainObject>(Framework.SecuritySystem.ISecurityProvider<TDomainObject> securityProvider)
-        {
-            if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.BusinessUnit)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.BusinessUnitFactory.Create(((Framework.SecuritySystem.ISecurityProvider<AttachmentsSampleSystem.Domain.BusinessUnit>)(securityProvider)))));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.Employee)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.EmployeeFactory.Create(((Framework.SecuritySystem.ISecurityProvider<AttachmentsSampleSystem.Domain.Employee>)(securityProvider)))));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.HRDepartment)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.HRDepartmentFactory.Create(((Framework.SecuritySystem.ISecurityProvider<AttachmentsSampleSystem.Domain.HRDepartment>)(securityProvider)))));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.Location)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.LocationFactory.Create(((Framework.SecuritySystem.ISecurityProvider<AttachmentsSampleSystem.Domain.Location>)(securityProvider)))));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.NamedLock)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.NamedLockFactory.Create()));
-            }
-            else
-            {
-                return new AttachmentsSampleSystem.BLL.SecurityDomainBLLBase<TDomainObject>(this.Context);
-            }
-        }
-        
-        public override Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid> Create<TDomainObject>(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperation)
-        {
-            if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.BusinessUnit)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.BusinessUnitFactory.Create(securityOperation)));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.Employee)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.EmployeeFactory.Create(securityOperation)));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.HRDepartment)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.HRDepartmentFactory.Create(securityOperation)));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.Location)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.LocationFactory.Create(securityOperation)));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.NamedLock)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.NamedLockFactory.Create()));
-            }
-            else
-            {
-                return new AttachmentsSampleSystem.BLL.SecurityDomainBLLBase<TDomainObject>(this.Context);
-            }
-        }
-        
-        public override Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid> Create<TDomainObject>(Framework.SecuritySystem.BLLSecurityMode bllSecurityMode)
-        {
-            if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.BusinessUnit)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.BusinessUnitFactory.Create(bllSecurityMode)));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.Employee)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.EmployeeFactory.Create(bllSecurityMode)));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.HRDepartment)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.HRDepartmentFactory.Create(bllSecurityMode)));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.Location)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.LocationFactory.Create(bllSecurityMode)));
-            }
-            else if ((typeof(TDomainObject) == typeof(AttachmentsSampleSystem.Domain.NamedLock)))
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(this.Context.Logics.NamedLockFactory.Create()));
-            }
-            else
-            {
-                return ((Framework.DomainDriven.BLL.Security.IDefaultSecurityDomainBLLBase<AttachmentsSampleSystem.Domain.PersistentDomainObjectBase, TDomainObject, System.Guid>)(new AttachmentsSampleSystem.BLL.SecurityDomainBLLBase<TDomainObject>(this.Context)));
-            }
+            return new AttachmentsSampleSystem.BLL.SecurityDomainBLLBase<TDomainObject>(this.Context, securityProvider);
         }
     }
 }

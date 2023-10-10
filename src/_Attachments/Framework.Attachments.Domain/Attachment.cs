@@ -4,15 +4,14 @@ using System.Linq;
 
 using Framework.Core;
 using Framework.Core.Serialization;
-using Framework.DomainDriven.Attributes;
 using Framework.DomainDriven.BLL;
 using Framework.Persistent;
+using Framework.Persistent.Mapping;
 using Framework.Restriction;
-using Framework.Security;
 
 namespace Framework.Attachments.Domain
 {
-    [DomainObjectAccess, BLLRemoveRole(CustomImplementation = true)]
+    [BLLRemoveRole(CustomImplementation = true)]
     [NotAuditedClass]
     public class Attachment : BaseDirectory, IDetail<AttachmentContainer>, IMaster<AttachmentTag>, ITemplateContainer
     {

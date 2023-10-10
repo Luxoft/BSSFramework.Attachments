@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using Framework.Core.Services;
 using Framework.DomainDriven;
 using Framework.DomainDriven.DBGenerator;
 

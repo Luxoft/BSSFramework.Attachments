@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Luxoft.Framework.DomainDriven.BLL" />
     <PackageReference Include="Luxoft.Framework.DomainDriven.BLL.Security" />
+    <PackageReference Include="Luxoft.Framework.Persistent.Mapping.Audit" />
   </ItemGroup>
 
 </Project>

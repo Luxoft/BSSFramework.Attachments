@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Framework.Attachments.TestGenerate
+﻿namespace Framework.Attachments.TestGenerate
 {
     public partial class ServerGenerationEnvironment :
 

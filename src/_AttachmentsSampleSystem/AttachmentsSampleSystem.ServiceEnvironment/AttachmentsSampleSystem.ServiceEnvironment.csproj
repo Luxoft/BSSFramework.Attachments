@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="Luxoft.Framework.App.ServiceEnvironment" />
+    <PackageReference Include="Luxoft.Framework.Configuration.Core" />
     <PackageReference Include="Luxoft.Framework.NotificationCore" />
     <PackageReference Include="MediatR" />
     <PackageReference Include="nuSpec.NHibernate" />

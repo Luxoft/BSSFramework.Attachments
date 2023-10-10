@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Luxoft.Framework.DomainDriven.ServiceModel.IAD" />
-    <PackageReference Include="Luxoft.Framework.DomainDriven.WebApiNetCore" />
+    <PackageReference Include="Luxoft.Framework.DomainDriven.WebApiNetCore.LegacyContext" />
   </ItemGroup>
 
 </Project>

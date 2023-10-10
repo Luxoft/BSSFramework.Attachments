@@ -10,7 +10,7 @@ using Framework.Core;
 using Framework.DomainDriven;
 using Framework.SecuritySystem;
 
-using JetBrains.Annotations;
+
 
 namespace Framework.Attachments.WebApi
 {
@@ -18,7 +18,7 @@ namespace Framework.Attachments.WebApi
     {
         private readonly IContextEvaluator<IAttachmentsBLLContext> contextEvaluator;
 
-        public AttachmentController([NotNull] IContextEvaluator<IAttachmentsBLLContext> contextEvaluator)
+        public AttachmentController(IContextEvaluator<IAttachmentsBLLContext> contextEvaluator)
         {
             this.contextEvaluator = contextEvaluator ?? throw new ArgumentNullException(nameof(contextEvaluator));
         }
@@ -47,7 +47,7 @@ namespace Framework.Attachments.WebApi
 
                 evaluateData.Context.GetPersistentTargetSystemService(attachment.Container.DomainType.TargetSystem)
                             .GetAttachmentSecurityProvider(attachment.Container.DomainType, BLLSecurityMode.View)
-                            .CheckAccess(attachment);
+                            .CheckAccess(attachment, evaluateData.Context.AccessDeniedExceptionService);
 
                 return attachment.ToRichDTO(evaluateData.MappingService);
             });
@@ -62,7 +62,7 @@ namespace Framework.Attachments.WebApi
 
                 evaluateData.Context.GetPersistentTargetSystemService(attachment.Container.DomainType.TargetSystem)
                             .GetAttachmentSecurityProvider(attachment.Container.DomainType, BLLSecurityMode.View)
-                            .CheckAccess(attachment);
+                            .CheckAccess(attachment, evaluateData.Context.AccessDeniedExceptionService);
 
                 return attachment.ToRichDTO(evaluateData.MappingService);
             });
@@ -113,7 +113,7 @@ namespace Framework.Attachments.WebApi
 
                 evaluateData.Context.GetPersistentTargetSystemService(attachment.Container.DomainType.TargetSystem)
                             .GetAttachmentSecurityProvider(attachment.Container.DomainType, BLLSecurityMode.View)
-                            .CheckAccess(attachment);
+                            .CheckAccess(attachment, evaluateData.Context.AccessDeniedExceptionService);
 
                 return attachment.Tags.ToRichDTOList(evaluateData.MappingService);
             });

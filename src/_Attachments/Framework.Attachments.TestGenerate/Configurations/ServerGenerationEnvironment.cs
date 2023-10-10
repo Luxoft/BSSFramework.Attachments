@@ -6,8 +6,6 @@ using Framework.DomainDriven.NHibernate;
 using Framework.Persistent;
 using Framework.Attachments.Domain;
 
-using NHibernate.Envers.Synchronization.Work;
-
 namespace Framework.Attachments.TestGenerate
 {
     public partial class ServerGenerationEnvironment : GenerationEnvironmentBase
@@ -59,5 +57,7 @@ namespace Framework.Attachments.TestGenerate
 
 
         public static readonly ServerGenerationEnvironment Default = new ServerGenerationEnvironment();
+
+        public override Type SecurityOperationType => throw new NotImplementedException();
     }
 }

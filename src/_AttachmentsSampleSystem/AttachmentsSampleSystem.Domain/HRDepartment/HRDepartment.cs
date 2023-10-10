@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
-using Framework.Core;
-using Framework.Core.Services;
-using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.Serialization;
 using Framework.Persistent;
-using Framework.Security;
 
 namespace AttachmentsSampleSystem.Domain
 {
     [DomainType("0BE31997-C4CD-449E-9394-A311016CB715")]
     [BLLViewRole, BLLSaveRole(AllowCreate = false), BLLRemoveRole]
-    [AttachmentsSampleSystemViewDomainObject(AttachmentsSampleSystemSecurityOperationCode.HRDepartmentView, AttachmentsSampleSystemSecurityOperationCode.EmployeeEdit)]
-    [AttachmentsSampleSystemEditDomainObject(AttachmentsSampleSystemSecurityOperationCode.HRDepartmentEdit)]
     public partial class HRDepartment :
         HRDepartmentBase,
         IDefaultHierarchicalPersistentDomainObjectBase<HRDepartment>,

@@ -11,44 +11,6 @@ namespace AttachmentsSampleSystem.Generated.DTO
 {
     
     
-    [Framework.DomainDriven.DTOFileTypeAttribute(typeof(AttachmentsSampleSystem.Domain.BusinessUnit), "DomainObjectSecurityOperationCode", Framework.DomainDriven.Serialization.DTORole.Client)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="AttachmentsSampleSystem")]
-    public enum AttachmentsSampleSystemBusinessUnitSecurityOperationCode : int
-    {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        BusinessUnitView = AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.BusinessUnitView,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        EmployeeEdit = AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.EmployeeEdit,
-    }
-    
-    [Framework.DomainDriven.DTOFileTypeAttribute(typeof(AttachmentsSampleSystem.Domain.HRDepartment), "DomainObjectSecurityOperationCode", Framework.DomainDriven.Serialization.DTORole.Client)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="AttachmentsSampleSystem")]
-    public enum AttachmentsSampleSystemHRDepartmentSecurityOperationCode : int
-    {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        EmployeeEdit = AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.EmployeeEdit,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        HRDepartmentView = AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.HRDepartmentView,
-    }
-    
-    [Framework.DomainDriven.DTOFileTypeAttribute(typeof(AttachmentsSampleSystem.Domain.Location), "DomainObjectSecurityOperationCode", Framework.DomainDriven.Serialization.DTORole.Client)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="AttachmentsSampleSystem")]
-    public enum AttachmentsSampleSystemLocationSecurityOperationCode : int
-    {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        HRDepartmentEdit = AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.HRDepartmentEdit,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        LocationView = AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.LocationView,
-    }
-    
-    [AttachmentsSampleSystem.AttachmentsSampleSystemEditDomainObjectAttribute(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.BusinessUnitEdit)]
-    [AttachmentsSampleSystem.AttachmentsSampleSystemViewDomainObjectAttribute(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.BusinessUnitView)]
     [Framework.DomainDriven.DTOFileTypeAttribute(typeof(AttachmentsSampleSystem.Domain.BusinessUnit), "IdentityDTO", Framework.DomainDriven.Serialization.DTORole.Client)]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="AttachmentsSampleSystem")]
     public struct BusinessUnitIdentityDTO : System.IEquatable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO>, Framework.Persistent.IIdentityObject<System.Guid>
@@ -139,8 +101,6 @@ namespace AttachmentsSampleSystem.Generated.DTO
         }
     }
     
-    [AttachmentsSampleSystem.AttachmentsSampleSystemEditDomainObjectAttribute(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.EmployeeEdit)]
-    [AttachmentsSampleSystem.AttachmentsSampleSystemViewDomainObjectAttribute(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.EmployeeView)]
     [Framework.DomainDriven.DTOFileTypeAttribute(typeof(AttachmentsSampleSystem.Domain.Employee), "IdentityDTO", Framework.DomainDriven.Serialization.DTORole.Client)]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="AttachmentsSampleSystem")]
     public struct EmployeeIdentityDTO : System.IEquatable<AttachmentsSampleSystem.Generated.DTO.EmployeeIdentityDTO>, Framework.Persistent.IIdentityObject<System.Guid>
@@ -231,8 +191,6 @@ namespace AttachmentsSampleSystem.Generated.DTO
         }
     }
     
-    [AttachmentsSampleSystem.AttachmentsSampleSystemEditDomainObjectAttribute(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.HRDepartmentEdit)]
-    [AttachmentsSampleSystem.AttachmentsSampleSystemViewDomainObjectAttribute(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.HRDepartmentView)]
     [Framework.DomainDriven.DTOFileTypeAttribute(typeof(AttachmentsSampleSystem.Domain.HRDepartment), "IdentityDTO", Framework.DomainDriven.Serialization.DTORole.Client)]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="AttachmentsSampleSystem")]
     public struct HRDepartmentIdentityDTO : System.IEquatable<AttachmentsSampleSystem.Generated.DTO.HRDepartmentIdentityDTO>, Framework.Persistent.IIdentityObject<System.Guid>
@@ -323,8 +281,6 @@ namespace AttachmentsSampleSystem.Generated.DTO
         }
     }
     
-    [AttachmentsSampleSystem.AttachmentsSampleSystemEditDomainObjectAttribute(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.LocationEdit)]
-    [AttachmentsSampleSystem.AttachmentsSampleSystemViewDomainObjectAttribute(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.LocationView)]
     [Framework.DomainDriven.DTOFileTypeAttribute(typeof(AttachmentsSampleSystem.Domain.Location), "IdentityDTO", Framework.DomainDriven.Serialization.DTORole.Client)]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="AttachmentsSampleSystem")]
     public struct LocationIdentityDTO : System.IEquatable<AttachmentsSampleSystem.Generated.DTO.LocationIdentityDTO>, Framework.Persistent.IIdentityObject<System.Guid>
@@ -798,7 +754,7 @@ namespace AttachmentsSampleSystem.Generated.DTO
         public System.DateTime? LastActionDate;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Framework.Core.Maybe<string> Login;
+        public string Login;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string MailAccountName;
@@ -928,7 +884,7 @@ namespace AttachmentsSampleSystem.Generated.DTO
         public System.DateTime? LastActionDate;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Framework.Core.Maybe<string> Login = Framework.Core.Maybe<string>.Nothing;
+        public string Login;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public AttachmentsSampleSystem.Domain.Inline.FioShort NameEng;

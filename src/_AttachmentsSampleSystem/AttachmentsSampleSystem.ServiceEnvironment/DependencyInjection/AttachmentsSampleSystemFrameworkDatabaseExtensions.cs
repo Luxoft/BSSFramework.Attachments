@@ -26,6 +26,7 @@ public static class AttachmentsSampleSystemFrameworkDatabaseExtensions
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         return services.AddDatabaseSettings(connectionString)
+                       .AddLegacyDatabaseSettings()
                        .RegistryGenericDatabaseVisitors()
                        .RegistryDatabaseVisitors()
                        .RegisterSpecificationEvaluator();

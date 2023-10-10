@@ -2,6 +2,8 @@
 
 using AttachmentsSampleSystem.BLL;
 
+using Framework.Authorization.BLL;
+using Framework.Authorization.Notification;
 using Framework.Cap;
 
 using Microsoft.Extensions.Configuration;
@@ -23,7 +25,7 @@ public static class AttachmentsSampleSystemApplicationExtensions
 
     private static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<CustomAttachmentSecurityService>();
+        services.AddScoped<INotificationPrincipalExtractor, LegacyNotificationPrincipalExtractor>();
 
         return services;
     }

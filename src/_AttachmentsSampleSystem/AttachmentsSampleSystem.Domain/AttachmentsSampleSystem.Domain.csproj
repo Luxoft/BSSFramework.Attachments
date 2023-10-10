@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Luxoft.Framework.App.Domain" />
+    <PackageReference Include="Luxoft.Framework.Persistent.Mapping.Audit" />
   </ItemGroup>
 
 </Project>

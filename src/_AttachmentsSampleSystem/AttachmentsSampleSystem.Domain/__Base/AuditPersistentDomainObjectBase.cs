@@ -2,7 +2,7 @@
 using System.ComponentModel;
 
 using Framework.Core;
-using Framework.DomainDriven;
+using Framework.DomainDriven.Attributes;
 using Framework.DomainDriven.Serialization;
 using Framework.Persistent;
 
