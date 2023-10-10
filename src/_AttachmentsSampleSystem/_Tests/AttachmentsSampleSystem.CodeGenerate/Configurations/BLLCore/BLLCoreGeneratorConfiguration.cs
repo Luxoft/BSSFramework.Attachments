@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AttachmentsSampleSystem.CodeGenerate
+﻿namespace AttachmentsSampleSystem.CodeGenerate
 {
     public class BLLCoreGeneratorConfiguration : Framework.DomainDriven.BLLCoreGenerator.GeneratorConfigurationBase<ServerGenerationEnvironment>
     {
@@ -8,5 +6,7 @@ namespace AttachmentsSampleSystem.CodeGenerate
             : base(environment)
         {
         }
+
+        public override bool GenerateAuthServices { get; } = false;
     }
 }

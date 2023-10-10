@@ -10,26 +10,6 @@
     {
         
         /// <summary>
-        /// Check Principal access
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("CheckPrincipalAccess")]
-        public virtual void CheckPrincipalAccess(CheckPrincipalAccessAutoRequest checkPrincipalAccessAutoRequest)
-        {
-            Framework.Authorization.AuthorizationSecurityOperationCode securityOperationCode = checkPrincipalAccessAutoRequest.securityOperationCode;
-            Framework.Authorization.Generated.DTO.PrincipalIdentityDTO principalIdent = checkPrincipalAccessAutoRequest.principalIdent;
-            this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.CheckPrincipalAccessInternal(principalIdent, securityOperationCode, evaluateData));
-        }
-        
-        protected virtual void CheckPrincipalAccessInternal(Framework.Authorization.Generated.DTO.PrincipalIdentityDTO principalIdent, Framework.Authorization.AuthorizationSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Authorization.BLL.IAuthorizationBLLContext, Framework.Authorization.Generated.DTO.IAuthorizationDTOMappingService> evaluateData)
-        {
-            Framework.Authorization.BLL.IPrincipalBLL bll = evaluateData.Context.Logics.Principal;
-            Framework.Security.TransferEnumHelper.Check(securityOperationCode);
-            Framework.Authorization.Domain.Principal domainObject = bll.GetById(principalIdent.Id, true);
-            Framework.SecuritySystem.SecurityProviderExtensions.CheckAccess(evaluateData.Context.SecurityService.GetSecurityProvider<Framework.Authorization.Domain.Principal>(securityOperationCode), domainObject);
-        }
-        
-        /// <summary>
         /// Create Principal by model (PrincipalCreateModel)
         /// </summary>
         [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
@@ -332,26 +312,6 @@
         }
         
         /// <summary>
-        /// Check access for Principal
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("HasPrincipalAccess")]
-        public virtual bool HasPrincipalAccess(HasPrincipalAccessAutoRequest hasPrincipalAccessAutoRequest)
-        {
-            Framework.Authorization.AuthorizationSecurityOperationCode securityOperationCode = hasPrincipalAccessAutoRequest.securityOperationCode;
-            Framework.Authorization.Generated.DTO.PrincipalIdentityDTO principalIdent = hasPrincipalAccessAutoRequest.principalIdent;
-            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.HasPrincipalAccessInternal(principalIdent, securityOperationCode, evaluateData));
-        }
-        
-        protected virtual bool HasPrincipalAccessInternal(Framework.Authorization.Generated.DTO.PrincipalIdentityDTO principalIdent, Framework.Authorization.AuthorizationSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Authorization.BLL.IAuthorizationBLLContext, Framework.Authorization.Generated.DTO.IAuthorizationDTOMappingService> evaluateData)
-        {
-            Framework.Authorization.BLL.IPrincipalBLL bll = evaluateData.Context.Logics.Principal;
-            Framework.Security.TransferEnumHelper.Check(securityOperationCode);
-            Framework.Authorization.Domain.Principal domainObject = bll.GetById(principalIdent.Id, true);
-            return evaluateData.Context.SecurityService.GetSecurityProvider<Framework.Authorization.Domain.Principal>(securityOperationCode).HasAccess(domainObject);
-        }
-        
-        /// <summary>
         /// Remove Principal
         /// </summary>
         [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
@@ -396,33 +356,5 @@
             bll.Save(domainObject);
             return Framework.Authorization.Generated.DTO.LambdaHelper.ToIdentityDTO(domainObject);
         }
-    }
-    
-    [System.Runtime.Serialization.DataContractAttribute()]
-    [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
-    public partial class CheckPrincipalAccessAutoRequest
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=0)]
-        public Framework.Authorization.Generated.DTO.PrincipalIdentityDTO principalIdent;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=1)]
-        public Framework.Authorization.AuthorizationSecurityOperationCode securityOperationCode;
-    }
-    
-    [System.Runtime.Serialization.DataContractAttribute()]
-    [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
-    public partial class HasPrincipalAccessAutoRequest
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=0)]
-        public Framework.Authorization.Generated.DTO.PrincipalIdentityDTO principalIdent;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=1)]
-        public Framework.Authorization.AuthorizationSecurityOperationCode securityOperationCode;
     }
 }

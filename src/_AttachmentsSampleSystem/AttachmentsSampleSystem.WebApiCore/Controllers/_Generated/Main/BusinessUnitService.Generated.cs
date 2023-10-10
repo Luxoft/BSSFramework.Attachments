@@ -10,26 +10,6 @@
     {
         
         /// <summary>
-        /// Check BusinessUnit access
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("CheckBusinessUnitAccess")]
-        public virtual void CheckBusinessUnitAccess(CheckBusinessUnitAccessAutoRequest checkBusinessUnitAccessAutoRequest)
-        {
-            AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperationCode = checkBusinessUnitAccessAutoRequest.securityOperationCode;
-            AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdent = checkBusinessUnitAccessAutoRequest.businessUnitIdent;
-            this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.CheckBusinessUnitAccessInternal(businessUnitIdent, securityOperationCode, evaluateData));
-        }
-        
-        protected virtual void CheckBusinessUnitAccessInternal(AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdent, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
-        {
-            AttachmentsSampleSystem.BLL.IBusinessUnitBLL bll = evaluateData.Context.Logics.BusinessUnit;
-            Framework.Security.TransferEnumHelper.Check(securityOperationCode);
-            AttachmentsSampleSystem.Domain.BusinessUnit domainObject = bll.GetById(businessUnitIdent.Id, true);
-            Framework.SecuritySystem.SecurityProviderExtensions.CheckAccess(evaluateData.Context.SecurityService.GetSecurityProvider<AttachmentsSampleSystem.Domain.BusinessUnit>(securityOperationCode), domainObject);
-        }
-        
-        /// <summary>
         /// Get BusinessUnit (FullDTO) by identity
         /// </summary>
         [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
@@ -87,22 +67,6 @@
         {
             AttachmentsSampleSystem.BLL.IBusinessUnitBLL bll = evaluateData.Context.Logics.BusinessUnitFactory.Create(Framework.SecuritySystem.BLLSecurityMode.View);
             return AttachmentsSampleSystem.Generated.DTO.LambdaHelper.ToFullDTOList(bll.GetListByIdents(businessUnitIdents, evaluateData.Context.FetchService.GetContainer<AttachmentsSampleSystem.Domain.BusinessUnit>(Framework.Transfering.ViewDTOType.FullDTO)), evaluateData.MappingService);
-        }
-        
-        /// <summary>
-        /// Get BusinessUnits (FullDTO) by operation
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("GetFullBusinessUnitsByOperation")]
-        public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO> GetFullBusinessUnitsByOperation([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode)
-        {
-            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetFullBusinessUnitsByOperationInternal(securityOperationCode, evaluateData));
-        }
-        
-        protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO> GetFullBusinessUnitsByOperationInternal(AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
-        {
-            AttachmentsSampleSystem.BLL.IBusinessUnitBLL bll = evaluateData.Context.Logics.BusinessUnitFactory.Create(Framework.Security.TransferEnumHelper.Convert<AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode>(securityOperationCode));
-            return AttachmentsSampleSystem.Generated.DTO.LambdaHelper.ToFullDTOList(bll.GetFullList(evaluateData.Context.FetchService.GetContainer<AttachmentsSampleSystem.Domain.BusinessUnit>(Framework.Transfering.ViewDTOType.FullDTO)), evaluateData.MappingService);
         }
         
         protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitFullDTO> GetFullBusinessUnitsInternal(Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
@@ -205,22 +169,6 @@
             return AttachmentsSampleSystem.Generated.DTO.LambdaHelper.ToSimpleDTOList(bll.GetListByIdents(businessUnitIdents, evaluateData.Context.FetchService.GetContainer<AttachmentsSampleSystem.Domain.BusinessUnit>(Framework.Transfering.ViewDTOType.SimpleDTO)), evaluateData.MappingService);
         }
         
-        /// <summary>
-        /// Get BusinessUnits (SimpleDTO) by operation
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("GetSimpleBusinessUnitsByOperation")]
-        public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO> GetSimpleBusinessUnitsByOperation([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode)
-        {
-            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetSimpleBusinessUnitsByOperationInternal(securityOperationCode, evaluateData));
-        }
-        
-        protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO> GetSimpleBusinessUnitsByOperationInternal(AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
-        {
-            AttachmentsSampleSystem.BLL.IBusinessUnitBLL bll = evaluateData.Context.Logics.BusinessUnitFactory.Create(Framework.Security.TransferEnumHelper.Convert<AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode>(securityOperationCode));
-            return AttachmentsSampleSystem.Generated.DTO.LambdaHelper.ToSimpleDTOList(bll.GetFullList(evaluateData.Context.FetchService.GetContainer<AttachmentsSampleSystem.Domain.BusinessUnit>(Framework.Transfering.ViewDTOType.SimpleDTO)), evaluateData.MappingService);
-        }
-        
         protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitSimpleDTO> GetSimpleBusinessUnitsInternal(Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
         {
             AttachmentsSampleSystem.BLL.IBusinessUnitBLL bll = evaluateData.Context.Logics.BusinessUnitFactory.Create(Framework.SecuritySystem.BLLSecurityMode.View);
@@ -287,46 +235,10 @@
             return AttachmentsSampleSystem.Generated.DTO.LambdaHelper.ToVisualDTOList(bll.GetListByIdents(businessUnitIdents, evaluateData.Context.FetchService.GetContainer<AttachmentsSampleSystem.Domain.BusinessUnit>(Framework.Transfering.ViewDTOType.VisualDTO)), evaluateData.MappingService);
         }
         
-        /// <summary>
-        /// Get BusinessUnits (VisualDTO) by operation
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("GetVisualBusinessUnitsByOperation")]
-        public virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO> GetVisualBusinessUnitsByOperation([Microsoft.AspNetCore.Mvc.FromBodyAttribute()] AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode)
-        {
-            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.GetVisualBusinessUnitsByOperationInternal(securityOperationCode, evaluateData));
-        }
-        
-        protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO> GetVisualBusinessUnitsByOperationInternal(AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
-        {
-            AttachmentsSampleSystem.BLL.IBusinessUnitBLL bll = evaluateData.Context.Logics.BusinessUnitFactory.Create(Framework.Security.TransferEnumHelper.Convert<AttachmentsSampleSystem.Generated.DTO.AttachmentsSampleSystemBusinessUnitSecurityOperationCode, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode>(securityOperationCode));
-            return AttachmentsSampleSystem.Generated.DTO.LambdaHelper.ToVisualDTOList(bll.GetFullList(evaluateData.Context.FetchService.GetContainer<AttachmentsSampleSystem.Domain.BusinessUnit>(Framework.Transfering.ViewDTOType.VisualDTO)), evaluateData.MappingService);
-        }
-        
         protected virtual System.Collections.Generic.IEnumerable<AttachmentsSampleSystem.Generated.DTO.BusinessUnitVisualDTO> GetVisualBusinessUnitsInternal(Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
         {
             AttachmentsSampleSystem.BLL.IBusinessUnitBLL bll = evaluateData.Context.Logics.BusinessUnitFactory.Create(Framework.SecuritySystem.BLLSecurityMode.View);
             return AttachmentsSampleSystem.Generated.DTO.LambdaHelper.ToVisualDTOList(bll.GetFullList(evaluateData.Context.FetchService.GetContainer<AttachmentsSampleSystem.Domain.BusinessUnit>(Framework.Transfering.ViewDTOType.VisualDTO)), evaluateData.MappingService);
-        }
-        
-        /// <summary>
-        /// Check access for BusinessUnit
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("HasBusinessUnitAccess")]
-        public virtual bool HasBusinessUnitAccess(HasBusinessUnitAccessAutoRequest hasBusinessUnitAccessAutoRequest)
-        {
-            AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperationCode = hasBusinessUnitAccessAutoRequest.securityOperationCode;
-            AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdent = hasBusinessUnitAccessAutoRequest.businessUnitIdent;
-            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.HasBusinessUnitAccessInternal(businessUnitIdent, securityOperationCode, evaluateData));
-        }
-        
-        protected virtual bool HasBusinessUnitAccessInternal(AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdent, AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystem.Generated.DTO.IAttachmentsSampleSystemDTOMappingService> evaluateData)
-        {
-            AttachmentsSampleSystem.BLL.IBusinessUnitBLL bll = evaluateData.Context.Logics.BusinessUnit;
-            Framework.Security.TransferEnumHelper.Check(securityOperationCode);
-            AttachmentsSampleSystem.Domain.BusinessUnit domainObject = bll.GetById(businessUnitIdent.Id, true);
-            return evaluateData.Context.SecurityService.GetSecurityProvider<AttachmentsSampleSystem.Domain.BusinessUnit>(securityOperationCode).HasAccess(domainObject);
         }
         
         /// <summary>
@@ -352,33 +264,5 @@
             bll.Save(domainObject);
             return AttachmentsSampleSystem.Generated.DTO.LambdaHelper.ToIdentityDTO(domainObject);
         }
-    }
-    
-    [System.Runtime.Serialization.DataContractAttribute()]
-    [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
-    public partial class CheckBusinessUnitAccessAutoRequest
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=0)]
-        public AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdent;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=1)]
-        public AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperationCode;
-    }
-    
-    [System.Runtime.Serialization.DataContractAttribute()]
-    [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
-    public partial class HasBusinessUnitAccessAutoRequest
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=0)]
-        public AttachmentsSampleSystem.Generated.DTO.BusinessUnitIdentityDTO businessUnitIdent;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=1)]
-        public AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode securityOperationCode;
     }
 }

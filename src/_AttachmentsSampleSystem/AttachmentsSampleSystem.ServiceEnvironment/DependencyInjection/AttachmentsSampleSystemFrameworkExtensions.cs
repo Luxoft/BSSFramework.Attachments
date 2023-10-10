@@ -1,6 +1,4 @@
-﻿using System;
-
-using AttachmentsSampleSystem.BLL;
+﻿using AttachmentsSampleSystem.BLL;
 using AttachmentsSampleSystem.Domain;
 using AttachmentsSampleSystem.Generated.DTO;
 
@@ -10,6 +8,8 @@ using Framework.Attachments.ServiceEnvironment;
 using Framework.Authorization.BLL;
 using Framework.Authorization.Events;
 using Framework.Authorization.Generated.DTO;
+using Framework.Authorization.SecuritySystem;
+using Framework.Configuration;
 using Framework.Configuration.BLL;
 using Framework.Configuration.BLL.Notification;
 using Framework.Configuration.Generated.DTO;
@@ -21,10 +21,6 @@ using Framework.DomainDriven.ServiceModel.IAD;
 using Framework.DomainDriven.ServiceModel.Service;
 using Framework.DomainDriven.WebApiNetCore;
 using Framework.Events;
-using Framework.Persistent;
-using Framework.QueryableSource;
-using Framework.SecuritySystem;
-using Framework.SecuritySystem.Rules.Builders;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -36,46 +32,50 @@ public static class AttachmentsSampleSystemFrameworkExtensions
     {
         return services.RegisterGenericServices()
                        .RegisterWebApiGenericServices()
-                       .RegisterAttachmentsBLL()
-                       .RegisterAttachmentsWebApiGenericServices()
-
-                       .RegisterMainBLLContext()
-                       .RegisterAttachmentsTargetSystems()
                        .RegisterListeners()
                        .RegisterContextEvaluator()
+                       .RegisterSupportServices()
 
-                       .RegisterSupportServices();
+                       // Legacy
+
+                       .RegisterLegacyGenericServices()
+                       .RegisterContextEvaluators()
+
+                       .RegisterMainBLLContext()
+
+                       .RegisterAttachmentsTargetSystems()
+                       .RegisterAttachmentsBLL()
+                       .RegisterAttachmentsWebApiGenericServices();
     }
 
     private static IServiceCollection RegisterMainBLLContext(this IServiceCollection services)
     {
         return services
 
+               .AddSingleton<AttachmentsSampleSystemValidationMap>()
                .AddSingleton<AttachmentsSampleSystemValidatorCompileCache>()
-
                .AddScoped<IAttachmentsSampleSystemValidator, AttachmentsSampleSystemValidator>()
 
                .AddSingleton(new AttachmentsSampleSystemMainFetchService().WithCompress().WithCache().WithLock().Add(FetchService<PersistentDomainObjectBase>.OData))
-               .AddScoped<IAttachmentsSampleSystemSecurityService, AttachmentsSampleSystemSecurityService>()
                .AddScoped<IAttachmentsSampleSystemBLLFactoryContainer, AttachmentsSampleSystemBLLFactoryContainer>()
                .AddScoped<IAttachmentsSampleSystemBLLContextSettings>(_ => new AttachmentsSampleSystemBLLContextSettings { TypeResolver = new[] { new AttachmentsSampleSystemBLLContextSettings().TypeResolver, TypeSource.FromSample<BusinessUnitSimpleDTO>().ToDefaultTypeResolver() }.ToComposite() })
                .AddScopedFromLazyInterfaceImplement<IAttachmentsSampleSystemBLLContext, AttachmentsSampleSystemBLLContext>()
 
-               .AddScopedFrom<ISecurityOperationResolver<PersistentDomainObjectBase, AttachmentsSampleSystemSecurityOperationCode>, IAttachmentsSampleSystemBLLContext>()
-               .AddScopedFrom<IDisabledSecurityProviderContainer<PersistentDomainObjectBase>, IAttachmentsSampleSystemSecurityService>()
-               .AddScopedFrom<IAttachmentsSampleSystemSecurityPathContainer, IAttachmentsSampleSystemSecurityService>()
-               .AddScoped<IQueryableSource<PersistentDomainObjectBase>, BLLQueryableSource<IAttachmentsSampleSystemBLLContext, PersistentDomainObjectBase, DomainObjectBase, Guid>>()
-               .AddScoped<ISecurityExpressionBuilderFactory<PersistentDomainObjectBase, Guid>, Framework.SecuritySystem.Rules.Builders.MaterializedPermissions.SecurityExpressionBuilderFactory<PersistentDomainObjectBase, Guid>>()
-               .AddScoped<IAccessDeniedExceptionService<PersistentDomainObjectBase>, AccessDeniedExceptionService<PersistentDomainObjectBase, Guid>>()
-
-               .Self(AttachmentsSampleSystemSecurityServiceBase.Register)
                .Self(AttachmentsSampleSystemBLLFactoryContainer.RegisterBLLFactory);
     }
 
     private static IServiceCollection RegisterAttachmentsTargetSystems(this IServiceCollection services)
     {
         services.AddScoped<Framework.Attachments.BLL.TargetSystemServiceFactory>();
-        services.AddScopedFrom((Framework.Attachments.BLL.TargetSystemServiceFactory factory) => factory.Create(tss => tss.IsMain, sp => sp.GetRequiredService<CustomAttachmentSecurityService>()));
+        services.AddScopedFrom(
+                               (Framework.Attachments.BLL.TargetSystemServiceFactory factory) =>
+                                       factory.Create<IAttachmentsSampleSystemBLLContext, PersistentDomainObjectBase>(
+                                        tss => tss.IsMain));
+
+        services.AddSingleton(
+                              new AttachmentDomainObjectSecurityOperationInfo<Location>(
+                               AttachmentsSampleSystemSecurityOperation.LocationViewAttachment,
+                               AttachmentsSampleSystemSecurityOperation.LocationEditAttachment));
 
         return services;
     }
@@ -84,7 +84,7 @@ public static class AttachmentsSampleSystemFrameworkExtensions
     {
         services.AddSingleton<IInitializeManager, InitializeManager>();
 
-        services.AddScoped<IBeforeTransactionCompletedDALListener, DenormalizeHierarchicalDALListener<IAttachmentsSampleSystemBLLContext, PersistentDomainObjectBase, NamedLock, NamedLockOperation>>();
+        services.AddScoped<IBeforeTransactionCompletedDALListener, DenormalizeHierarchicalDALListener<PersistentDomainObjectBase, NamedLock, NamedLockOperation>>();
         services.AddScoped<IBeforeTransactionCompletedDALListener, FixDomainObjectEventRevisionNumberDALListener>();
 
         services.AddScoped<DefaultAuthDALListener>();
@@ -122,19 +122,15 @@ public static class AttachmentsSampleSystemFrameworkExtensions
 
     private static IServiceCollection RegisterSupportServices(this IServiceCollection services)
     {
-        // For auth
-        services.AddScopedFrom<ISecurityTypeResolverContainer, IAttachmentsSampleSystemBLLContext>();
-        services.AddScoped<IAuthorizationExternalSource, AuthorizationExternalSource<IAttachmentsSampleSystemBLLContext, PersistentDomainObjectBase, AuditPersistentDomainObjectBase, AttachmentsSampleSystemSecurityOperationCode>>();
-
         // For notification
         services.AddSingleton<IDefaultMailSenderContainer>(new DefaultMailSenderContainer("AttachmentsSampleSystem_Sender@luxoft.com"));
         services.AddScopedFrom<IBLLSimpleQueryBase<IEmployee>, IEmployeeBLLFactory>(factory => factory.Create());
 
         // For expand tree
         services.RegisterHierarchicalObjectExpander<PersistentDomainObjectBase>();
-        
-        // For repository
-        services.AddScoped(_ => new LegacyPersistentDomainObjectBaseList(typeof(PersistentDomainObjectBase)));
+
+        // For parsing auth operations
+        services.AddSingleton(new SecurityOperationTypeInfo(typeof(AttachmentsSampleSystemSecurityOperation)));
 
         return services;
     }

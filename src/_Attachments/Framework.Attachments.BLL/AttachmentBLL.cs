@@ -6,13 +6,13 @@ using Framework.Attachments.Domain;
 using Framework.DomainDriven.BLL;
 using Framework.Persistent;
 
-using JetBrains.Annotations;
+
 
 namespace Framework.Attachments.BLL
 {
     public partial class AttachmentBLL
     {
-        public override void Insert([NotNull] Attachment attachment, Guid id)
+        public override void Insert(Attachment attachment, Guid id)
         {
             if (attachment == null) throw new ArgumentNullException(nameof(attachment));
 

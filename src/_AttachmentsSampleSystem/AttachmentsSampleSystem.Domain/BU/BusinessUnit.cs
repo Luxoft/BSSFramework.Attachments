@@ -11,9 +11,7 @@ namespace AttachmentsSampleSystem.Domain
 {
     [DomainType("5C326B10-B4B4-402C-BCCE-A311016CB715")]
     [BLLViewRole, BLLSaveRole(AllowCreate = false)]
-    [AttachmentsSampleSystemViewDomainObject(AttachmentsSampleSystemSecurityOperationCode.BusinessUnitView, SourceTypes = new[] { typeof(Employee) })]
-    [AttachmentsSampleSystemEditDomainObject(AttachmentsSampleSystemSecurityOperationCode.BusinessUnitEdit)]
-    public partial class BusinessUnit : BaseDirectory,
+    public class BusinessUnit : BaseDirectory,
                                         IDenormalizedHierarchicalPersistentSource<BusinessUnitAncestorLink, BusinessUnitToAncestorChildView, BusinessUnit, Guid>,
                                         IDefaultHierarchicalPersistentDomainObjectBase<BusinessUnit>,
                                         IMaster<BusinessUnit>,

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AttachmentsSampleSystem.CodeGenerate
+﻿namespace AttachmentsSampleSystem.CodeGenerate
 {
     public class BLLGeneratorConfiguration : Framework.DomainDriven.BLLGenerator.GeneratorConfigurationBase<
             ServerGenerationEnvironment>

@@ -159,16 +159,7 @@ namespace AttachmentsSampleSystem.Generated.DTO
             mappingObject.IsCandidate = domainObject.IsCandidate;
             mappingObject.Landlinephone = domainObject.Landlinephone;
             mappingObject.LastActionDate = domainObject.LastActionDate;
-            if (this.Context.SecurityService.GetSecurityProvider<AttachmentsSampleSystem.Domain.Employee>(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.EmployeeView).HasAccess(domainObject))
-            {
-                string resultLogin;
-                resultLogin = domainObject.Login;
-                mappingObject.Login = new Framework.Core.Just<string>(resultLogin);
-            }
-            else
-            {
-                mappingObject.Login = Framework.Core.Maybe<string>.Nothing;
-            }
+            mappingObject.Login = domainObject.Login;
             mappingObject.MailAccountName = domainObject.MailAccountName;
             mappingObject.NameEng = domainObject.NameEng;
             mappingObject.NameNative = domainObject.NameNative;
@@ -236,6 +227,7 @@ namespace AttachmentsSampleSystem.Generated.DTO
             domainObject.Interphone = mappingObject.Interphone;
             domainObject.Landlinephone = mappingObject.Landlinephone;
             domainObject.LastActionDate = mappingObject.LastActionDate;
+            domainObject.Login = mappingObject.Login;
             domainObject.NameEng = mappingObject.NameEng;
             domainObject.NameNative = mappingObject.NameNative;
             domainObject.NameRussian = mappingObject.NameRussian;
@@ -260,18 +252,6 @@ namespace AttachmentsSampleSystem.Generated.DTO
             }
             domainObject.ValidateVirtualProp = mappingObject.ValidateVirtualProp;
             domainObject.WorkPeriod = mappingObject.WorkPeriod;
-            Framework.Core.Just<string> justLogin = Framework.Core.PipeObjectExtensions.AsCast<Framework.Core.Just<string>>(mappingObject.Login);
-            if (!object.ReferenceEquals(justLogin, null))
-            {
-                if (this.Context.SecurityService.GetSecurityProvider<AttachmentsSampleSystem.Domain.Employee>(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.EmployeeEdit).HasAccess(domainObject))
-                {
-                    domainObject.Login = justLogin.Value;
-                }
-                else
-                {
-                    throw new Framework.Exceptions.BusinessLogicException("Access for write to field \"Login\" denied");
-                }
-            }
         }
         
         public virtual void MapEmployee(AttachmentsSampleSystem.Generated.DTO.EmployeeUpdateDTO mappingObject, AttachmentsSampleSystem.Domain.Employee domainObject)
@@ -320,14 +300,7 @@ namespace AttachmentsSampleSystem.Generated.DTO
             Framework.Core.Just<string> justLogin = Framework.Core.PipeObjectExtensions.AsCast<Framework.Core.Just<string>>(mappingObject.Login);
             if (!object.ReferenceEquals(justLogin, null))
             {
-                if (this.Context.SecurityService.GetSecurityProvider<AttachmentsSampleSystem.Domain.Employee>(AttachmentsSampleSystem.AttachmentsSampleSystemSecurityOperationCode.EmployeeEdit).HasAccess(domainObject))
-                {
-                    domainObject.Login = justLogin.Value;
-                }
-                else
-                {
-                    throw new Framework.Exceptions.BusinessLogicException("Access for write to field \"Login\" denied");
-                }
+                domainObject.Login = justLogin.Value;
             }
             Framework.Core.Just<AttachmentsSampleSystem.Domain.Inline.FioShort> justNameEng = Framework.Core.PipeObjectExtensions.AsCast<Framework.Core.Just<AttachmentsSampleSystem.Domain.Inline.FioShort>>(mappingObject.NameEng);
             if (!object.ReferenceEquals(justNameEng, null))

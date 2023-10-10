@@ -185,7 +185,7 @@ namespace AttachmentsSampleSystem.Generated.DTO
             target.Interphone = Framework.Core.Maybe.Return(currentSource.Interphone);
             target.Landlinephone = Framework.Core.Maybe.Return(currentSource.Landlinephone);
             target.LastActionDate = Framework.Core.Maybe.Return(currentSource.LastActionDate);
-            target.Login = currentSource.Login;
+            target.Login = Framework.Core.Maybe.Return(currentSource.Login);
             target.NameEng = Framework.Core.Maybe.Return(currentSource.NameEng);
             target.NameNative = Framework.Core.Maybe.Return(currentSource.NameNative);
             target.NameRussian = Framework.Core.Maybe.Return(currentSource.NameRussian);
@@ -248,7 +248,7 @@ namespace AttachmentsSampleSystem.Generated.DTO
             }
             if (baseSource.Login != currentSource.Login)
             {
-                target.Login = currentSource.Login;
+                target.Login = Framework.Core.Maybe.Return(currentSource.Login);
             }
             if (baseSource.NameEng != currentSource.NameEng)
             {
@@ -449,17 +449,7 @@ namespace AttachmentsSampleSystem.Generated.DTO
             target.Interphone = source.Interphone;
             target.Landlinephone = source.Landlinephone;
             target.LastActionDate = source.LastActionDate;
-            Framework.Core.Just<string> justLogin = Framework.Core.PipeObjectExtensions.AsCast<Framework.Core.Just<string>>(source.Login);
-            if (!object.ReferenceEquals(justLogin, null))
-            {
-                string resultLogin;
-                resultLogin = justLogin.Value;
-                target.Login = new Framework.Core.Just<string>(resultLogin);
-            }
-            else
-            {
-                target.Login = Framework.Core.Maybe<string>.Nothing;
-            }
+            target.Login = source.Login;
             target.NameEng = source.NameEng;
             target.NameNative = source.NameNative;
             target.NameRussian = source.NameRussian;

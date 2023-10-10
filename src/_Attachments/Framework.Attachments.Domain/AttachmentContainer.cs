@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 
 using Framework.Attachments.Abstract;
-using Framework.DomainDriven.Attributes;
 using Framework.DomainDriven.BLL;
 using Framework.Persistent;
+using Framework.Persistent.Mapping;
 using Framework.Restriction;
-using Framework.Security;
 
 namespace Framework.Attachments.Domain
 {
     /// <summary>
     /// Контейнер аттачментов
     /// </summary>
-    [DomainObjectAccess]
     [UniqueGroup]
     [NotAuditedClass]
     [BLLRole]

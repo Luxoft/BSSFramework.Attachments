@@ -8,7 +8,7 @@ using Framework.DomainDriven.BLL;
 using Framework.Persistent;
 using Framework.SecuritySystem;
 
-using JetBrains.Annotations;
+
 
 using nuSpec.Abstraction;
 
@@ -16,7 +16,7 @@ namespace Framework.Attachments.BLL
 {
     public partial class AttachmentContainerBLL
     {
-        public override void Insert([NotNull] AttachmentContainer attachmentContainer, Guid id)
+        public override void Insert(AttachmentContainer attachmentContainer, Guid id)
         {
             if (attachmentContainer == null) throw new ArgumentNullException(nameof(attachmentContainer));
 

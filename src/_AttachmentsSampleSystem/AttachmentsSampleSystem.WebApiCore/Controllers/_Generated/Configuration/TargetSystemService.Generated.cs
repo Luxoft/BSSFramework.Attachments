@@ -10,26 +10,6 @@
     {
         
         /// <summary>
-        /// Check TargetSystem access
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("CheckTargetSystemAccess")]
-        public virtual void CheckTargetSystemAccess(CheckTargetSystemAccessAutoRequest checkTargetSystemAccessAutoRequest)
-        {
-            Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode = checkTargetSystemAccessAutoRequest.securityOperationCode;
-            Framework.Configuration.Generated.DTO.TargetSystemIdentityDTO targetSystemIdent = checkTargetSystemAccessAutoRequest.targetSystemIdent;
-            this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.CheckTargetSystemAccessInternal(targetSystemIdent, securityOperationCode, evaluateData));
-        }
-        
-        protected virtual void CheckTargetSystemAccessInternal(Framework.Configuration.Generated.DTO.TargetSystemIdentityDTO targetSystemIdent, Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Configuration.BLL.IConfigurationBLLContext, Framework.Configuration.Generated.DTO.IConfigurationDTOMappingService> evaluateData)
-        {
-            Framework.Configuration.BLL.ITargetSystemBLL bll = evaluateData.Context.Logics.TargetSystem;
-            Framework.Security.TransferEnumHelper.Check(securityOperationCode);
-            Framework.Configuration.Domain.TargetSystem domainObject = bll.GetById(targetSystemIdent.Id, true);
-            Framework.SecuritySystem.SecurityProviderExtensions.CheckAccess(evaluateData.Context.SecurityService.GetSecurityProvider<Framework.Configuration.Domain.TargetSystem>(securityOperationCode), domainObject);
-        }
-        
-        /// <summary>
         /// Get TargetSystem (FullDTO) by identity
         /// </summary>
         [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
@@ -313,26 +293,6 @@
         }
         
         /// <summary>
-        /// Check access for TargetSystem
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("HasTargetSystemAccess")]
-        public virtual bool HasTargetSystemAccess(HasTargetSystemAccessAutoRequest hasTargetSystemAccessAutoRequest)
-        {
-            Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode = hasTargetSystemAccessAutoRequest.securityOperationCode;
-            Framework.Configuration.Generated.DTO.TargetSystemIdentityDTO targetSystemIdent = hasTargetSystemAccessAutoRequest.targetSystemIdent;
-            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.HasTargetSystemAccessInternal(targetSystemIdent, securityOperationCode, evaluateData));
-        }
-        
-        protected virtual bool HasTargetSystemAccessInternal(Framework.Configuration.Generated.DTO.TargetSystemIdentityDTO targetSystemIdent, Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Configuration.BLL.IConfigurationBLLContext, Framework.Configuration.Generated.DTO.IConfigurationDTOMappingService> evaluateData)
-        {
-            Framework.Configuration.BLL.ITargetSystemBLL bll = evaluateData.Context.Logics.TargetSystem;
-            Framework.Security.TransferEnumHelper.Check(securityOperationCode);
-            Framework.Configuration.Domain.TargetSystem domainObject = bll.GetById(targetSystemIdent.Id, true);
-            return evaluateData.Context.SecurityService.GetSecurityProvider<Framework.Configuration.Domain.TargetSystem>(securityOperationCode).HasAccess(domainObject);
-        }
-        
-        /// <summary>
         /// Save TargetSystems
         /// </summary>
         [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
@@ -355,33 +315,5 @@
             bll.Save(domainObject);
             return Framework.Configuration.Generated.DTO.LambdaHelper.ToIdentityDTO(domainObject);
         }
-    }
-    
-    [System.Runtime.Serialization.DataContractAttribute()]
-    [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
-    public partial class CheckTargetSystemAccessAutoRequest
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=0)]
-        public Framework.Configuration.Generated.DTO.TargetSystemIdentityDTO targetSystemIdent;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=1)]
-        public Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode;
-    }
-    
-    [System.Runtime.Serialization.DataContractAttribute()]
-    [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
-    public partial class HasTargetSystemAccessAutoRequest
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=0)]
-        public Framework.Configuration.Generated.DTO.TargetSystemIdentityDTO targetSystemIdent;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=1)]
-        public Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode;
     }
 }

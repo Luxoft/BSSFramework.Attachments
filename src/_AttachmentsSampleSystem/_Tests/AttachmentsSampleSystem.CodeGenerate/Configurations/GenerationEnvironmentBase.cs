@@ -15,7 +15,7 @@ namespace AttachmentsSampleSystem.CodeGenerate
         }
 
 
-        public override Type SecurityOperationCodeType { get; } = typeof(AttachmentsSampleSystemSecurityOperationCode);
+        public override Type SecurityOperationType { get; } = typeof(AttachmentsSampleSystemSecurityOperation);
 
         public override Type OperationContextType { get; } = typeof(AttachmentsSampleSystemOperationContext);
     }

@@ -1,7 +1,6 @@
 ﻿using AttachmentsSampleSystem.BLL;
 using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
-using AttachmentsSampleSystem.WebApiCore.Controllers;
-
+using AttachmentsSampleSystem.WebApiCore.Controllers._Generated.SL;
 using Automation.ServiceEnvironment;
 
 using Microsoft.Extensions.DependencyInjection;

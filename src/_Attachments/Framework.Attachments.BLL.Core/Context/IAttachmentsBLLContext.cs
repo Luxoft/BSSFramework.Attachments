@@ -11,7 +11,7 @@ namespace Framework.Attachments.BLL
 {
     public partial interface IAttachmentsBLLContext :
 
-            ISecurityBLLContext<IAuthorizationBLLContext, PersistentDomainObjectBase, DomainObjectBase, Guid>,
+            ISecurityBLLContext<IAuthorizationBLLContext, PersistentDomainObjectBase, Guid>,
             IConfigurationBLLContextContainer<Framework.Configuration.BLL.IConfigurationBLLContext>,
             ITypeResolverContainer<string>
     {

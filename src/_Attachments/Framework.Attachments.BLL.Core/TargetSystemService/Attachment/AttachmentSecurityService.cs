@@ -9,30 +9,23 @@ using Framework.DomainDriven.BLL.Security;
 using Framework.Persistent;
 using Framework.SecuritySystem;
 
-using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Framework.Attachments.BLL
 {
-    public class AttachmentSecurityService<TBLLContext, TPersistentDomainObjectBase> : BLLContextContainer<IAttachmentsBLLContext>, IAttachmentSecurityProviderSource
+    public class AttachmentSecurityService<TBllContext, TPersistentDomainObjectBase> : BLLContextContainer<IAttachmentsBLLContext>, IAttachmentSecurityProviderSource
 
-        where TBLLContext : class,
-
-                            ITypeResolverContainer<string>,
-                            IDefaultBLLContext<TPersistentDomainObjectBase, Guid>
+        where TBllContext : class, ITypeResolverContainer<string>, ISecurityBLLContext<TPersistentDomainObjectBase, Guid>, ISecurityServiceContainer<IRootSecurityService<TPersistentDomainObjectBase>>
 
 
         where TPersistentDomainObjectBase : class, IIdentityObject<Guid>
     {
-        private readonly TBLLContext _targetSystemContext;
+        private readonly TBllContext targetSystemContext;
 
-        private readonly IRootSecurityService<TBLLContext, TPersistentDomainObjectBase> attachmentSecurityService;
-
-        public AttachmentSecurityService(IAttachmentsBLLContext context, TBLLContext targetSystemContext,
-                                         [NotNull] IRootSecurityService<TBLLContext, TPersistentDomainObjectBase> attachmentSecurityService)
+        public AttachmentSecurityService(IAttachmentsBLLContext context, TBllContext targetSystemContext)
             : base(context)
         {
-            this._targetSystemContext = targetSystemContext ?? throw new ArgumentNullException(nameof(targetSystemContext));
-            this.attachmentSecurityService = attachmentSecurityService ?? throw new ArgumentNullException(nameof(attachmentSecurityService));
+            this.targetSystemContext = targetSystemContext ?? throw new ArgumentNullException(nameof(targetSystemContext));
         }
 
 
@@ -42,40 +35,60 @@ namespace Framework.Attachments.BLL
             if (containerPath == null) throw new ArgumentNullException(nameof(containerPath));
             if (mainDomainType == null) throw new ArgumentNullException(nameof(mainDomainType));
 
-            return new GetAttachmentSecurityProviderProcessor<TDomainObject>(this._targetSystemContext, this.attachmentSecurityService, this.Context, containerPath, securityMode).Process(mainDomainType.Name);
+            return new GetAttachmentSecurityProviderProcessor<TDomainObject>(this.targetSystemContext, this.Context, containerPath, securityMode).Process(mainDomainType.Name);
         }
 
 
-        private class GetAttachmentSecurityProviderProcessor<TDomainObject> : TypeResolverDomainObjectProcessor<TBLLContext, TPersistentDomainObjectBase, ISecurityProvider<TDomainObject>>
+        private class GetAttachmentSecurityProviderProcessor<TDomainObject> : TypeResolverDomainObjectProcessor<TBllContext, TPersistentDomainObjectBase, ISecurityProvider<TDomainObject>>
             where TDomainObject : PersistentDomainObjectBase
         {
-            private readonly IRootSecurityService<TBLLContext, TPersistentDomainObjectBase> attachmentSecurityService;
+            private readonly IAttachmentsBLLContext mainContext;
 
-            private readonly IAttachmentsBLLContext _mainContext;
-
-            private readonly Expression<Func<TDomainObject, AttachmentContainer>> _containerPath;
-            private readonly BLLSecurityMode _securityMode;
+            private readonly Expression<Func<TDomainObject, AttachmentContainer>> containerPath;
+            private readonly BLLSecurityMode securityMode;
 
 
-            public GetAttachmentSecurityProviderProcessor(TBLLContext context, [NotNull] IRootSecurityService<TBLLContext, TPersistentDomainObjectBase> attachmentSecurityService, IAttachmentsBLLContext mainContext, Expression<Func<TDomainObject, AttachmentContainer>> containerPath, BLLSecurityMode securityMode)
+            public GetAttachmentSecurityProviderProcessor(TBllContext context, IAttachmentsBLLContext mainContext, Expression<Func<TDomainObject, AttachmentContainer>> containerPath, BLLSecurityMode securityMode)
                 : base(context)
             {
-                this.attachmentSecurityService = attachmentSecurityService ?? throw new ArgumentNullException(nameof(attachmentSecurityService));
-                this._mainContext = mainContext;
-                this._containerPath = containerPath ?? throw new ArgumentNullException(nameof(containerPath));
-                this._securityMode = securityMode;
+                this.mainContext = mainContext;
+                this.containerPath = containerPath ?? throw new ArgumentNullException(nameof(containerPath));
+                this.securityMode = securityMode;
             }
 
 
-            protected override ISecurityProvider<TDomainObject> Process<TMainDomainObject>()
+            protected override ISecurityProvider<TDomainObject> Process<TTargetSystemDomainObject>()
             {
-                var targetSystemSecurityProvider = this.attachmentSecurityService.GetSecurityProvider<TMainDomainObject>(this._securityMode);
+                var targetSystemSecurityProvider = this.GetTargetSecurityProvider<TTargetSystemDomainObject>();
 
-                return new AttachmentSecurityProvider<TDomainObject, TMainDomainObject>(this._mainContext, targetSystemSecurityProvider, this.Context, this._containerPath);
+                return new AttachmentSecurityProvider<TDomainObject, TTargetSystemDomainObject>(targetSystemSecurityProvider, this.Context, this.containerPath);
+            }
+
+            private ISecurityProvider<TTargetSystemDomainObject> GetTargetSecurityProvider<TTargetSystemDomainObject>()
+                    where TTargetSystemDomainObject : class, TPersistentDomainObjectBase
+            {
+                var customAttachmentOperationInfo = this.Context.ServiceProvider.GetService<AttachmentDomainObjectSecurityOperationInfo<TTargetSystemDomainObject>>();
+
+                if (customAttachmentOperationInfo != null)
+                {
+                    var targetDomainService = this.Context.ServiceProvider.GetRequiredService<IDomainSecurityService<TTargetSystemDomainObject>>();
+
+                    switch (this.securityMode)
+                    {
+                        case BLLSecurityMode.View when customAttachmentOperationInfo.ViewOperation != null:
+                            return targetDomainService.GetSecurityProvider(customAttachmentOperationInfo.ViewOperation);
+
+                        case BLLSecurityMode.Edit when customAttachmentOperationInfo.EditOperation != null:
+                            return targetDomainService.GetSecurityProvider(customAttachmentOperationInfo.EditOperation);
+
+                    }
+                }
+
+                return this.Context.SecurityService.GetSecurityProvider<TTargetSystemDomainObject>(this.securityMode);
             }
         }
 
-        public class AttachmentSecurityProvider<TDomainObject, TTargetSystemDomainObject> : SecurityProviderBase<TDomainObject>
+        public class AttachmentSecurityProvider<TDomainObject, TTargetSystemDomainObject> : ISecurityProvider<TDomainObject>
 
             where TDomainObject : PersistentDomainObjectBase
             where TTargetSystemDomainObject : class, TPersistentDomainObjectBase
@@ -87,8 +100,7 @@ namespace Framework.Attachments.BLL
             private static readonly LambdaCompileCache CompileCache = new LambdaCompileCache();
 
 
-            public AttachmentSecurityProvider(IAttachmentsBLLContext mainContext, ISecurityProvider<TTargetSystemDomainObject> targetSystemSecurityProvider, TBLLContext context, Expression<Func<TDomainObject, AttachmentContainer>> containerPath)
-                : base(mainContext.AccessDeniedExceptionService)
+            public AttachmentSecurityProvider(ISecurityProvider<TTargetSystemDomainObject> targetSystemSecurityProvider, TBllContext context, Expression<Func<TDomainObject, AttachmentContainer>> containerPath)
             {
                 this.Context = context;
 
@@ -96,19 +108,18 @@ namespace Framework.Attachments.BLL
                 this.targetSystemSecurityProvider = targetSystemSecurityProvider;
             }
 
+            public TBllContext Context { get; }
 
-            public TBLLContext Context { get; }
-
-            public override IQueryable<TDomainObject> InjectFilter(IQueryable<TDomainObject> queryable)
+            public IQueryable<TDomainObject> InjectFilter(IQueryable<TDomainObject> queryable)
             {
                 var mainQueryable = this.Context.Logics.Default.Create<TTargetSystemDomainObject>().GetUnsecureQueryable();
 
-                var filteredMainQuarable = this.targetSystemSecurityProvider.InjectFilter(mainQueryable);
+                var filteredMainQueryable = this.targetSystemSecurityProvider.InjectFilter(mainQueryable);
 
-                return filteredMainQuarable.Join(queryable, v => v.Id, this.containerPath.Select(v => v.ObjectId), (_, domainObject) => domainObject);
+                return filteredMainQueryable.Join(queryable, v => v.Id, this.containerPath.Select(v => v.ObjectId), (_, domainObject) => domainObject);
             }
 
-            public override bool HasAccess(TDomainObject domainObject)
+            public bool HasAccess(TDomainObject domainObject)
             {
                 if (domainObject == null) throw new ArgumentNullException(nameof(domainObject));
 
@@ -117,11 +128,11 @@ namespace Framework.Attachments.BLL
                 return this.targetSystemSecurityProvider.HasAccess(targetDomainObject);
             }
 
-            public override UnboundedList<string> GetAccessors(TDomainObject domainObject)
+            public UnboundedList<string> GetAccessors(TDomainObject domainObject)
             {
-                var mainBLL = this.Context.Logics.Implemented.Create<TTargetSystemDomainObject>();
+                var mainBll = this.Context.Logics.Implemented.Create<TTargetSystemDomainObject>();
 
-                var obj = mainBLL.GetById(this.containerPath.Eval(domainObject).ObjectId, true);
+                var obj = mainBll.GetById(this.containerPath.Eval(domainObject).ObjectId, true);
 
                 return this.targetSystemSecurityProvider.GetAccessors(obj);
             }

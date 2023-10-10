@@ -5,8 +5,6 @@ using Framework.Attachments.BLL;
 using Framework.Core;
 using Framework.DomainDriven;
 
-using JetBrains.Annotations;
-
 namespace Framework.Attachments.Environment
 {
     public class AttachmentCleanerDALListener : IBeforeTransactionCompletedDALListener
@@ -14,7 +12,7 @@ namespace Framework.Attachments.Environment
         private readonly ITargetSystemService targetSystemService;
 
 
-        public AttachmentCleanerDALListener([NotNull] ITargetSystemService targetSystemService)
+        public AttachmentCleanerDALListener(ITargetSystemService targetSystemService)
         {
             this.targetSystemService = targetSystemService ?? throw new ArgumentNullException(nameof(targetSystemService));
         }

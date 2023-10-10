@@ -1,6 +1,4 @@
-﻿using Framework.Persistent;
-
-namespace Framework.Attachments.Environment;
+﻿namespace Framework.Attachments.Environment;
 
 public static class AttachmentsTargetSystemHelper
 {

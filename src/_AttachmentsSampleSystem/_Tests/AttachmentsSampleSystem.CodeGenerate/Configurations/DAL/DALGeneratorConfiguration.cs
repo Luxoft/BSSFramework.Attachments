@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AttachmentsSampleSystem.CodeGenerate
+﻿namespace AttachmentsSampleSystem.CodeGenerate
 {
     public class DALGeneratorConfiguration : Framework.DomainDriven.NHibernate.DALGenerator.GeneratorConfigurationBase<ServerGenerationEnvironment>
     {

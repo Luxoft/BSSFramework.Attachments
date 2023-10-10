@@ -1,31 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using Framework.Core;
-using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.Serialization;
 using Framework.Persistent;
 using Framework.Persistent.Mapping;
 using Framework.Restriction;
-using Framework.SecuritySystem;
 using Framework.Transfering;
 using Framework.Validation;
 
 using AttachmentsSampleSystem.Domain.Inline;
+
+using Framework.Configuration;
 
 namespace AttachmentsSampleSystem.Domain
 {
     [UniqueGroup(UseDbEvaluation = true)]
     [BLLViewRole(Max = MainDTOType.FullDTO)]
     [BLLSaveRole(SaveType = BLLSaveType.Both)]
-    [AttachmentsSampleSystemViewDomainObject(AttachmentsSampleSystemSecurityOperationCode.EmployeeView)]
-    [AttachmentsSampleSystemEditDomainObject(AttachmentsSampleSystemSecurityOperationCode.EmployeeEdit)]
     [BLLEventRole(Mode = EventRoleMode.Save)]
     [BLLIntegrationSaveRole]
     [DomainType("{AA46DA53-9B21-4DEC-9C70-720BDA1CB198}")]
-    public partial class Employee :
+    public class Employee :
         AuditPersistentDomainObjectBase,
         IEmployee
     {
@@ -109,8 +106,6 @@ namespace AttachmentsSampleSystem.Domain
 
         [MaxLength(30)]
         [UniqueElement]
-        [AttachmentsSampleSystemViewDomainObject(AttachmentsSampleSystemSecurityOperationCode.EmployeeView)]
-        [AttachmentsSampleSystemEditDomainObject(AttachmentsSampleSystemSecurityOperationCode.EmployeeEdit)]
         public virtual string Login
         {
             get { return this.login.TrimNull(); }

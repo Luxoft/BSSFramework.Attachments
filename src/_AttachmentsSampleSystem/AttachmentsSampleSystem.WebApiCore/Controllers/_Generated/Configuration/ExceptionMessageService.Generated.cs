@@ -10,26 +10,6 @@
     {
         
         /// <summary>
-        /// Check ExceptionMessage access
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("CheckExceptionMessageAccess")]
-        public virtual void CheckExceptionMessageAccess(CheckExceptionMessageAccessAutoRequest checkExceptionMessageAccessAutoRequest)
-        {
-            Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode = checkExceptionMessageAccessAutoRequest.securityOperationCode;
-            Framework.Configuration.Generated.DTO.ExceptionMessageIdentityDTO exceptionMessageIdent = checkExceptionMessageAccessAutoRequest.exceptionMessageIdent;
-            this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.CheckExceptionMessageAccessInternal(exceptionMessageIdent, securityOperationCode, evaluateData));
-        }
-        
-        protected virtual void CheckExceptionMessageAccessInternal(Framework.Configuration.Generated.DTO.ExceptionMessageIdentityDTO exceptionMessageIdent, Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Configuration.BLL.IConfigurationBLLContext, Framework.Configuration.Generated.DTO.IConfigurationDTOMappingService> evaluateData)
-        {
-            Framework.Configuration.BLL.IExceptionMessageBLL bll = evaluateData.Context.Logics.ExceptionMessage;
-            Framework.Security.TransferEnumHelper.Check(securityOperationCode);
-            Framework.Configuration.Domain.ExceptionMessage domainObject = bll.GetById(exceptionMessageIdent.Id, true);
-            Framework.SecuritySystem.SecurityProviderExtensions.CheckAccess(evaluateData.Context.SecurityService.GetSecurityProvider<Framework.Configuration.Domain.ExceptionMessage>(securityOperationCode), domainObject);
-        }
-        
-        /// <summary>
         /// Get ExceptionMessage (FullDTO) by identity
         /// </summary>
         [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
@@ -178,26 +158,6 @@
             return Framework.Configuration.Generated.DTO.LambdaHelper.ToSimpleDTOList(bll.GetFullList(evaluateData.Context.FetchService.GetContainer<Framework.Configuration.Domain.ExceptionMessage>(Framework.Transfering.ViewDTOType.SimpleDTO)), evaluateData.MappingService);
         }
         
-        /// <summary>
-        /// Check access for ExceptionMessage
-        /// </summary>
-        [Microsoft.AspNetCore.Mvc.HttpPostAttribute()]
-        [Microsoft.AspNetCore.Mvc.RouteAttribute("HasExceptionMessageAccess")]
-        public virtual bool HasExceptionMessageAccess(HasExceptionMessageAccessAutoRequest hasExceptionMessageAccessAutoRequest)
-        {
-            Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode = hasExceptionMessageAccessAutoRequest.securityOperationCode;
-            Framework.Configuration.Generated.DTO.ExceptionMessageIdentityDTO exceptionMessageIdent = hasExceptionMessageAccessAutoRequest.exceptionMessageIdent;
-            return this.Evaluate(Framework.DomainDriven.DBSessionMode.Read, evaluateData => this.HasExceptionMessageAccessInternal(exceptionMessageIdent, securityOperationCode, evaluateData));
-        }
-        
-        protected virtual bool HasExceptionMessageAccessInternal(Framework.Configuration.Generated.DTO.ExceptionMessageIdentityDTO exceptionMessageIdent, Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Configuration.BLL.IConfigurationBLLContext, Framework.Configuration.Generated.DTO.IConfigurationDTOMappingService> evaluateData)
-        {
-            Framework.Configuration.BLL.IExceptionMessageBLL bll = evaluateData.Context.Logics.ExceptionMessage;
-            Framework.Security.TransferEnumHelper.Check(securityOperationCode);
-            Framework.Configuration.Domain.ExceptionMessage domainObject = bll.GetById(exceptionMessageIdent.Id, true);
-            return evaluateData.Context.SecurityService.GetSecurityProvider<Framework.Configuration.Domain.ExceptionMessage>(securityOperationCode).HasAccess(domainObject);
-        }
-        
         protected virtual Framework.Configuration.Generated.DTO.ExceptionMessageIdentityDTO SaveExceptionMessageInternal(Framework.Configuration.Generated.DTO.ExceptionMessageStrictDTO exceptionMessageStrict, Framework.DomainDriven.ServiceModel.Service.EvaluatedData<Framework.Configuration.BLL.IConfigurationBLLContext, Framework.Configuration.Generated.DTO.IConfigurationDTOMappingService> evaluateData, Framework.Configuration.BLL.IExceptionMessageBLL bll)
         {
             Framework.Configuration.Domain.ExceptionMessage domainObject = Framework.DomainDriven.BLL.DefaultDomainBLLBaseExtensions.GetByIdOrCreate(bll, exceptionMessageStrict.Id);
@@ -205,33 +165,5 @@
             bll.Save(domainObject);
             return Framework.Configuration.Generated.DTO.LambdaHelper.ToIdentityDTO(domainObject);
         }
-    }
-    
-    [System.Runtime.Serialization.DataContractAttribute()]
-    [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
-    public partial class CheckExceptionMessageAccessAutoRequest
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=0)]
-        public Framework.Configuration.Generated.DTO.ExceptionMessageIdentityDTO exceptionMessageIdent;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=1)]
-        public Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode;
-    }
-    
-    [System.Runtime.Serialization.DataContractAttribute()]
-    [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
-    public partial class HasExceptionMessageAccessAutoRequest
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=0)]
-        public Framework.Configuration.Generated.DTO.ExceptionMessageIdentityDTO exceptionMessageIdent;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex=1)]
-        public Framework.Configuration.ConfigurationSecurityOperationCode securityOperationCode;
     }
 }

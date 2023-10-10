@@ -8,14 +8,14 @@ using Framework.Authorization.BLL;
 using Framework.Core;
 using Framework.DomainDriven;
 using Framework.DomainDriven.BLL;
-using Framework.SecuritySystem.Rules.Builders;
-using Framework.DomainDriven.BLL.Tracking;
+using Framework.DomainDriven.BLL.Security;
+using Framework.DomainDriven.Tracking;
 using Framework.Exceptions;
 using Framework.HierarchicalExpand;
 using Framework.QueryLanguage;
 using Framework.SecuritySystem;
 
-using JetBrains.Annotations;
+
 
 namespace Framework.Attachments.BLL
 {
@@ -27,24 +27,21 @@ namespace Framework.Attachments.BLL
 
         public AttachmentsBLLContext(
             IServiceProvider serviceProvider,
-            [NotNull] IOperationEventSenderContainer<PersistentDomainObjectBase> operationSenders,
-            [NotNull] IObjectStateService objectStateService,
-            [NotNull] IAccessDeniedExceptionService<PersistentDomainObjectBase> accessDeniedExceptionService,
-            [NotNull] IStandartExpressionBuilder standartExpressionBuilder,
-            [NotNull] IAttachmentsValidator validator,
-            [NotNull] IHierarchicalObjectExpanderFactory<Guid> hierarchicalObjectExpanderFactory,
-            [NotNull] IFetchService<PersistentDomainObjectBase, FetchBuildRule> fetchService,
-            [NotNull] ISecurityExpressionBuilderFactory<PersistentDomainObjectBase, Guid> securityExpressionBuilderFactory,
-            IAttachmentsSecurityService securityService,
+            IOperationEventSenderContainer<PersistentDomainObjectBase> operationSenders,
+            ITrackingService<PersistentDomainObjectBase> trackingService,
+            IAccessDeniedExceptionService accessDeniedExceptionService,
+            IStandartExpressionBuilder standartExpressionBuilder,
+            IAttachmentsValidator validator,
+            IHierarchicalObjectExpanderFactory<Guid> hierarchicalObjectExpanderFactory,
+            IFetchService<PersistentDomainObjectBase, FetchBuildRule> fetchService,
+            IRootSecurityService<PersistentDomainObjectBase> securityService,
             IAttachmentsBLLFactoryContainer logics,
             IAuthorizationBLLContext authorizationBLLContext,
-            [NotNull] Framework.Configuration.BLL.IConfigurationBLLContext configurationBLLContext,
+            Framework.Configuration.BLL.IConfigurationBLLContext configurationBLLContext,
             IEnumerable<ITargetSystemService> targetSystemServices,
             IAttachmentsBLLContextSettings settings)
-            : base(serviceProvider, operationSenders, objectStateService, accessDeniedExceptionService, standartExpressionBuilder, validator, hierarchicalObjectExpanderFactory, fetchService)
+            : base(serviceProvider, operationSenders, trackingService, accessDeniedExceptionService, standartExpressionBuilder, validator, hierarchicalObjectExpanderFactory, fetchService)
         {
-            this.SecurityExpressionBuilderFactory = securityExpressionBuilderFactory ?? throw new ArgumentNullException(nameof(securityExpressionBuilderFactory));
-
             this.SecurityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
             this.Logics = logics ?? throw new ArgumentNullException(nameof(logics));
 
@@ -60,15 +57,13 @@ namespace Framework.Attachments.BLL
             this.TypeResolver = settings.TypeResolver;
         }
 
-        public IAttachmentsSecurityService SecurityService { get; }
+        public IRootSecurityService<PersistentDomainObjectBase> SecurityService { get; }
 
         public override IAttachmentsBLLFactoryContainer Logics { get; }
 
         public IAuthorizationBLLContext Authorization { get; }
 
         public Framework.Configuration.BLL.IConfigurationBLLContext Configuration { get; }
-
-        public ISecurityExpressionBuilderFactory<PersistentDomainObjectBase, Guid> SecurityExpressionBuilderFactory { get; }
 
         public ITypeResolver<string> TypeResolver { get; }
 

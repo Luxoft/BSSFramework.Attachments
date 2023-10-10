@@ -1,17 +1,11 @@
-﻿using System;
-
-using Framework.Authorization.BLL;
-using Framework.Authorization.Domain;
+﻿using Framework.Authorization.Domain;
 using Framework.Authorization.Generated.DTO;
 using Framework.DomainDriven;
-using Framework.DomainDriven.BLL;
-using Framework.DomainDriven.ServiceModel.Service;
-using Framework.Exceptions;
 using Framework.SecuritySystem;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace AttachmentsSampleSystem.WebApiCore.Controllers
+namespace AttachmentsSampleSystem.WebApiCore.Controllers._Generated.SL
 {
     public class AuthSLJsonController : Framework.Authorization.WebApi.AuthSLJsonController
     {
@@ -40,8 +34,8 @@ namespace AttachmentsSampleSystem.WebApiCore.Controllers
 
 
 
-        [System.Runtime.Serialization.DataContractAttribute()]
-        [Framework.DomainDriven.ServiceModel.IAD.AutoRequestAttribute()]
+        [System.Runtime.Serialization.DataContract()]
+        [Framework.DomainDriven.ServiceModel.IAD.AutoRequest()]
         public class SavePermissionAutoRequest
         {
             public SavePermissionAutoRequest()
@@ -55,12 +49,12 @@ namespace AttachmentsSampleSystem.WebApiCore.Controllers
                 this.permissionDTO = permissionDTO;
             }
 
-            [System.Runtime.Serialization.DataMemberAttribute()]
-            [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex = 0)]
+            [System.Runtime.Serialization.DataMember()]
+            [Framework.DomainDriven.ServiceModel.IAD.AutoRequestProperty(OrderIndex = 0)]
             public PrincipalIdentityDTO principalIdent;
 
-            [System.Runtime.Serialization.DataMemberAttribute()]
-            [Framework.DomainDriven.ServiceModel.IAD.AutoRequestPropertyAttribute(OrderIndex = 1)]
+            [System.Runtime.Serialization.DataMember()]
+            [Framework.DomainDriven.ServiceModel.IAD.AutoRequestProperty(OrderIndex = 1)]
             public PermissionStrictDTO permissionDTO;
         }
     }

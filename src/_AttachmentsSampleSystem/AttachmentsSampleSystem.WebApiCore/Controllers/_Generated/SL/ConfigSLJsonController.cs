@@ -6,7 +6,7 @@ using Framework.Notification.DTO;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace AttachmentsSampleSystem.WebApiCore.Controllers
+namespace AttachmentsSampleSystem.WebApiCore.Controllers._Generated.SL
 {
     public class ConfigSLJsonController : Framework.Configuration.WebApi.ConfigSLJsonController
     {
@@ -20,7 +20,7 @@ namespace AttachmentsSampleSystem.WebApiCore.Controllers
 
             this.EvaluateC(DBSessionMode.Write, context =>
             {
-                var bll = new SentMessageBLL(context);
+                var bll = context.Logics.SentMessage;
 
                 bll.Save(notification.ToSentMessage());
             });

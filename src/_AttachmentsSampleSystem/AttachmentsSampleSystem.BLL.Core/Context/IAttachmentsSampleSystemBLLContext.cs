@@ -3,17 +3,18 @@
 using Framework.Authorization.BLL;
 using Framework.Core;
 using Framework.DomainDriven.BLL;
-using Framework.DomainDriven.BLL.Security;
-using Framework.DomainDriven.BLL.Tracking;
 using Framework.Attachments.BLL;
 
 using AttachmentsSampleSystem.Domain;
+
+using Framework.DomainDriven.BLL.Security;
+using Framework.DomainDriven.Tracking;
 
 namespace AttachmentsSampleSystem.BLL
 {
     public partial interface IAttachmentsSampleSystemBLLContext :
 
-        ISecurityBLLContext<IAuthorizationBLLContext, PersistentDomainObjectBase, DomainObjectBase, Guid>,
+        ISecurityBLLContext<IAuthorizationBLLContext, PersistentDomainObjectBase, Guid>,
 
         IAttachmentsBLLContextContainer,
 
@@ -23,9 +24,7 @@ namespace AttachmentsSampleSystem.BLL
 
         Framework.DomainDriven.BLL.Configuration.IConfigurationBLLContextContainer<Framework.Configuration.BLL.IConfigurationBLLContext>,
 
-        IDefaultHierarchicalBLLContext<PersistentDomainObjectBase, Guid>,
-
-        ISecurityTypeResolverContainer
+        IDefaultHierarchicalBLLContext<PersistentDomainObjectBase, Guid>
     {
     }
 }
