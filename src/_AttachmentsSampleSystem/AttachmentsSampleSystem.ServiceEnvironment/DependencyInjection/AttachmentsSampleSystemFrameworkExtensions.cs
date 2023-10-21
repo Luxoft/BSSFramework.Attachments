@@ -114,7 +114,6 @@ public static class AttachmentsSampleSystemFrameworkExtensions
 
     private static IServiceCollection RegisterContextEvaluator(this IServiceCollection services)
     {
-        services.AddSingleton<IContextEvaluator<IAttachmentsSampleSystemBLLContext>, ContextEvaluator<IAttachmentsSampleSystemBLLContext>>();
         services.AddScoped<IApiControllerBaseEvaluator<EvaluatedData<IAttachmentsSampleSystemBLLContext, IAttachmentsSampleSystemDTOMappingService>>, ApiControllerBaseSingleCallEvaluator<EvaluatedData<IAttachmentsSampleSystemBLLContext, IAttachmentsSampleSystemDTOMappingService>>>();
 
         return services;

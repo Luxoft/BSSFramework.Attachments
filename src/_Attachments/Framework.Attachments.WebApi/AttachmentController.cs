@@ -16,9 +16,9 @@ namespace Framework.Attachments.WebApi
 {
     public partial class AttachmentController
     {
-        private readonly IContextEvaluator<IAttachmentsBLLContext> contextEvaluator;
+        private readonly IServiceEvaluator<IAttachmentsBLLContext> contextEvaluator;
 
-        public AttachmentController(IContextEvaluator<IAttachmentsBLLContext> contextEvaluator)
+        public AttachmentController(IServiceEvaluator<IAttachmentsBLLContext> contextEvaluator)
         {
             this.contextEvaluator = contextEvaluator ?? throw new ArgumentNullException(nameof(contextEvaluator));
         }

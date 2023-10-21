@@ -25,7 +25,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers
 
         public TestBusinessRole CreateRole(string name, params SecurityOperation[] operations)
         {
-            this.RootServiceProvider.GetRequiredService<IContextEvaluator<IAuthorizationBLLContext>>().Evaluate(DBSessionMode.Write,
+            this.RootServiceProvider.GetRequiredService<IServiceEvaluator<IAuthorizationBLLContext>>().Evaluate(DBSessionMode.Write,
                 ctx =>
                 {
                     var role = ctx.Logics.BusinessRole.GetByNameOrCreate(name);
