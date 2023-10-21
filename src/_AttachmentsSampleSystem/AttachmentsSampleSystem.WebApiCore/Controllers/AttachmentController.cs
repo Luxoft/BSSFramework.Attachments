@@ -7,7 +7,7 @@ namespace AttachmentsSampleSystem.WebApiCore.Controllers
 {
     public class AttachmentController : Framework.Attachments.WebApi.AttachmentController
     {
-        public AttachmentController(IContextEvaluator<IAttachmentsBLLContext> contextEvaluator)
+        public AttachmentController(IServiceEvaluator<IAttachmentsBLLContext> contextEvaluator)
                 : base(contextEvaluator)
         {
         }

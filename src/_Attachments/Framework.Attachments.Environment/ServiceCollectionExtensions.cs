@@ -38,7 +38,6 @@ namespace Framework.Attachments.ServiceEnvironment
 
         private static IServiceCollection RegisterAttachmentsContextEvaluator(this IServiceCollection services)
         {
-            services.AddSingleton<IContextEvaluator<IAttachmentsBLLContext>, ContextEvaluator<IAttachmentsBLLContext>>();
             services.AddScoped<IApiControllerBaseEvaluator<EvaluatedData<IAttachmentsBLLContext, IAttachmentsDTOMappingService>>, ApiControllerBaseSingleCallEvaluator<EvaluatedData<IAttachmentsBLLContext, IAttachmentsDTOMappingService>>>();
 
             return services;

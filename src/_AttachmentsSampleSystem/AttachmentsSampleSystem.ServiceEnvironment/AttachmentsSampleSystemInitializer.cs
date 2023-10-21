@@ -12,11 +12,11 @@ namespace AttachmentsSampleSystem.ServiceEnvironment;
 
 public class AttachmentsSampleSystemInitializer
 {
-    private readonly IContextEvaluator<IAttachmentsSampleSystemBLLContext> contextEvaluator;
+    private readonly IServiceEvaluator<IAttachmentsSampleSystemBLLContext> contextEvaluator;
 
     private readonly IInitializeManager initializeManager;
 
-    public AttachmentsSampleSystemInitializer(IContextEvaluator<IAttachmentsSampleSystemBLLContext> contextEvaluator, IInitializeManager initializeManager)
+    public AttachmentsSampleSystemInitializer(IServiceEvaluator<IAttachmentsSampleSystemBLLContext> contextEvaluator, IInitializeManager initializeManager)
     {
         this.contextEvaluator = contextEvaluator;
         this.initializeManager = initializeManager;
