@@ -1,7 +1,7 @@
 ﻿<Project>
   <!-- Package settings -->
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Copyright>Luxoft 2009-2023</Copyright>
     <Authors>Luxoft BSS</Authors>
