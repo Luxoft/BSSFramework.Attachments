@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Linq;
-
 
 using Framework.Configuration.Domain;
 using Framework.Configuration.Generated.DTO;
 using Framework.Core;
-
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
 using AttachmentsSampleSystem.Domain;
 using AttachmentsSampleSystem.Domain.Inline;

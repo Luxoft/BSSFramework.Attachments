@@ -1,4 +1,5 @@
-﻿using Framework.SecuritySystem.DependencyInjection;
+﻿using AttachmentsSampleSystem.Security;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,6 @@ public static class AttachmentsSampleSystemGeneralDependencyInjectionExtensions
                .RegisterGeneralBssFramework()
                .RegisterGeneralDatabaseSettings(configuration)
                .RegisterGeneralApplicationServices(configuration)
-               .RegisterDomainSecurityServices();
+               .RegisterGeneralSecurityServices();
     }
 }

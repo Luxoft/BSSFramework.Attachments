@@ -1,6 +1,4 @@
-﻿using System;
-
-using Framework.DomainDriven;
+﻿using Framework.DomainDriven;
 using Framework.DomainDriven.NHibernate;
 using Framework.Attachments.Domain;
 
