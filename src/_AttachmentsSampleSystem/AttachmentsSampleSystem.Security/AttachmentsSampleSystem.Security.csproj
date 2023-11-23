@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\__SolutionItems\CommonAssemblyInfo.cs" Link="Properties\CommonAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AttachmentsSampleSystem.Domain\AttachmentsSampleSystem.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Luxoft.Framework.Authorization.SecuritySystem" />
+    <PackageReference Include="Luxoft.Framework.SecuritySystem" />
+    <PackageReference Include="Luxoft.Framework.SecuritySystem.Bss" />
+  </ItemGroup>
+
+</Project>

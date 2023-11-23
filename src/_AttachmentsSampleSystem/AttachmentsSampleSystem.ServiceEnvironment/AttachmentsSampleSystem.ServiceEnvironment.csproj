@@ -15,6 +15,8 @@
     <ProjectReference Include="..\AttachmentsSampleSystem.Generated.DAL.NHibernate\AttachmentsSampleSystem.Generated.DAL.NHibernate.csproj" />
 
     <ProjectReference Include="..\AttachmentsSampleSystem.Generated.DTO\AttachmentsSampleSystem.Generated.DTO.csproj" />
+
+    <ProjectReference Include="..\AttachmentsSampleSystem.Security\AttachmentsSampleSystem.Security.csproj" />
   </ItemGroup>
 
 

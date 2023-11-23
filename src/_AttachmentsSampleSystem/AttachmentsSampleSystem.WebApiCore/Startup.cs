@@ -62,8 +62,7 @@ namespace AttachmentsSampleSystem.WebApiCore
 
             if (this.HostingEnvironment.IsProduction())
             {
-                services.AddMetrics();
-
+                AppMetricsServiceCollectionExtensions.AddMetrics(services);
             }
 
             services.AddCap(opt => opt.UseDashboard());

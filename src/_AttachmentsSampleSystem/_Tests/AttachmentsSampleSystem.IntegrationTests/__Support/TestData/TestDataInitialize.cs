@@ -3,6 +3,7 @@
 using AttachmentsSampleSystem.BLL;
 using AttachmentsSampleSystem.Domain.Inline;
 using AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers;
+using AttachmentsSampleSystem.Security;
 using AttachmentsSampleSystem.ServiceEnvironment;
 
 using Automation.ServiceEnvironment;
@@ -28,8 +29,8 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 
             this.AuthHelper.AddCurrentUserToAdmin();
 
-            this.AuthHelper.SetUserRole(DefaultConstants.NOTIFICATION_ADMIN, TestBusinessRole.SystemIntegration);
-            this.AuthHelper.SetUserRole(DefaultConstants.INTEGRATION_USER, TestBusinessRole.SystemIntegration);
+            this.AuthHelper.SetUserRole(DefaultConstants.NOTIFICATION_ADMIN, AttachmentsSampleSystemSecurityRole.SystemIntegration);
+            this.AuthHelper.SetUserRole(DefaultConstants.INTEGRATION_USER, AttachmentsSampleSystemSecurityRole.SystemIntegration);
 
             this.DataHelper.SaveLocation(id: DefaultConstants.LOCATION_PARENT_ID, name: DefaultConstants.LOCATION_PARENT_NAME);
 

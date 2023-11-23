@@ -1,54 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using Automation.ServiceEnvironment;
+﻿using AttachmentsSampleSystem.Domain;
+
 using Automation.Utils;
 using AttachmentsSampleSystem.Generated.DTO;
 
+using Framework.Authorization.SecuritySystem;
+
 namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData
 {
-    public class AttachmentsSampleSystemPermission : IPermissionDefinition
+    public class AttachmentsSampleSystemTestPermission : TestPermission
     {
-        public AttachmentsSampleSystemPermission()
+        public AttachmentsSampleSystemTestPermission(
+                string securityRoleName,
+                BusinessUnitIdentityDTO? businessUnit,
+                LocationIdentityDTO? location = null)
+                : base(securityRoleName)
         {
-        }
-
-        public AttachmentsSampleSystemPermission(TestBusinessRole role)
-        {
-            this.Role = role;
-        }
-
-        public AttachmentsSampleSystemPermission(
-            TestBusinessRole role,
-            BusinessUnitIdentityDTO? businessUnit,
-            LocationIdentityDTO? location)
-        {
-            this.Role = role;
             this.BusinessUnit = businessUnit;
             this.Location = location;
         }
 
-        public TestBusinessRole Role { get; set; }
-
-        public BusinessUnitIdentityDTO? BusinessUnit { get; set; }
-
-        public LocationIdentityDTO? Location { get; set; }
-
-        public IEnumerable<Tuple<string, Guid>> GetEntities()
+        public AttachmentsSampleSystemTestPermission(
+                SecurityRole securityRole,
+                BusinessUnitIdentityDTO? businessUnit,
+                LocationIdentityDTO? location = null)
+                : base(securityRole)
         {
-            if (this.BusinessUnit != null)
-            {
-                yield return Tuple.Create(DefaultConstants.ENTITY_TYPE_FINANCIAL_BUSINESS_UNIT_NAME, ((BusinessUnitIdentityDTO)this.BusinessUnit).Id);
-            }
-
-            if (this.Location != null)
-            {
-                yield return Tuple.Create(DefaultConstants.ENTITY_TYPE_LOCATION_NAME, ((LocationIdentityDTO)this.Location).Id);
-            }
+            this.BusinessUnit = businessUnit;
+            this.Location = location;
         }
 
-        public string GetRoleName()
+        public BusinessUnitIdentityDTO? BusinessUnit
         {
-            return this.Role.GetRoleName();
+            get => this.GetSingleIdentity(typeof(BusinessUnit), v => new BusinessUnitIdentityDTO(v));
+            set => this.SetSingleIdentity(typeof(BusinessUnit), v => v.Id, value);
+        }
+
+        public LocationIdentityDTO? Location
+        {
+            get => this.GetSingleIdentity(typeof(Location), v => new LocationIdentityDTO(v));
+            set => this.SetSingleIdentity(typeof(Location), v => v.Id, value);
         }
     }
 }

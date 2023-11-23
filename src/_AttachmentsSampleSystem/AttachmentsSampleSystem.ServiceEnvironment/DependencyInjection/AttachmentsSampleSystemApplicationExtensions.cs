@@ -27,6 +27,8 @@ public static class AttachmentsSampleSystemApplicationExtensions
     {
         services.AddScoped<INotificationPrincipalExtractor, LegacyNotificationPrincipalExtractor>();
 
+        services.AddSingleton(Serilog.Log.Logger);
+
         return services;
     }
 }

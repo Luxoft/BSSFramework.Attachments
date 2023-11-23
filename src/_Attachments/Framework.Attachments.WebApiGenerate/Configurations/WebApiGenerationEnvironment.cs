@@ -1,5 +1,4 @@
-﻿using System;
-using Framework.Attachments.TestGenerate;
+﻿using Framework.Attachments.TestGenerate;
 
 namespace Framework.Attachments.WebApiGenerate
 {

@@ -4,7 +4,6 @@ using System.Linq;
 
 using Framework.Attachments.Domain;
 using Framework.Core;
-using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.BLL.Security;
 using Framework.Persistent;
 

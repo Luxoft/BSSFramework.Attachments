@@ -5,7 +5,6 @@ using System.Linq;
 using Framework.Cap.Abstractions;
 using Framework.Core.Services;
 using Framework.DomainDriven;
-using Framework.DomainDriven.BLL;
 using Framework.DomainDriven.NHibernate;
 
 using Microsoft.Data.SqlClient;
@@ -13,8 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using NHibernate.Tool.hbm2ddl;
-
-using AttachmentsSampleSystem.WebApiCore;
 
 using Framework.Core;
 using Framework.DomainDriven.NHibernate.Audit;

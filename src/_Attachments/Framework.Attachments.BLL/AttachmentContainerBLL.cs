@@ -6,11 +6,6 @@ using Framework.Attachments.Domain;
 using Framework.Core;
 using Framework.DomainDriven.BLL;
 using Framework.Persistent;
-using Framework.SecuritySystem;
-
-
-
-using nuSpec.Abstraction;
 
 namespace Framework.Attachments.BLL
 {

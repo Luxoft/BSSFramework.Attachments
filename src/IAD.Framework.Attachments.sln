@@ -68,6 +68,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttachmentsSampleSystem.DbG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttachmentsSampleSystem.IntegrationTests", "_AttachmentsSampleSystem\_Tests\AttachmentsSampleSystem.IntegrationTests\AttachmentsSampleSystem.IntegrationTests.csproj", "{5F32D378-014D-4ABC-8C9D-0044CC5AE4E1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttachmentsSampleSystem.Security", "_AttachmentsSampleSystem\AttachmentsSampleSystem.Security\AttachmentsSampleSystem.Security.csproj", "{456AB92B-02E3-4610-9E21-739942C9FD3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -166,6 +168,10 @@ Global
 		{5F32D378-014D-4ABC-8C9D-0044CC5AE4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F32D378-014D-4ABC-8C9D-0044CC5AE4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F32D378-014D-4ABC-8C9D-0044CC5AE4E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{456AB92B-02E3-4610-9E21-739942C9FD3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456AB92B-02E3-4610-9E21-739942C9FD3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456AB92B-02E3-4610-9E21-739942C9FD3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456AB92B-02E3-4610-9E21-739942C9FD3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -197,6 +203,7 @@ Global
 		{511261C2-528B-468D-B164-0D5D1368B36A} = {9AF8E113-231E-455B-BD45-DCDB66482620}
 		{C6E07F97-5CA6-4DA9-ACF8-71420F5E0E75} = {9AF8E113-231E-455B-BD45-DCDB66482620}
 		{5F32D378-014D-4ABC-8C9D-0044CC5AE4E1} = {9AF8E113-231E-455B-BD45-DCDB66482620}
+		{456AB92B-02E3-4610-9E21-739942C9FD3F} = {D41D34D4-7207-490D-89B2-1973A132D047}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {68BB011C-6BAC-4558-903A-BF29D2F8046F}

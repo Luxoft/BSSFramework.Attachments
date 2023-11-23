@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using Automation.ServiceEnvironment;
-
-using DocumentFormat.OpenXml.Drawing.Diagrams;
+using Automation.Utils;
 
 using Framework.Attachments.BLL;
 using Framework.Authorization.BLL;
@@ -23,7 +21,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers
         }
 
 
-        public TestBusinessRole CreateRole(string name, params SecurityOperation[] operations)
+        public TestPermission CreateRole(string name, params SecurityOperation[] operations)
         {
             this.RootServiceProvider.GetRequiredService<IServiceEvaluator<IAuthorizationBLLContext>>().Evaluate(DBSessionMode.Write,
                 ctx =>
@@ -41,7 +39,7 @@ namespace AttachmentsSampleSystem.IntegrationTests.__Support.TestData.Helpers
                     ctx.Logics.BusinessRole.Save(role);
                 });
 
-            return new TestBusinessRole(name);
+            return new TestPermission(name);
         }
     }
 }
