@@ -14,12 +14,9 @@ namespace Framework.Attachments.BLL
     public partial class AttachmentBLL : Framework.Attachments.BLL.SecurityDomainBLLBase<Framework.Attachments.Domain.Attachment, Framework.DomainDriven.BLL.BLLBaseOperation>, Framework.Attachments.BLL.IAttachmentBLL
     {
         
-		partial void Initialize();
-        
         public AttachmentBLL(Framework.Attachments.BLL.IAttachmentsBLLContext context, Framework.SecuritySystem.ISecurityProvider<Framework.Attachments.Domain.Attachment> securityProvider, nuSpec.Abstraction.ISpecificationEvaluator specificationEvaluator = null) : 
                 base(context, securityProvider, specificationEvaluator)
         {
-            this.Initialize();
         }
     }
     
@@ -35,12 +32,9 @@ namespace Framework.Attachments.BLL
     public partial class AttachmentContainerBLL : Framework.Attachments.BLL.SecurityDomainBLLBase<Framework.Attachments.Domain.AttachmentContainer, Framework.DomainDriven.BLL.BLLBaseOperation>, Framework.Attachments.BLL.IAttachmentContainerBLL
     {
         
-		partial void Initialize();
-        
         public AttachmentContainerBLL(Framework.Attachments.BLL.IAttachmentsBLLContext context, Framework.SecuritySystem.ISecurityProvider<Framework.Attachments.Domain.AttachmentContainer> securityProvider, nuSpec.Abstraction.ISpecificationEvaluator specificationEvaluator = null) : 
                 base(context, securityProvider, specificationEvaluator)
         {
-            this.Initialize();
         }
     }
     
@@ -56,12 +50,9 @@ namespace Framework.Attachments.BLL
     public partial class DomainTypeBLL : Framework.Attachments.BLL.SecurityDomainBLLBase<Framework.Attachments.Domain.DomainType, Framework.DomainDriven.BLL.BLLBaseOperation>, Framework.Attachments.BLL.IDomainTypeBLL
     {
         
-		partial void Initialize();
-        
         public DomainTypeBLL(Framework.Attachments.BLL.IAttachmentsBLLContext context, Framework.SecuritySystem.ISecurityProvider<Framework.Attachments.Domain.DomainType> securityProvider, nuSpec.Abstraction.ISpecificationEvaluator specificationEvaluator = null) : 
                 base(context, securityProvider, specificationEvaluator)
         {
-            this.Initialize();
         }
     }
     
@@ -77,12 +68,9 @@ namespace Framework.Attachments.BLL
     public partial class TargetSystemBLL : Framework.Attachments.BLL.SecurityDomainBLLBase<Framework.Attachments.Domain.TargetSystem, Framework.DomainDriven.BLL.BLLBaseOperation>, Framework.Attachments.BLL.ITargetSystemBLL
     {
         
-		partial void Initialize();
-        
         public TargetSystemBLL(Framework.Attachments.BLL.IAttachmentsBLLContext context, Framework.SecuritySystem.ISecurityProvider<Framework.Attachments.Domain.TargetSystem> securityProvider, nuSpec.Abstraction.ISpecificationEvaluator specificationEvaluator = null) : 
                 base(context, securityProvider, specificationEvaluator)
         {
-            this.Initialize();
         }
     }
     
