@@ -14,12 +14,9 @@ namespace AttachmentsSampleSystem.BLL
     public partial class BusinessUnitBLL : AttachmentsSampleSystem.BLL.SecurityDomainBLLBase<AttachmentsSampleSystem.Domain.BusinessUnit, Framework.DomainDriven.BLL.BLLBaseOperation>, AttachmentsSampleSystem.BLL.IBusinessUnitBLL
     {
         
-		partial void Initialize();
-        
         public BusinessUnitBLL(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context, Framework.SecuritySystem.ISecurityProvider<AttachmentsSampleSystem.Domain.BusinessUnit> securityProvider, nuSpec.Abstraction.ISpecificationEvaluator specificationEvaluator = null) : 
                 base(context, securityProvider, specificationEvaluator)
         {
-            this.Initialize();
         }
     }
     
@@ -35,12 +32,9 @@ namespace AttachmentsSampleSystem.BLL
     public partial class EmployeeBLL : AttachmentsSampleSystem.BLL.SecurityDomainBLLBase<AttachmentsSampleSystem.Domain.Employee, Framework.DomainDriven.BLL.BLLBaseOperation>, AttachmentsSampleSystem.BLL.IEmployeeBLL
     {
         
-		partial void Initialize();
-        
         public EmployeeBLL(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context, Framework.SecuritySystem.ISecurityProvider<AttachmentsSampleSystem.Domain.Employee> securityProvider, nuSpec.Abstraction.ISpecificationEvaluator specificationEvaluator = null) : 
                 base(context, securityProvider, specificationEvaluator)
         {
-            this.Initialize();
         }
     }
     
@@ -56,12 +50,9 @@ namespace AttachmentsSampleSystem.BLL
     public partial class HRDepartmentBLL : AttachmentsSampleSystem.BLL.SecurityDomainBLLBase<AttachmentsSampleSystem.Domain.HRDepartment, Framework.DomainDriven.BLL.BLLBaseOperation>, AttachmentsSampleSystem.BLL.IHRDepartmentBLL
     {
         
-		partial void Initialize();
-        
         public HRDepartmentBLL(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context, Framework.SecuritySystem.ISecurityProvider<AttachmentsSampleSystem.Domain.HRDepartment> securityProvider, nuSpec.Abstraction.ISpecificationEvaluator specificationEvaluator = null) : 
                 base(context, securityProvider, specificationEvaluator)
         {
-            this.Initialize();
         }
     }
     
@@ -77,12 +68,9 @@ namespace AttachmentsSampleSystem.BLL
     public partial class LocationBLL : AttachmentsSampleSystem.BLL.SecurityDomainBLLBase<AttachmentsSampleSystem.Domain.Location, Framework.DomainDriven.BLL.BLLBaseOperation>, AttachmentsSampleSystem.BLL.ILocationBLL
     {
         
-		partial void Initialize();
-        
         public LocationBLL(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context, Framework.SecuritySystem.ISecurityProvider<AttachmentsSampleSystem.Domain.Location> securityProvider, nuSpec.Abstraction.ISpecificationEvaluator specificationEvaluator = null) : 
                 base(context, securityProvider, specificationEvaluator)
         {
-            this.Initialize();
         }
     }
     
@@ -98,12 +86,9 @@ namespace AttachmentsSampleSystem.BLL
     public partial class NamedLockBLL : AttachmentsSampleSystem.BLL.SecurityDomainBLLBase<AttachmentsSampleSystem.Domain.NamedLock, Framework.DomainDriven.BLL.BLLBaseOperation>, AttachmentsSampleSystem.BLL.INamedLockBLL
     {
         
-		partial void Initialize();
-        
         public NamedLockBLL(AttachmentsSampleSystem.BLL.IAttachmentsSampleSystemBLLContext context, Framework.SecuritySystem.ISecurityProvider<AttachmentsSampleSystem.Domain.NamedLock> securityProvider, nuSpec.Abstraction.ISpecificationEvaluator specificationEvaluator = null) : 
                 base(context, securityProvider, specificationEvaluator)
         {
-            this.Initialize();
         }
     }
     
